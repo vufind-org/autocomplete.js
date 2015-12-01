@@ -1,5 +1,5 @@
 ﻿/**
- * vufind.typeahead.js 0.3
+ * vufind.typeahead.js 0.3.1
  * ~ @crhallberg
  */
 (function ( $ ) {
@@ -205,7 +205,7 @@
           }
           // hide on escape
           case 27: {
-            hide(element);
+            hide();
             $(this).data('selected', -1);
             break;
           }
