@@ -25,7 +25,9 @@
 
     function createList(data, input) {
       var shell = $('<div/>');
-      for (var i=0, len=Math.min(options.maxResults, data.length); i<len; i++) {
+      var length = Math.min(options.maxResults, data.length);
+      input.data('length', length);
+      for (var i=0; i<length; i++) {
         if (typeof data[i] === 'string') {
           data[i] = {val: data[i]};
         }
@@ -113,6 +115,7 @@
       }
 
       input.data('selected', -1);
+      input.data('length', 0);
 
       if (options.cache) {
         var cid = Math.floor(Math.random()*1000);
@@ -185,7 +188,7 @@
           case 40: {
             show();
             event.preventDefault();
-            if (position < options.maxResults) {
+            if (position < input.data('length')-1) {
               position++;
               element.find('.item.selected').removeClass('selected');
               element.find('.item:eq('+position+')').addClass('selected');
