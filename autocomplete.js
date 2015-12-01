@@ -1,5 +1,5 @@
 ﻿/**
- * vufind.typeahead.js 0.3
+ * vufind.typeahead.js 0.2
  * ~ @crhallberg
  */
 (function ( $ ) {
@@ -29,18 +29,14 @@
         if (typeof data[i] === 'string') {
           data[i] = {val: data[i]};
         }
-        var content = data[i].val;
-        if (options.highlight) {
-          var regex = new RegExp('('+input.val()+')', 'ig');
-          content = content.replace(regex, '<b>$1</b>');
-        }
         var item = typeof data[i].href === 'undefined'
-          ? $('<div/>').addClass('item')
-                       .attr('data-value', data[i].val)
-                       .html(content)
+          ? $('<div/>').attr('data-value', data[i].val)
+                      .html(data[i].val)
+                      .addClass('item')
           : $('<a/>').attr('href', data[i].href)
-                     .attr('data-value', data[i].val)
-                     .html(content)
+                    .attr('data-value', data[i].val)
+                    .html(data[i].val)
+                    .addClass('item')
         if (typeof data[i].description !== 'undefined') {
           item.append($('<small/>').text(data[i].description));
         }
@@ -260,7 +256,8 @@
     highlight: true,
     loadingString: 'Loading...',
     maxResults: 20,
-    minLength: 3
+    minLength: 3,
+    minResults: 1
   };
 
   var xhr = false;
