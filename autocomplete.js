@@ -150,6 +150,8 @@
           return;
         }
         switch (event.which) {
+          case 9:    // tab
+          case 13:   // enter
           case 16:   // shift
           case 20:   // caps lock
           case 27:   // esc
