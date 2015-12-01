@@ -8,6 +8,7 @@ You can tweak the below options as much as you like, but there are two functions
 
 ### handler
 This function will be called when a search for a term needs to be done
+
     function(query, cb) {
       // query is the search term
       // callback cb with an array of results when done
@@ -18,6 +19,7 @@ This function will be called when a search for a term needs to be done
 
 ### onselection (optional)
 This function will fire when a selection is made
+
     function(term, inputElement, eventtype) {
       // term is the word searched
       // inputElement will be the input being populated
