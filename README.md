@@ -23,6 +23,7 @@ This function will fire when a selection is made
     function(term, inputElement, eventtype) {
       // term is the word searched
       // inputElement will be the input being populated
+      // eventType will have a .mouse = true or a .key = true depending on how the user selected an item
     }
 
 ## options
