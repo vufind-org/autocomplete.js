@@ -14,7 +14,7 @@ This function will be called when a search for a term needs to be done
       // callback cb with an array of results when done
       // result formats
       // - array of strings
-      // - array of objects: {val: value[, href: link]}
+      // - array of objects: {val: value[, href: link][, description: text]}
     }
 
 ### onselection (optional)

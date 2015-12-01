@@ -1,5 +1,5 @@
 ﻿/**
- * vufind.typeahead.js 0.3.1
+ * vufind.typeahead.js 0.4
  * ~ @crhallberg
  */
 (function ( $ ) {
@@ -35,18 +35,23 @@
           content = content.replace(regex, '<b>$1</b>');
         }
         var item = typeof data[i].href === 'undefined'
-          ? $('<div/>').addClass('item')
-                       .attr('data-value', data[i].val)
-                       .html(content)
-          : $('<a/>').attr('href', data[i].href)
-                     .attr('data-value', data[i].val)
-                     .html(content)
+          ? $('<div/>')
+          : $('<a/>').attr('href', data[i].href);
+        item.attr('data-index', i+0)
+            .attr('data-value', data[i].val)
+            .addClass('item')
+            .html(content)
+            .mouseover(function() {
+              $.fn.autocomplete.element.find('.item.selected').removeClass('selected');
+              $(this).addClass('selected');
+              input.data('selected', this.dataset.index);
+            });
         if (typeof data[i].description !== 'undefined') {
           item.append($('<small/>').text(data[i].description));
         }
         shell.append(item);
       }
-      $.fn.autocomplete.element.html(shell.html());
+      $.fn.autocomplete.element.html(shell);
       $.fn.autocomplete.element.find('.item').mousedown(function() {
         populate($(this).attr('data-value'), input, {mouse: true})
       });
@@ -61,7 +66,7 @@
         show();
         align(input, $.fn.autocomplete.element);
         var term = input.val();
-        var cid = parseInt(input.data('cache-id'));
+        var cid = input.data('cache-id');
         if (options.cache && typeof $.fn.autocomplete.cache[cid][term] !== "undefined") {
           if ($.fn.autocomplete.cache[cid][term].length === 0) {
             hide();
@@ -199,6 +204,7 @@
               } else {
                 populate(selected.attr('data-value'), $(this), element, {key: true});
                 element.find('.item.selected').removeClass('selected');
+                $(this).data('selected', -1);
               }
             }
             break;
