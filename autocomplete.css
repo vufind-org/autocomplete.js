@@ -1,0 +1,23 @@
+﻿.autocomplete-results {
+  margin: 0;
+  margin-top: 2px;
+  padding: 0;
+  border: 1px solid lightgray;
+  background-color: white;
+  overflow: hidden;
+}
+.autocomplete-results .item {
+  display: block;
+  margin: 0;
+  border-bottom: 1px solid lightgray;
+  cursor: pointer;
+}
+.autocomplete-results .item:last-child {border: 0;}
+.autocomplete-results .item.selected {
+  background-color: black;
+  color: white;
+}
+.autocomplete-results .item small {
+  display: block;
+  color: gray;
+}
