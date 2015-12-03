@@ -1,5 +1,5 @@
 /**
- * vufind.typeahead.js 0.6
+ * vufind.typeahead.js 0.7
  * ~ @crhallberg
  */
 (function ( $ ) {
@@ -58,7 +58,7 @@
       }
       $.fn.autocomplete.element.html(shell);
       $.fn.autocomplete.element.find('.item').mousedown(function() {
-        populate($(this).attr('data-value'), input, {mouse: true})
+        populate($(this).attr('data-value'), input, {mouse: true});
       });
       align(input, $.fn.autocomplete.element);
     }
@@ -99,7 +99,7 @@
       var offset = input[0].getBoundingClientRect();
       element.css({
         position: 'absolute',
-        top: offset.top + offset.height,
+        top: offset.top + offset.height + document.body.scrollTop,
         left: offset.left,
         maxWidth: offset.width * 2,
         minWidth: offset.width,
