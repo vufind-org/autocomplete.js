@@ -1,5 +1,5 @@
 /**
- * vufind.typeahead.js 0.7
+ * vufind.typeahead.js 0.8
  * ~ @crhallberg
  */
 (function ( $ ) {
@@ -18,9 +18,7 @@
     function populate(value, input, eventType) {
       input.val(value);
       hide();
-      if (typeof options.onselection !== 'undefined') {
-        options.onselection(value, input, eventType);
-      }
+      input.trigger('autocomplete:select', {value: value, eventType: eventType});
     }
 
     function createList(data, input) {
@@ -101,8 +99,8 @@
         position: 'absolute',
         top: offset.top + offset.height + document.body.scrollTop,
         left: offset.left,
-        maxWidth: offset.width * 2,
         minWidth: offset.width,
+        maxWidth: input.closest('form').width(),
         zIndex: 50
       });
     }
@@ -111,9 +109,12 @@
       if (typeof element === 'undefined') {
         element = $('<div/>')
           .addClass('autocomplete-results hidden')
-          .text('<i class="item loading">'+options.loadingString+'</i>');
+          .html('<i class="item loading">'+options.loadingString+'</i>');
         align(input, element);
         $('body').append(element);
+        $(window).resize(function() {
+          align(input, element);
+        });
       }
 
       input.data('selected', -1);
