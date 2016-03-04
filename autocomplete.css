@@ -12,6 +12,7 @@
   border-bottom: 1px solid lightgray;
   cursor: pointer;
 }
+.autocomplete-results .item:hover {background-color: lightgray;}
 .autocomplete-results .item:last-child {border: 0;}
 .autocomplete-results .item.selected {
   background-color: black;
@@ -19,5 +20,5 @@
 }
 .autocomplete-results .item small {
   display: block;
-  color: gray;
+  color: darkgray;
 }

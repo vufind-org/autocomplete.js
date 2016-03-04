@@ -1,6 +1,6 @@
 /*global jQuery, window, document, console, setTimeout, clearTimeout */
 /**
- * vufind.typeahead.js 0.12
+ * vufind.typeahead.js 0.13
  * ~ @crhallberg
  */
 (function ( $ ) {
@@ -36,43 +36,53 @@
     element.addClass(options.hidingClass);
   }
 
-  function populate(value, input, eventType) {
-    input.val(value);
+  function populate(data, input, eventType) {
+    input.val(data.value);
+    input.data('selection', data);
+    if (options.callback) {
+      options.callback(data, input, eventType);
+    }
     hide();
-    input.trigger('autocomplete:select', {value: value, eventType: eventType});
   }
 
   function createList(data, input) {
+    // Limit results
+    data = data.slice(0, Math.min(options.maxResults, data.length));
+    input.data('length', data.length);
+    // highlighting setup
+    // escape term for regex - https://github.com/sindresorhus/escape-string-regexp/blob/master/index.js
+    var escapedTerm = input.val().replace(/[|\\{}()\[\]\^$+*?.]/g, '\\$&');
+    var regex = new RegExp('('+escapedTerm+')', 'ig');
     var shell = $('<div/>');
-    var length = Math.min(options.maxResults, data.length);
-    input.data('length', length);
-    for (var i=0; i<length; i++) {
+    for (var i=0; i<data.length; i++) {
       if (typeof data[i] === 'string') {
         data[i] = {val: data[i]};
       }
-      var content = data[i].val;
+      var content = data[i].label || data[i].value;
       if (options.highlight) {
-        // escape term for regex
-        // https://github.com/sindresorhus/escape-string-regexp/blob/master/index.js
-        var escapedTerm = input.val().replace(/[|\\{}()\[\]\^$+*?.]/g, '\\$&');
-        var regex = new RegExp('('+escapedTerm+')', 'ig');
         content = content.replace(regex, '<b>$1</b>');
       }
       var item = typeof data[i].href === 'undefined'
         ? $('<div/>')
         : $('<a/>').attr('href', data[i].href);
+      // Data
       item.attr('data-index', i+0)
-          .attr('data-value', data[i].val)
+          .attr('data-value', data[i].value)
+          .data(data[i])
           .addClass('item')
           .html(content);
       if (typeof data[i].description !== 'undefined') {
-        item.append($('<small/>').text(data[i].description));
+        item.append($('<small/>').html(
+          options.highlight
+            ? data[i].description.replace(regex, '<b>$1</b>')
+            : data[i].description
+        ));
       }
       shell.append(item);
     }
     element.html(shell);
     element.find('.item').mousedown(function() {
-      populate($(this).attr('data-value'), input, {mouse: true});
+      populate($(this).data(), input, {mouse: true});
       setTimeout(function() {
         input.focus();
         hide();
@@ -214,7 +224,7 @@
             if (event.which === 13 && selected.attr('href')) {
               window.location.assign(selected.attr('href'));
             } else {
-              populate(selected.attr('data-value'), $(this), element, {key: true});
+              populate(selected.data(), $(this), element, {key: true});
               element.find('.item.selected').removeClass('selected');
               $(this).data('selected', -1);
             }
