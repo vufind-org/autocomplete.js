@@ -30,11 +30,13 @@ function(query, cb) { }
 ### callback (optional)
 This function will fire when a selection is made
 
-    function(data, inputElement, eventtype) {
-      // full selected object, given from the handler
-      // inputElement will be the input being populated
-      // eventType will have a .mouse = true or a .key = true depending on how the user selected an item
-    }
+```Javascript
+function(data, inputElement, eventtype) {
+  // full selected object, given from the handler
+  // inputElement will be the input being populated
+  // eventType will have a .mouse = true or a .key = true depending on how the user selected an item
+}
+```
 
 ## other options
 - `ajaxDelay` (200) - milliseconds between last input and firing of AJAX
