@@ -6,6 +6,12 @@ requires [jQuery](http://code.jquery.com/)
 ## setup
 You can tweak the below options as much as you like, but there are two functions not set by default.
 
+```Javascript
+$('input').autocomplete({
+  handler: function(query, cb) {}
+})
+```
+
 ### handler
 This function will be called when a search for a term needs to be done
 
@@ -31,9 +37,9 @@ function(query, cb) { }
 This function will fire when a selection is made
 
 ```Javascript
-function(data, inputElement, eventtype) {
-  // full selected object, given from the handler
-  // inputElement will be the input being populated
+function(data, inputElement, eventType) {
+  // data - full selected object, given from the handler
+  // inputElement - the input being populated
   // eventType will have a .mouse = true or a .key = true depending on how the user selected an item
 }
 ```
