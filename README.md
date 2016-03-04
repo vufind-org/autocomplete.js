@@ -17,11 +17,11 @@ This function will be called when a search for a term needs to be done
       // - array of objects: {val: value[, href: link][, description: text]}
     }
 
-### onselection (optional)
+### callback (optional)
 This function will fire when a selection is made
 
-    function(term, inputElement, eventtype) {
-      // term is the word searched
+    function(data, inputElement, eventtype) {
+      // full selected object, given from the handler
       // inputElement will be the input being populated
       // eventType will have a .mouse = true or a .key = true depending on how the user selected an item
     }

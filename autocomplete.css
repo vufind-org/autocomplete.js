@@ -1,10 +1,12 @@
 ﻿.autocomplete-results {
+  position: absolute;
   margin: 0;
   margin-top: 2px;
   padding: 0;
   border: 1px solid lightgray;
   background-color: white;
   overflow: hidden;
+  z-index: 50;
 }
 .autocomplete-results .item {
   display: block;

@@ -20,12 +20,10 @@
   function align(input) {
     var position = input.offset();
     element.css({
-      position: 'absolute',
       top: position.top + input.outerHeight(),
       left: position.left,
       minWidth: input.width(),
       maxWidth: Math.max(input.width(), input.closest('form').width()),
-      zIndex: 50
     });
   }
 
@@ -66,9 +64,7 @@
         ? $('<div/>')
         : $('<a/>').attr('href', data[i].href);
       // Data
-      item.attr('data-index', i+0)
-          .attr('data-value', data[i].value)
-          .data(data[i])
+      item.data(data[i])
           .addClass('item')
           .html(content);
       if (typeof data[i].description !== 'undefined') {
@@ -193,18 +189,15 @@
       var position = $(this).data('selected');
       switch (event.which) {
         // arrow keys through items
-        case 38:
+        case 38: // up key
           event.preventDefault();
           element.find('.item.selected').removeClass('selected');
-          if (position > 0) {
-            position--;
+          if (position-- > 0) {
             element.find('.item:eq('+position+')').addClass('selected');
-            $(this).data('selected', position);
-          } else {
-            $(this).data('selected', -1);
           }
+          $(this).data('selected', position);
           break;
-        case 40:
+        case 40: // down key
           event.preventDefault();
           if (element.hasClass(options.hidingClass)) {
             search(input, element);
@@ -224,7 +217,7 @@
             if (event.which === 13 && selected.attr('href')) {
               window.location.assign(selected.attr('href'));
             } else {
-              populate(selected.data(), $(this), element, {key: true});
+              populate(selected.data(), $(this), {key: true});
               element.find('.item.selected').removeClass('selected');
               $(this).data('selected', -1);
             }
@@ -237,15 +230,6 @@
           break;
       }
     });
-
-    if (
-      typeof options.data    === "undefined" &&
-      typeof options.handler === "undefined" &&
-      typeof options.preload === "undefined" &&
-      typeof options.remote  === "undefined"
-    ) {
-      return input;
-    }
 
     window.addEventListener("resize", hide, false);
 
