@@ -9,13 +9,21 @@ You can tweak the below options as much as you like, but there are two functions
 ### handler
 This function will be called when a search for a term needs to be done
 
-    function(query, cb) {
-      // query is the search term
-      // callback cb with an array of results when done
-      // result formats
-      // - array of strings
-      // - array of objects: {val: value[, href: link][, description: text]}
-    }
+    function(query, cb) { }
+
+- `query` is the search term
+- call `cb` with an array of results when done
+  - array of strings
+  - array of objects:
+
+```Javascript
+{
+  value: "input value"
+  label: "optional display string for results list",
+  description: "optional long text",
+  href: "optional, go to a link instead of fill in input"
+}
+```
 
 ### callback (optional)
 This function will fire when a selection is made
@@ -26,7 +34,7 @@ This function will fire when a selection is made
       // eventType will have a .mouse = true or a .key = true depending on how the user selected an item
     }
 
-## options
+## other options
 * **ajaxDelay** (200) - milliseconds between last input and firing of AJAX
 * **cache** (true) - save results by term and reuse results if the same term is retyped
 * **hidingClass** ('hidden') - class added when the results are hidden and removed when revealed
