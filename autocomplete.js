@@ -1,6 +1,6 @@
 /*global jQuery, window, document, console, setTimeout, clearTimeout */
 /**
- * vufind.typeahead.js 0.13
+ * vufind.typeahead.js 0.14
  * ~ @crhallberg
  */
 (function ( $ ) {
@@ -54,7 +54,7 @@
     var shell = $('<div/>');
     for (var i=0; i<data.length; i++) {
       if (typeof data[i] === 'string') {
-        data[i] = {val: data[i]};
+        data[i] = {value: data[i]};
       }
       var content = data[i].label || data[i].value;
       if (options.highlight) {
