@@ -14,11 +14,12 @@
   border-bottom: 1px solid lightgray;
   cursor: pointer;
 }
-.autocomplete-results .item:hover {background-color: lightgray;}
-.autocomplete-results .item:last-child {border: 0;}
+.autocomplete-results .item:last-child { border: 0; }
+.autocomplete-results .item:hover { background-color: lightgray; }
+.autocomplete-results .item.loading { background-color: white; }
 .autocomplete-results .item.selected {
-  background-color: black;
-  color: white;
+  background-color: lightgray;
+  color: black;
 }
 .autocomplete-results .item small {
   display: block;
