@@ -4,22 +4,23 @@
   margin-top: 2px;
   padding: 0;
   border: 1px solid lightgray;
-  background-color: white;
+  background-color: inherit;
   overflow: hidden;
   z-index: 50;
 }
 .autocomplete-results .item {
   display: block;
   margin: 0;
+  padding: .75rem 1rem;
   border-bottom: 1px solid lightgray;
   cursor: pointer;
 }
 .autocomplete-results .item:last-child { border: 0; }
 .autocomplete-results .item:hover { background-color: lightgray; }
-.autocomplete-results .item.loading { background-color: white; }
+.autocomplete-results .item.loading { background-color: inherit; }
 .autocomplete-results .item.selected {
-  background-color: lightgray;
-  color: black;
+  background-color: black;
+  color: white;
 }
 .autocomplete-results .item small {
   display: block;

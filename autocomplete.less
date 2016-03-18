@@ -1,4 +1,4 @@
-﻿@autocomplete-item-bg   : white;
+﻿@autocomplete-item-bg   : inherit;
 @autocomplete-active-bg : black;
 @autocomplete-hover-bg  : lightgray;
 @autocomplete-border    : lightgray;
@@ -13,14 +13,16 @@
   background-color: @autocomplete-item-bg;
   overflow: hidden;
   z-index: 50;
+
   .item {
     display: block;
     margin: 0;
+    padding: .75rem 1rem;
     border-bottom: 1px solid @autocomplete-border;
     cursor: pointer;
 
-    &:last-child { border: 0;}
-    &:hover { background-color: @autocomplete-hover-bg;}
+    &:last-child { border: 0; }
+    &:hover { background-color: @autocomplete-hover-bg; }
     &.loading { background-color: @autocomplete-item-bg; }
     &.selected {
       background-color: @autocomplete-active-bg;
