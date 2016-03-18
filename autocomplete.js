@@ -1,6 +1,6 @@
 /*global jQuery, window, document, console, setTimeout, clearTimeout */
 /**
- * vufind.typeahead.js 0.14
+ * crhallberg/autocomplete.js 0.14
  * ~ @crhallberg
  */
 (function ( $ ) {
