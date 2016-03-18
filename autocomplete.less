@@ -1,0 +1,35 @@
+﻿@autocomplete-item-bg   : white;
+@autocomplete-active-bg : black;
+@autocomplete-hover-bg  : lightgray;
+@autocomplete-border    : lightgray;
+@autocomplete-secondary : darkgray; // item description
+
+.autocomplete-results {
+  position: absolute;
+  margin: 0;
+  margin-top: 2px;
+  padding: 0;
+  border: 1px solid @autocomplete-border;
+  background-color: @autocomplete-item-bg;
+  overflow: hidden;
+  z-index: 50;
+  .item {
+    display: block;
+    margin: 0;
+    border-bottom: 1px solid @autocomplete-border;
+    cursor: pointer;
+
+    &:last-child { border: 0;}
+    &:hover { background-color: @autocomplete-hover-bg;}
+    &.loading { background-color: @autocomplete-item-bg; }
+    &.selected {
+      background-color: @autocomplete-active-bg;
+      color: contrast(@autocomplete-active-bg);
+    }
+
+    small {
+      display: block;
+      color: @autocomplete-secondary;
+    }
+  }
+}
