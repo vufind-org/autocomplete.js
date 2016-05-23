@@ -1,6 +1,6 @@
 /*global jQuery, window, document, console, setTimeout, clearTimeout */
 /**
- * crhallberg/autocomplete.js 0.14
+ * crhallberg/autocomplete.js 0.14.1
  * ~ @crhallberg
  */
 (function ( $ ) {
@@ -17,13 +17,15 @@
         minLength: 3
       };
 
+  var xhr = false;
+
   function align(input) {
     var position = input.offset();
     element.css({
       top: position.top + input.outerHeight(),
       left: position.left,
       minWidth: input.width(),
-      maxWidth: Math.max(input.width(), input.closest('form').width()),
+      maxWidth: Math.max(input.width(), input.closest('form').width())
     });
   }
 
@@ -238,11 +240,6 @@
 
   $.fn.autocomplete = function(settings) {
 
-    if ('undefined' == typeof settings.handler) {
-      console.error('handler function not provided for autocomplete');
-      return this;
-    }
-
     options = $.extend( {}, options, settings );
 
     return this.each(function() {
@@ -260,6 +257,9 @@
           cache[cid] = {};
         }
         return input;
+      } else if ('undefined' == typeof settings.handler) {
+        console.error('handler function not provided for autocomplete');
+        return this;
       } else {
         element = $('.autocomplete-results');
         if (element.length == 0) {
@@ -275,7 +275,6 @@
   };
 
   var timer = false;
-  var xhr = false;
   $.fn.autocomplete.ajax = function(ops) {
     if (timer) { clearTimeout(timer); }
     if (xhr) { xhr.abort(); }
