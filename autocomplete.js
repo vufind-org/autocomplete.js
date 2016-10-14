@@ -1,5 +1,5 @@
 /**
- * crhallberg/autocomplete.js 0.16.0
+ * crhallberg/autocomplete.js 0.16.1
  * ~ @crhallberg
  */
 (function autocomplete( $ ) {
@@ -96,6 +96,10 @@
       createList(data, input);
     }
   }
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+  function escapeRegExp(string){
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+  }
   function search(input) {
     if (xhr) { xhr.abort(); }
     if (input.val().length >= options.minLength) {
@@ -111,7 +115,7 @@
           createList(cache[cid][term], input);
         }
       } else if (typeof options.static !== 'undefined') {
-        var regex = new RegExp(input.val(), 'i');
+        var regex = new RegExp(escapeRegExp(input.val()), 'i');
         handleResults(input, term, options.static.filter(function staticFilter(_item) {
           var content = typeof _item === 'string'
             ? _item
