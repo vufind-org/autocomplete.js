@@ -8,9 +8,13 @@ You can tweak the below options as much as you like, but there are two functions
 
 ```Javascript
 $('input').autocomplete({
+  static: ['list', 'of', { label:'strings or items', value:'items' }],
   handler: function(query, cb) {}
 })
 ```
+
+### static
+A list of strings and {value:, label:, description:, href:} items to use for every search. Matched without case sensitivity.
 
 ### handler
 This function will be called when a search for a term needs to be done
