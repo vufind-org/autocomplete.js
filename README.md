@@ -14,7 +14,7 @@ $('input').autocomplete({
 ```
 
 ### static
-A list of strings and {value:, label:, description:, href:} items to use for every search. Matched without case sensitivity.
+A list of strings and `{value:, [label:], [description:], [href:]}` items to use for every search. Matched without case sensitivity.
 
 ### handler
 This function will be called when a search for a term needs to be done
