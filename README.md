@@ -20,10 +20,10 @@ A list of strings and `{value:, [label:], [description:], [href:]}` items to use
 This function will be called when a search for a term needs to be done
 
 ```Javascript
-function(input, cb) { }
+function(inputEl, cb) { }
 ```
 
-- `input` is the input being queried, it is a jQuery wrapped element
+- `inputEl` is the input element being queried, it comes jQuery-wrapped
 - call `cb` with an array of results when done
   - array of strings
   - array of objects:
