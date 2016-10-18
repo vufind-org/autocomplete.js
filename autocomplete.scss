@@ -1,9 +1,9 @@
-﻿/* crhallberg/autocomplete.js 0.14 */
-$autocomplete-item-bg   : inherit;
-$autocomplete-active-bg : black;
-$autocomplete-hover-bg  : lightgray;
-$autocomplete-border    : lightgray;
-$autocomplete-secondary : darkgray; // item description
+﻿/* crhallberg/autocomplete.js 0.16.1 */
+$autocomplete-item-bg   : inherit   !default;
+$autocomplete-active-bg : black     !default;
+$autocomplete-hover-bg  : lightgray !default;
+$autocomplete-border    : lightgray !default;
+$autocomplete-secondary : darkgray  !default; // item description
 
 .autocomplete-results {
   position: absolute;
