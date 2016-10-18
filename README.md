@@ -3,31 +3,36 @@ Lightweight autocomplete library focused on the UI.
 
 requires [jQuery](http://code.jquery.com/)
 
-## setup
+## Setup
 You can tweak the below options as much as you like, but there are two functions not set by default.
+
+### Using a static list
+A list of strings and items to use for every search. Matched without case sensitivity.
+
+Matched items are sorted based on the position of the term within the item. You can change the sorting behaviour by passing a function in as `staticSort`.
 
 ```Javascript
 $('input').autocomplete({
   static: ['list', 'of', { label:'strings or items', value:'items' }],
-  handler: function(query, cb) {}
+  staticSort: optionalFunction
 })
 ```
 
-### static
-A list of strings and `{value:, [label:], [description:], [href:]}` items to use for every search. Matched without case sensitivity.
 
-### handler
-This function will be called when a search for a term needs to be done
-
+### Defining a custom handler
+For cases where you want to use a dynamic list or make an ajax call to populate your list, this is accomplished by defining a handler function. This function will be called when a search for a term needs to be done. The autocomplete list is then populated by returning items to the callback function.
 ```Javascript
-function(inputEl, cb) { }
+$('input').autocomplete({
+  handler: function(inputEl, callback) { callback(items); }
+})
 ```
 
 - `inputEl` is the input element being queried, it comes jQuery-wrapped
-- call `cb` with an array of results when done
+- call `callback` with an array of results when done
   - array of strings
-  - array of objects:
+  - array of objects
 
+### item format
 ```Javascript
 {
   value: "input value"
@@ -62,8 +67,8 @@ function(data, inputElement, eventType) {
 $('.autocomplete').each(function(i, op) {
   $(op).autocomplete({
     maxResults: 10,
-    handler: function(query, cb) {
-      console.log(query);
+    handler: function(inputEl, cb) {
+      console.log(inputEl);
       cb('1,2,3,4,5,6,7,8,9,10'.split(','));
     },
     onselection: function() {
@@ -78,12 +83,12 @@ $('.autocomplete').each(function(i, op) {
 $('.autocomplete').each(function(i, op) {
   $(op).autocomplete({
     maxResults: 10,
-    handler: function(query, cb) {
+    handler: function(inputEl, cb) {
       $.fn.autocomplete.ajax({
-        url: 'http://md5.jsontest.com/?text='+query,
+        url: 'http://md5.jsontest.com/?text=' + inputEl.val(),
         dataType:'json',
         success: function(json) {
-          cb([json.md5, query]);
+          cb([json.md5, inputEl]);
         }
       });
     }

@@ -2,7 +2,7 @@
 (function autocomplete( $ ) {
   var cache = {},
     element = false,
-    options = {
+    options = { // default options
       ajaxDelay: 200,
       cache: true,
       hidingClass: 'hidden',
@@ -118,9 +118,13 @@
         var matches = options.static.filter(function staticFilter(_item) {
           return _item.match.match(term);
         });
-        matches.sort(function defaultStaticSort(a, b) {
-          return a.match.indexOf(term) - b.match.indexOf(term);
-        });
+        if (typeof options.staticSort === 'functions') {
+          matches.sort(options.staticSort);
+        } else {
+          matches.sort(function defaultStaticSort(a, b) {
+            return a.match.indexOf(term) - b.match.indexOf(term);
+          });
+        }
         handleResults(input, term, matches);
       // Call handler
       } else {
