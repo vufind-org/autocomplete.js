@@ -1,5 +1,5 @@
 # autocomplete.js
-Lightweight autocomplete library focused on the UI.
+Here to provide the interface so you can control the results.
 
 requires [jQuery](http://code.jquery.com/)
 
