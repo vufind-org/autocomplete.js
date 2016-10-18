@@ -1,7 +1,4 @@
-/**
- * crhallberg/autocomplete.js 0.16.2
- * ~ @crhallberg
- */
+/* https://github.com/crhallberg/autocomplete.js 0.16.2 */
 (function autocomplete( $ ) {
   var cache = {},
     element = false,
@@ -108,26 +105,28 @@
       align(input);
       input.data('selected', -1);
       var term = input.val();
-      // Check for static list
-      if (typeof options.static !== 'undefined') {
-        var regex = new RegExp(escapeRegExp(input.val()), 'i');
-        handleResults(input, term, options.static.filter(function staticFilter(_item) {
-          return (_item.label || _item.value).match(regex);
-        }));
-      } else {
-        // Check cache (only for handler-based setups)
-        var cid = input.data('cache-id');
-        if (options.cache && typeof cache[cid][term] !== "undefined") {
-          if (cache[cid][term].length === 0) {
-            hide();
-          } else {
-            createList(cache[cid][term], input);
-          }
+      // Check cache (only for handler-based setups)
+      var cid = input.data('cache-id');
+      if (options.cache && typeof cache[cid][term] !== "undefined") {
+        if (cache[cid][term].length === 0) {
+          hide();
         } else {
-          options.handler(input, function achandlerCallback(data) {
-            handleResults(input, term, data);
-          });
+          createList(cache[cid][term], input);
         }
+      // Check for static list
+      } else if (typeof options.static !== 'undefined') {
+        var matches = options.static.filter(function staticFilter(_item) {
+          return _item.match.match(term);
+        });
+        matches.sort(function defaultStaticSort(a, b) {
+          return a.match.indexOf(term) - b.match.indexOf(term);
+        });
+        handleResults(input, term, matches);
+      // Call handler
+      } else {
+        options.handler(input, function achandlerCallback(data) {
+          handleResults(input, term, data);
+        });
       }
     } else {
       hide();
@@ -277,10 +276,11 @@
         if (typeof settings.static !== 'undefined') {
           // Preprocess strings into items
           settings.static = settings.static.map(function preprocessStatic(_item) {
-            if (typeof _item === 'string') {
-              return { value: _item };
-            }
-            return _item;
+            var item = typeof _item === 'string'
+              ? { value: _item }
+              : _item;
+            item.match = (item.label || item.value).toLowerCase();
+            return item;
           });
         }
         options = $.extend( {}, options, settings );
