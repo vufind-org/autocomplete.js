@@ -1,5 +1,5 @@
 /**
- * crhallberg/autocomplete.js 0.16.1
+ * crhallberg/autocomplete.js 0.16.2
  * ~ @crhallberg
  */
 (function autocomplete( $ ) {
@@ -106,28 +106,29 @@
       element.html('<i class="item loading">' + options.loadingString + '</i>');
       show();
       align(input);
+      input.data('selected', -1);
       var term = input.val();
-      var cid = input.data('cache-id');
-      if (options.cache && typeof cache[cid][term] !== "undefined") {
-        if (cache[cid][term].length === 0) {
-          hide();
-        } else {
-          createList(cache[cid][term], input);
-        }
-      } else if (typeof options.static !== 'undefined') {
+      // Check for static list
+      if (typeof options.static !== 'undefined') {
         var regex = new RegExp(escapeRegExp(input.val()), 'i');
         handleResults(input, term, options.static.filter(function staticFilter(_item) {
-          var content = typeof _item === 'string'
-            ? _item
-            : _item.label || _item.value;
-          return content.match(regex);
+          return (_item.label || _item.value).match(regex);
         }));
       } else {
-        options.handler(input, function achandlerCallback(data) {
-          handleResults(input, term, data);
-        });
+        // Check cache (only for handler-based setups)
+        var cid = input.data('cache-id');
+        if (options.cache && typeof cache[cid][term] !== "undefined") {
+          if (cache[cid][term].length === 0) {
+            hide();
+          } else {
+            createList(cache[cid][term], input);
+          }
+        } else {
+          options.handler(input, function achandlerCallback(data) {
+            handleResults(input, term, data);
+          });
+        }
       }
-      input.data('selected', -1);
     } else {
       hide();
     }
@@ -273,6 +274,15 @@
         console.error('Neither handler function nor static result list provided for autocomplete');
         return this;
       } else {
+        if (typeof settings.static !== 'undefined') {
+          // Preprocess strings into items
+          settings.static = settings.static.map(function preprocessStatic(_item) {
+            if (typeof _item === 'string') {
+              return { value: _item };
+            }
+            return _item;
+          });
+        }
         options = $.extend( {}, options, settings );
         setup(input);
       }
