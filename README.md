@@ -62,7 +62,7 @@ function(data, inputElement, eventType) {
 - `maxResults` (20) - Most results shown
 - `minLength` (3) - Minimum term length before firing
 
-## Basic Example
+## Basic Handler Example
 ```Javascript
 $('.autocomplete').each(function(i, op) {
   $(op).autocomplete({
@@ -80,19 +80,24 @@ $('.autocomplete').each(function(i, op) {
 
 ## AJAX Example
 ```Javascript
-$('.autocomplete').each(function(i, op) {
-  $(op).autocomplete({
-    maxResults: 10,
-    handler: function(inputEl, cb) {
-      $.fn.autocomplete.ajax({
-        url: 'http://md5.jsontest.com/?text=' + inputEl.val(),
-        dataType:'json',
-        success: function(json) {
-          cb([json.md5, inputEl]);
-        }
-      });
-    }
-  });
+$(input).autocomplete({
+  maxResults: 10,
+  handler: function(inputEl, cb) {
+    $.fn.autocomplete.ajax({
+      url: 'http://md5.jsontest.com/?text=' + inputEl.val(),
+      dataType:'json',
+      success: function(json) {
+        cb([json.md5, inputEl]);
+      }
+    });
+  }
+});
+```
+
+## Static Example
+```Javascript
+$(input).autocomplete({
+  static: ['aardvark','albatross','alligator','alpaca','ant','anteater','antelope','ape','armadillo','baboon','badger','barracuda','bat','bear','bee','beetle','bison','boar','buffalo','bushbaby','bustard','butterfly','camel','capuchin','caribou','cat','caterpillar','chameleon','chamois','cheetah','chicken','chimpanzee','chinchilla','chipmunk','chough','clam','cobra','cockroach','cod','cormorant','coyote','crab','crane','crocodile','crow','curlew','deer','dinosaur','dog','dogfish','dolphin','donkey','dotterel','dove','dragon','dragonfly','duck','dugong','dunlin','eagle','echidna','eel','eland','elephant','elk','emu','falcon','ferret','finch','fish','flamingo','fly','fox','frog','gaur','gazelle','gecko','gerbil','giraffe','gnu','goat','goldfish','goose','gorilla','goshawk','grasshopper','grouse','guanaco','gull','hamster','hare','hawk','hedgehog','heron','herring','hippopotamus','hornet','horse','horsecrab','hummingbird','hyena','hyrax','ibex','ibis','iguana','impala','jackal','jaguar','jay','jellyfish','kangaroo','koala','kouprey','kudu','lapwing','lark','lemming','lemur','leopard','lion','llama','lobster','locust','loris','louse','lynx','lyrebird','magpie','mallard','manatee','marten','meerkat','mink','mole','mongoose','monkey','moose','mosquito','mouse','mule','narwhal','newt','nightingale','numbat','octopus','okapi','opossum','oryx','ostrich','otter','owl','ox','oyster','panther','parrot','partridge','peacock','peafowl','pelican','penguin','pheasant','pig','pigeon','platypus','pony','porcupine','porpoise','puffin','quagga','quail','quelea','rabbit','raccoon','ram','rat','raven','reindeer','rhea','rhinoceros','rook','ruff','salamander','salmon','sambar','sandpiper','sardine','scorpion','seahorse','seal','shark','sheep','shrew','shrimp','skink','skunk','snail','snake','spider','squid','squirrel','starling','stinkbug','stork','swan','tapir','tarsier','termite','tern','tiger','toad','trout','turkey','turtle','viper','vulture','wallaby','walrus','wasp','weasel','whale','wolf','wolverine','wombat','woodcock','woodpecker','worm','wren','yak','zebra','zorilla']
 });
 ```
 
