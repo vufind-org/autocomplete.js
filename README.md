@@ -7,7 +7,7 @@ requires [jQuery](http://code.jquery.com/)
 You can tweak the below options as much as you like, but there are two functions not set by default.
 
 ### Using a static list
-A list of strings and items to use for every search. Matched without case sensitivity.
+A list of strings and [items](#item-format) to use for every search. Matched without case sensitivity.
 
 Matched items are sorted based on the position of the term within the item. You can change the sorting behaviour by passing a function in as `staticSort`.
 
@@ -30,9 +30,9 @@ $('input').autocomplete({
 - `inputEl` is the input element being queried, it comes jQuery-wrapped
 - call `callback` with an array of results when done
   - array of strings
-  - array of objects
+  - array of [objects](#item-format)
 
-### item format
+### Item format
 ```Javascript
 {
   value: "input value"
@@ -43,7 +43,7 @@ $('input').autocomplete({
 ```
 
 ### callback (optional)
-This function will fire when a selection is made
+This function will fire when a selection is made.
 
 ```Javascript
 function(data, inputElement, eventType) {
@@ -53,7 +53,7 @@ function(data, inputElement, eventType) {
 }
 ```
 
-## other options
+## Other options
 - `ajaxDelay` (200) - milliseconds between last input and firing of AJAX
 - `cache` (true) - save results by term and reuse results if the same term is retyped
 - `hidingClass` ('hidden') - class added when the results are hidden and removed when revealed
@@ -62,7 +62,7 @@ function(data, inputElement, eventType) {
 - `maxResults` (20) - Most results shown
 - `minLength` (3) - Minimum term length before firing
 
-## example
+## Basic Example
 ```Javascript
 $('.autocomplete').each(function(i, op) {
   $(op).autocomplete({
@@ -71,14 +71,14 @@ $('.autocomplete').each(function(i, op) {
       console.log(inputEl);
       cb('1,2,3,4,5,6,7,8,9,10'.split(','));
     },
-    onselection: function() {
+    callback: function() {
       $(input).closest('form').submit();
     }
   });
 });
 ```
 
-## ajax example
+## AJAX Example
 ```Javascript
 $('.autocomplete').each(function(i, op) {
   $(op).autocomplete({
@@ -96,14 +96,11 @@ $('.autocomplete').each(function(i, op) {
 });
 ```
 
-## methods
+## Methods
 - `$().autocomplete({options})` - setup
 - `$().autocomplete('show')`- reveal the results panel
 - `$().autocomplete('hide')` - hide the results panel
 - `$().autocomplete('clear cache')` - clear cache for these inputs
 
-## exposed components
+## Exposed components
 - `$.fn.autocomplete.ajax` - make jQuery style AJAX calls that cancel on new searches
-
-## License
-[Creative Commons Zero License] (https://creativecommons.org/publicdomain/zero/1.0/)
