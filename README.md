@@ -62,7 +62,7 @@ Returning an object with a `sections` key to your handler callback will create a
   sections: [
     [items],
     [], // empty arrays ignored
-    { label: "Section 2", items: [items]) },
+    { label: "Section 2", items: [items]) }, // use { label:, items: } to add headers to your sections
     [items]
   ]
 }
