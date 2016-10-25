@@ -80,7 +80,7 @@
       shell = listToHTML(data, regex);
     } else {
       shell = $('<div/>');
-      for (var i=0; i<data.sections.length; i++) {
+      for (var i = 0; i < data.sections.length; i++) {
         if (typeof data.sections[i].label !== 'undefined' && data.sections[i].items.length > 0) {
           if (i > 0) {
             shell.append($('<hr/>', { class: 'ac-section-divider' }));
@@ -110,11 +110,11 @@
     align(input);
   }
 
-  function handleResults(input, term, data) {
+  function handleResults(input, term, _data) {
     // Limit results
-    var data = typeof data.sections === 'undefined'
-      ? data.slice(0, Math.min(options.maxResults, data.length))
-      : data;
+    var data = typeof _data.sections === 'undefined'
+      ? _data.slice(0, Math.min(options.maxResults, _data.length))
+      : _data;
     var cid = input.data('cache-id');
     cache[cid][term] = data;
     if (data.length === 0) {
