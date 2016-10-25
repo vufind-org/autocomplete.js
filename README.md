@@ -55,6 +55,25 @@ function(data, inputElement, eventType) {
 }
 ```
 
+### Sectioned display
+Returning an object with a `sections` key to your handler callback will create a sectioned output.
+```JSON
+{
+  sections: [
+    [items],
+    [strings],
+    { label: "Section 2", items: [items]) },
+    items.slice(10, 15).map(function(x) {
+      return {
+        value: x.value + " <b>in images</b>",
+        href: 'http://google.com'
+      }
+    }),
+  ]
+}
+```
+![Sections visual](http://image.prntscr.com/image/16f13976674b4b618fd94ddbad04c8ab.png)
+
 ## Other options
 - `ajaxDelay` (200) - milliseconds between last input and firing of AJAX
 - `cache` (true) - save results by term and reuse results if the same term is retyped
