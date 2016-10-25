@@ -30,12 +30,15 @@
     element.addClass(options.hidingClass);
   }
 
-  function populate(data, input, eventType) {
-    input.val(data.value);
-    input.data('selection', data);
+  function populate(item, input, eventType) {
     if (options.callback) {
-      options.callback(data, input, eventType);
+      if (options.callback(item, input, eventType) === true && typeof item.href !== 'undefined') {
+        return window.location.assign(item.href);
+      }
+    } else if (typeof item.href !== 'undefined') {
+      return window.location.assign(item.href);
     }
+    input.val(item.value);
     hide();
   }
 
@@ -261,7 +264,7 @@
         if (selected.length > 0) {
           event.preventDefault();
           if (event.which === 13 && selected.attr('href')) {
-            window.location.assign(selected.attr('href'));
+            return window.location.assign(selected.attr('href'));
           } else {
             populate(selected.data(), $(this), {key: true});
             element.find('.ac-item.selected').removeClass('selected');
