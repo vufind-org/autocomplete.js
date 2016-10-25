@@ -1,0 +1,7 @@
+sudo: false
+
+before_script:
+  - npm install -g eslint
+
+script:
+  - eslint -c .eslint.yml
