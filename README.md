@@ -103,7 +103,7 @@ $(input).autocomplete({
       url: 'http://md5.jsontest.com/?text=' + inputEl.val(),
       dataType:'json',
       success: function(json) {
-        cb([json.md5, inputEl]);
+        cb([json.md5, inputEl[0]]);
       }
     });
   }
