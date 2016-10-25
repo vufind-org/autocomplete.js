@@ -31,13 +31,13 @@
 .autocomplete-results .ac-section-header {
   float: right;
   display: block;
-  margin-top: -1.4rem;
+  margin-top: -1.75rem;
   padding: 0 .5rem;
   color: gray;
   background-color: #fff;
 }
 .autocomplete-results .ac-section-divider {
-  margin: .75rem;
+  margin: 1rem .5rem;
   border: 0;
   border-top: 2px solid lightgray;
 }

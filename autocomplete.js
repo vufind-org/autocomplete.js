@@ -78,15 +78,20 @@
     } else {
       shell = $('<div/>');
       for (var i=0; i<data.sections.length; i++) {
-        if (i > 0) shell.append($('<hr/>', { class: 'ac-section-divider' }));
-        if (typeof data.sections[i].label === 'undefined') {
-          shell.append(listToHTML(data.sections[i], regex));
-        } else {
+        if (typeof data.sections[i].label !== 'undefined' && data.sections[i].items.length > 0) {
+          if (i > 0) {
+            shell.append($('<hr/>', { class: 'ac-section-divider' }));
+          }
           shell.append($('<header>', {
             class: 'ac-section-header',
             html: data.sections[i].label
           }));
           shell.append(listToHTML(data.sections[i].items, regex));
+        } else if (data.sections[i].length > 0) {
+          if (i > 0) {
+            shell.append($('<hr/>', { class: 'ac-section-divider' }));
+          }
+          shell.append(listToHTML(data.sections[i], regex));
         }
       }
     }
