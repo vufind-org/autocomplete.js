@@ -115,7 +115,7 @@
     var data = typeof _data.sections === 'undefined'
       ? _data.slice(0, Math.min(options.maxResults, _data.length))
       : _data;
-    var cid = input.data('cache-id');
+    var cid = input.data('cacheId');
     cache[cid][term] = data;
     if (data.length === 0) {
       hide();
@@ -132,7 +132,7 @@
       input.data('selected', -1);
       var term = input.val();
       // Check cache (only for handler-based setups)
-      var cid = input.data('cache-id');
+      var cid = input.data('cacheId');
       if (options.cache && typeof cache[cid][term] !== "undefined") {
         if (cache[cid][term].length === 0) {
           hide();
@@ -178,7 +178,7 @@
 
     if (options.cache) {
       var cid = Math.floor(Math.random() * 1000);
-      input.data('cache-id', cid);
+      input.data('cacheId', cid);
       cache[cid] = {};
     }
 
@@ -298,7 +298,7 @@
         } else if (settings === "hide") {
           hide();
         } else if (options.cache && settings === "clear cache") {
-          var cid = parseInt(input.data('cache-id'), 10);
+          var cid = parseInt(input.data('cacheId'), 10);
           cache[cid] = {};
         }
         return input;
