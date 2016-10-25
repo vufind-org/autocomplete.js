@@ -20,7 +20,7 @@
       top: position.top + input.outerHeight(),
       left: position.left,
       minWidth: input.width(),
-      maxWidth: Math.max(input.width(), input.closest('form').width())
+      // maxWidth: Math.max(input.width(), input.closest('form').width())
     });
   }
 
@@ -40,38 +40,59 @@
     hide();
   }
 
-  function createList(data, input) {
-    input.data('length', data.length);
-    // highlighting setup
-    // escape term for regex - https://github.com/sindresorhus/escape-string-regexp/blob/master/index.js
-    var escapedTerm = input.val().replace(/[|\\{}()\[\]\^$+*?.]/g, '\\$&');
-    var regex = new RegExp('(' + escapedTerm + ')', 'ig');
+  function listToHTML(list, regex) {
     var shell = $('<div/>');
-    for (var i = 0; i < data.length; i++) {
-      if (typeof data[i] === 'string') {
-        data[i] = {value: data[i]};
+    for (var i = 0; i < list.length; i++) {
+      if (typeof list[i] === 'string') {
+        list[i] = {value: list[i]};
       }
-      var content = data[i].label || data[i].value;
+      var content = list[i].label || list[i].value;
       if (options.highlight) {
         content = content.replace(regex, '<b>$1</b>');
       }
-      var item = typeof data[i].href === 'undefined'
+      var item = typeof list[i].href === 'undefined'
         ? $('<div/>')
-        : $('<a/>').attr('href', data[i].href);
-      // Data
-      item.data(data[i])
+        : $('<a/>').attr('href', list[i].href);
+      // list
+      item.data(list[i])
           .addClass('item')
           .html(content);
-      if (typeof data[i].description !== 'undefined') {
+      if (typeof list[i].description !== 'undefined') {
         item.append($('<small/>').html(
           options.highlight
-            ? data[i].description.replace(regex, '<b>$1</b>')
-            : data[i].description
+            ? list[i].description.replace(regex, '<b>$1</b>')
+            : list[i].description
         ));
       }
       shell.append(item);
     }
+    return shell;
+  }
+  function createList(data, input) {
+    // highlighting setup
+    // escape term for regex - https://github.com/sindresorhus/escape-string-regexp/blob/master/index.js
+    var escapedTerm = input.val().replace(/[|\\{}()\[\]\^$+*?.]/g, '\\$&');
+    var regex = new RegExp('(' + escapedTerm + ')', 'ig');
+    var shell;
+    if (typeof data.sections === 'undefined') {
+      shell = listToHTML(data, regex);
+    } else {
+      shell = $('<div/>');
+      for (var i=0; i<data.sections.length; i++) {
+        if (i > 0) shell.append($('<hr/>', { class: 'ac-section-divider' }));
+        if (typeof data.sections[i].label === 'undefined') {
+          shell.append(listToHTML(data.sections[i], regex));
+        } else {
+          shell.append($('<header>', {
+            class: 'ac-section-header',
+            html: data.sections[i].label
+          }));
+          shell.append(listToHTML(data.sections[i].items, regex));
+        }
+      }
+    }
     element.html(shell);
+    input.data('length', shell.find('.item').length);
     element.find('.item').mousedown(function acItemClick() {
       populate($(this).data(), input, {mouse: true});
       setTimeout(function acClickDelay() {
@@ -84,7 +105,9 @@
 
   function handleResults(input, term, data) {
     // Limit results
-    var data = data.slice(0, Math.min(options.maxResults, data.length));
+    var data = typeof data.sections === 'undefined'
+      ? data.slice(0, Math.min(options.maxResults, data.length))
+      : data;
     var cid = input.data('cache-id');
     cache[cid][term] = data;
     if (data.length === 0) {
@@ -209,10 +232,12 @@
       case 38: // up key
         event.preventDefault();
         element.find('.item.selected').removeClass('selected');
-        if (position-- > 0) {
-          element.find('.item:eq(' + position + ')').addClass('selected');
+        if (position > -1) {
+          if (position-- > 0) {
+            element.find('.item:eq(' + position + ')').addClass('selected');
+          }
+          $(this).data('selected', position);
         }
-        $(this).data('selected', position);
         break;
       case 40: // down key
         event.preventDefault();
