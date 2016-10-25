@@ -19,8 +19,7 @@
     element.css({
       top: position.top + input.outerHeight(),
       left: position.left,
-      minWidth: input.width(),
-      // maxWidth: Math.max(input.width(), input.closest('form').width())
+      minWidth: input.width()
     });
   }
 
@@ -55,7 +54,7 @@
         : $('<a/>').attr('href', list[i].href);
       // list
       item.data(list[i])
-          .addClass('item')
+          .addClass('ac-item')
           .html(content);
       if (typeof list[i].description !== 'undefined') {
         item.append($('<small/>').html(
@@ -92,8 +91,8 @@
       }
     }
     element.html(shell);
-    input.data('length', shell.find('.item').length);
-    element.find('.item').mousedown(function acItemClick() {
+    input.data('length', shell.find('.ac-item').length);
+    element.find('.ac-item').mousedown(function acItemClick() {
       populate($(this).data(), input, {mouse: true});
       setTimeout(function acClickDelay() {
         input.focus();
@@ -231,10 +230,10 @@
         // arrow keys through items
       case 38: // up key
         event.preventDefault();
-        element.find('.item.selected').removeClass('selected');
+        element.find('.ac-item.selected').removeClass('selected');
         if (position > -1) {
           if (position-- > 0) {
-            element.find('.item:eq(' + position + ')').addClass('selected');
+            element.find('.ac-item:eq(' + position + ')').addClass('selected');
           }
           $(this).data('selected', position);
         }
@@ -245,22 +244,22 @@
           search(input, element);
         } else if (position < input.data('length') - 1) {
           position++;
-          element.find('.item.selected').removeClass('selected');
-          element.find('.item:eq(' + position + ')').addClass('selected');
+          element.find('.ac-item.selected').removeClass('selected');
+          element.find('.ac-item:eq(' + position + ')').addClass('selected');
           $(this).data('selected', position);
         }
         break;
         // enter to nav or populate
       case 9:
       case 13:
-        var selected = element.find('.item.selected');
+        var selected = element.find('.ac-item.selected');
         if (selected.length > 0) {
           event.preventDefault();
           if (event.which === 13 && selected.attr('href')) {
             window.location.assign(selected.attr('href'));
           } else {
             populate(selected.data(), $(this), {key: true});
-            element.find('.item.selected').removeClass('selected');
+            element.find('.ac-item.selected').removeClass('selected');
             $(this).data('selected', -1);
           }
         }

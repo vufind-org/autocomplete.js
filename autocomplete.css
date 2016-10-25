@@ -1,6 +1,7 @@
 ﻿/* https://github.com/crhallberg/autocomplete.js 0.16.3 */
 .autocomplete-results {
   position: absolute;
+  display: table;
   margin: 0;
   margin-top: 2px;
   padding: 0;
@@ -9,21 +10,21 @@
   overflow: hidden;
   z-index: 50;
 }
-.autocomplete-results .item {
+.autocomplete-results .ac-item {
   display: block;
   margin: 0;
   padding: .5rem;
   border-bottom: 1px solid lightgray;
   cursor: pointer;
 }
-.autocomplete-results .item:last-child { border: 0; }
-.autocomplete-results .item:hover { background-color: lightgray; }
-.autocomplete-results .item.loading { background-color: inherit; }
-.autocomplete-results .item.selected {
+.autocomplete-results .ac-item:last-child { border: 0; }
+.autocomplete-results .ac-item:hover { background-color: lightgray; }
+.autocomplete-results .ac-item.loading { background-color: inherit; }
+.autocomplete-results .ac-item.selected {
   background-color: black;
   color: white;
 }
-.autocomplete-results .item small {
+.autocomplete-results .ac-item small {
   display: block;
   color: darkgray;
 }
