@@ -5,4 +5,4 @@ node_js:
 before_script:
   - npm install -g eslint
 script:
-  - eslint -c .eslint.js
+  - eslint -c .eslint.js autocomplete.js
