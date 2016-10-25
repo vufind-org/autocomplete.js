@@ -61,7 +61,7 @@ Returning an object with a `sections` key to your handler callback will create a
 {
   sections: [
     [items],
-    [strings],
+    [], // empty arrays ignored
     { label: "Section 2", items: [items]) },
     [items]
   ]
