@@ -57,18 +57,13 @@ function(data, inputElement, eventType) {
 
 ### Sectioned display
 Returning an object with a `sections` key to your handler callback will create a sectioned output.
-```JSON
+```Javascript
 {
   sections: [
     [items],
     [strings],
     { label: "Section 2", items: [items]) },
-    items.slice(10, 15).map(function(x) {
-      return {
-        value: x.value + " <b>in images</b>",
-        href: 'http://google.com'
-      }
-    }),
+    [items]
   ]
 }
 ```
