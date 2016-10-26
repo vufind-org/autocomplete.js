@@ -33,7 +33,13 @@
           return window.location.assign(item.href);
         }
         input.val(item.value);
-        hide();
+        // Reset
+        element.find('.ac-item.selected').removeClass('selected');
+        $(this).data('selected', -1);
+        setTimeout(function acPopulateDelay() {
+          input.focus();
+          hide();
+        }, 10);
       }
 
       var _listToHTML = function(list, regex) {
@@ -70,24 +76,24 @@
         var escapedTerm = input.val().replace(/[|\\{}()\[\]\^$+*?.]/g, '\\$&');
         var regex = new RegExp('(' + escapedTerm + ')', 'ig');
         var shell;
-        if (typeof data.sections === 'undefined') {
+        if (typeof data.groups === 'undefined') {
           shell = _listToHTML(data, regex);
         } else {
           shell = $('<div/>');
-          for (var i = 0; i < data.sections.length; i++) {
-            if (typeof data.sections[i].label !== 'undefined' || i > 0) {
+          for (var i = 0; i < data.groups.length; i++) {
+            if (typeof data.groups[i].label !== 'undefined' || i > 0) {
               shell.append($('<hr/>', { class: 'ac-section-divider' }));
             }
-            if (typeof data.sections[i].label !== 'undefined') {
+            if (typeof data.groups[i].label !== 'undefined') {
               shell.append($('<header>', {
                 class: 'ac-section-header',
-                html: data.sections[i].label
+                html: data.groups[i].label
               }));
             }
-            if (typeof data.sections[i].label !== 'undefined' && data.sections[i].items.length > 0) {
-              shell.append(_listToHTML(data.sections[i].items, regex));
-            } else if (data.sections[i].length > 0) {
-              shell.append(_listToHTML(data.sections[i], regex));
+            if (typeof data.groups[i].label !== 'undefined' && data.groups[i].items.length > 0) {
+              shell.append(_listToHTML(data.groups[i].items, regex));
+            } else if (data.groups[i].length > 0) {
+              shell.append(_listToHTML(data.groups[i], regex));
             }
           }
         }
@@ -95,22 +101,18 @@
         input.data('length', shell.find('.ac-item').length);
         element.find('.ac-item').mousedown(function acItemClick() {
           _populate($(this).data(), input, {mouse: true});
-          setTimeout(function acClickDelay() {
-            input.focus();
-            hide();
-          }, 10);
         });
         _align(input);
       }
 
       var _handleResults = function(input, term, _data) {
         // Limit results
-        var data = typeof _data.sections === 'undefined'
+        var data = typeof _data.groups === 'undefined'
           ? _data.slice(0, Math.min(options.maxResults, _data.length))
           : _data;
         var cid = input.data('cacheId');
         cache[cid][term] = data;
-        if (data.length === 0 || (typeof data.sections !== 'undefined' && data.sections.length === 0)) {
+        if (data.length === 0 || (typeof data.groups !== 'undefined' && data.groups.length === 0)) {
           hide();
         } else {
           _createList(data, input);
@@ -260,8 +262,6 @@
                 return window.location.assign(selected.attr('href'));
               } else {
                 _populate(selected.data(), $(this), {key: true});
-                element.find('.ac-item.selected').removeClass('selected');
-                $(this).data('selected', -1);
               }
             }
             break;
