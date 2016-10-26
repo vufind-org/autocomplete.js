@@ -118,6 +118,44 @@
           _createList(data, input);
         }
       }
+      var _defaultStaticSort = function(a, b) { // .bind(lcterm)
+        console.log(this);
+        return a.match.indexOf(this) - b.match.indexOf(this);
+      }
+      var _staticGroups = function(lcterm) {
+        var matches = [];
+        for (var i = 0; i < options.static.groups.length; i++) {
+          if (typeof options.static.groups[i].label === 'undefined') {
+            var ms = options.static.groups[i].filter(function staticGroupFilter(_item) {
+              return _item.match.match(lcterm);
+            });
+            if (ms.length > 0) {
+              if (typeof options.staticSort === 'function') {
+                ms.sort(options.staticSort);
+              } else {
+                ms.sort(_defaultStaticSort.bind(lcterm));
+              }
+              matches.push(m);
+            }
+          } else {
+            var mitems = options.static.groups[i].items.filter(function staticLabelledGroupFilter(_item) {
+              return _item.match.match(lcterm);
+            });
+            if (mitems.length > 0) {
+              if (typeof options.staticSort === 'function') {
+                mitems.sort(options.staticSort);
+              } else {
+                mitems.sort(_defaultStaticSort.bind(lcterm));
+              }
+              matches.push({
+                label: options.static.groups[i].label,
+                items: mitems
+              });
+            }
+          }
+        }
+        return matches;
+      }
       var search = function(input) {
         if (xhr) { xhr.abort(); }
         if (input.val().length >= options.minLength) {
@@ -137,15 +175,18 @@
           // Check for static list
           } else if (typeof options.static !== 'undefined') {
             var lcterm = term.toLowerCase();
-            var matches = options.static.filter(function staticFilter(_item) {
-              return _item.match.match(lcterm);
-            });
-            if (typeof options.staticSort === 'function') {
-              matches.sort(options.staticSort);
+            var matches;
+            if (typeof options.static.groups !== 'undefined') {
+              matches = { groups: _staticGroups(lcterm) };
             } else {
-              matches.sort(function defaultStaticSort(a, b) {
-                return a.match.indexOf(lcterm) - b.match.indexOf(lcterm);
+              matches = options.static.filter(function staticFilter(_item) {
+                return _item.match.match(lcterm);
               });
+              if (typeof options.staticSort === 'function') {
+                matches.sort(options.staticSort);
+              } else {
+                matches.sort(_defaultStaticSort.bind(lcterm));
+              }
             }
             _handleResults(input, term, matches);
           // Call handler
@@ -291,17 +332,28 @@
         return input;
       } else if (typeof settings.handler === 'undefined' && typeof settings.static === 'undefined') {
         console.error('Neither handler function nor static result list provided for autocomplete');
-        return this;
+        return input;
       } else {
         if (typeof settings.static !== 'undefined') {
-          // Preprocess strings into items
-          settings.static = settings.static.map(function preprocessStatic(_item) {
+          function preprocessStatic(_item) {
             var item = typeof _item === 'string'
               ? { value: _item }
               : _item;
             item.match = (item.label || item.value).toLowerCase();
             return item;
-          });
+          }
+          // Preprocess strings into items
+          if (typeof settings.static.groups !== 'undefined') {
+            for (var i = 0; i < settings.static.groups.length; i++) {
+              if (typeof settings.static.groups[i].label !== 'undefined') {
+                settings.static.groups[i].items = settings.static.groups[i].items.map(preprocessStatic);
+              } else {
+                settings.static.groups[i] = settings.static.groups[i].map(preprocessStatic);
+              }
+            }
+          } else {
+            settings.static = settings.static.map(preprocessStatic);
+          }
         }
         options = $.extend( {}, $.fn.autocomplete.defaults, settings );
         _setup(input);
