@@ -1,14 +1,15 @@
 /* https://github.com/crhallberg/autocomplete.js 1.0b */
 (function autocomplete( $ ) {
   var element = false,
-      xhr = false;
+    xhr = false;
 
-  function Factory(input, settings) {
+  function Factory(_input, settings) {
     return (function acClosure() {
-      var cache = {},
-          options;
+      var input = $(this),
+        cache = {},
+        options;
 
-      var _align = function(input) {
+      var _align = function _align() {
         var position = input.offset();
         element.css({
           top: position.top + input.outerHeight(),
@@ -17,14 +18,14 @@
         });
       }
 
-      var show = function() {
+      var show = function show() {
         element.removeClass(options.hidingClass);
       }
-      var hide = function() {
+      var hide = function hide() {
         element.addClass(options.hidingClass);
       }
 
-      var _populate = function(item, input, eventType) {
+      var _populate = function _populate(item, eventType) {
         if (options.callback) {
           if (options.callback(item, input, eventType) === true && typeof item.href !== 'undefined') {
             return window.location.assign(item.href);
@@ -42,7 +43,7 @@
         }, 10);
       }
 
-      var _listToHTML = function(list, regex) {
+      var _listToHTML = function _listToHTML(list, regex) {
         var shell = $('<div/>');
         for (var i = 0; i < list.length; i++) {
           if (typeof list[i] === 'string') {
@@ -70,7 +71,7 @@
         }
         return shell;
       }
-      var _createList = function(data, input) {
+      var _createList = function _createList(data) {
         // highlighting setup
         // escape term for regex - https://github.com/sindresorhus/escape-string-regexp/blob/master/index.js
         var escapedTerm = input.val().replace(/[|\\{}()\[\]\^$+*?.]/g, '\\$&');
@@ -100,12 +101,12 @@
         element.html(shell);
         input.data('length', shell.find('.ac-item').length);
         element.find('.ac-item').mousedown(function acItemClick() {
-          _populate($(this).data(), input, {mouse: true});
+          _populate($(this).data(), {mouse: true});
         });
-        _align(input);
+        _align();
       }
 
-      var _handleResults = function(input, term, _data) {
+      var _handleResults = function _handleResults(term, _data) {
         // Limit results
         var data = typeof _data.groups === 'undefined'
           ? _data.slice(0, Math.min(options.maxResults, _data.length))
@@ -115,29 +116,16 @@
         if (data.length === 0 || (typeof data.groups !== 'undefined' && data.groups.length === 0)) {
           hide();
         } else {
-          _createList(data, input);
+          _createList(data);
         }
       }
-      var _defaultStaticSort = function(a, b) { // .bind(lcterm)
-        console.log(this);
+      var _defaultStaticSort = function _defaultStaticSort(a, b) { // .bind(lcterm)
         return a.match.indexOf(this) - b.match.indexOf(this);
       }
-      var _staticGroups = function(lcterm) {
+      var _staticGroups = function _staticGroups(lcterm) {
         var matches = [];
         for (var i = 0; i < options.static.groups.length; i++) {
-          if (typeof options.static.groups[i].label === 'undefined') {
-            var ms = options.static.groups[i].filter(function staticGroupFilter(_item) {
-              return _item.match.match(lcterm);
-            });
-            if (ms.length > 0) {
-              if (typeof options.staticSort === 'function') {
-                ms.sort(options.staticSort);
-              } else {
-                ms.sort(_defaultStaticSort.bind(lcterm));
-              }
-              matches.push(m);
-            }
-          } else {
+          if (typeof options.static.groups[i].label !== 'undefined') {
             var mitems = options.static.groups[i].items.filter(function staticLabelledGroupFilter(_item) {
               return _item.match.match(lcterm);
             });
@@ -152,16 +140,28 @@
                 items: mitems
               });
             }
+          } else {
+            var ms = options.static.groups[i].filter(function staticGroupFilter(_item) {
+              return _item.match.match(lcterm);
+            });
+            if (ms.length > 0) {
+              if (typeof options.staticSort === 'function') {
+                ms.sort(options.staticSort);
+              } else {
+                ms.sort(_defaultStaticSort.bind(lcterm));
+              }
+              matches.push(ms);
+            }
           }
         }
         return matches;
       }
-      var search = function(input) {
+      var search = function search() {
         if (xhr) { xhr.abort(); }
         if (input.val().length >= options.minLength) {
           element.html('<i class="item loading">' + options.loadingString + '</i>');
           show();
-          _align(input);
+          _align();
           input.data('selected', -1);
           var term = input.val();
           // Check cache (only for handler-based setups)
@@ -170,7 +170,7 @@
             if (cache[cid][term].length === 0) {
               hide();
             } else {
-              _createList(cache[cid][term], input);
+              _createList(cache[cid][term]);
             }
           // Check for static list
           } else if (typeof options.static !== 'undefined') {
@@ -188,11 +188,11 @@
                 matches.sort(_defaultStaticSort.bind(lcterm));
               }
             }
-            _handleResults(input, term, matches);
+            _handleResults(term, matches);
           // Call handler
           } else {
             options.handler(input, function achandlerCallback(data) {
-              _handleResults(input, term, data);
+              _handleResults(term, data);
             });
           }
         } else {
@@ -200,12 +200,19 @@
         }
       }
 
-      var _setup = function(input) {
+      function preprocessStatic(_item) {
+        var item = typeof _item === 'string'
+          ? { value: _item }
+          : _item;
+        item.match = (item.label || item.value).toLowerCase();
+        return item;
+      }
+      var _setup = function _setup() {
         if ($('.autocomplete-results').length === 0) {
           element = $('<div/>')
             .addClass('autocomplete-results ' + options.hidingClass)
             .html('<i class="item loading">' + options.loadingString + '</i>');
-          _align(input);
+          _align();
           $(document.body).append(element);
         }
 
@@ -226,10 +233,10 @@
           }
         });
         input.click(function acinputClick() {
-          search(input, element);
+          search();
         });
         input.focus(function acinputFocus() {
-          search(input, element);
+          search();
         });
         input.keyup(function acinputKeyup(event) {
           // Ignore navigation keys
@@ -261,7 +268,7 @@
           case 19:   // pause/break
             return;
           default:
-            search(input, element);
+            search();
           }
         });
         input.keydown(function acinputKeydown(event) {
@@ -285,7 +292,7 @@
           case 40: // down key
             event.preventDefault();
             if (element.hasClass(options.hidingClass)) {
-              search(input, element);
+              search();
             } else if (position < input.data('length') - 1) {
               position++;
               element.find('.ac-item.selected').removeClass('selected');
@@ -317,12 +324,10 @@
         window.addEventListener("resize", hide, false);
       }
 
-      var input = $(this);
-
       if (typeof settings === "string") {
         if (settings === "show") {
           show();
-          _align(input);
+          _align();
         } else if (settings === "hide") {
           hide();
         } else if (options.cache && settings === "clear cache") {
@@ -335,13 +340,6 @@
         return input;
       } else {
         if (typeof settings.static !== 'undefined') {
-          function preprocessStatic(_item) {
-            var item = typeof _item === 'string'
-              ? { value: _item }
-              : _item;
-            item.match = (item.label || item.value).toLowerCase();
-            return item;
-          }
           // Preprocess strings into items
           if (typeof settings.static.groups !== 'undefined') {
             for (var i = 0; i < settings.static.groups.length; i++) {
@@ -356,11 +354,11 @@
           }
         }
         options = $.extend( {}, $.fn.autocomplete.defaults, settings );
-        _setup(input);
+        _setup();
       }
 
       return input;
-    }.bind(input))();
+    }.bind(_input))();
   }
 
   $.fn.autocomplete = function acJQuery(settings) {
