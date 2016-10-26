@@ -75,19 +75,18 @@
         } else {
           shell = $('<div/>');
           for (var i = 0; i < data.sections.length; i++) {
-            if (typeof data.sections[i].label !== 'undefined' && data.sections[i].items.length > 0) {
-              if (i > 0) {
-                shell.append($('<hr/>', { class: 'ac-section-divider' }));
-              }
+            if (typeof data.sections[i].label !== 'undefined' || i > 0) {
+              shell.append($('<hr/>', { class: 'ac-section-divider' }));
+            }
+            if (typeof data.sections[i].label !== 'undefined') {
               shell.append($('<header>', {
                 class: 'ac-section-header',
                 html: data.sections[i].label
               }));
+            }
+            if (typeof data.sections[i].label !== 'undefined' && data.sections[i].items.length > 0) {
               shell.append(_listToHTML(data.sections[i].items, regex));
             } else if (data.sections[i].length > 0) {
-              if (i > 0) {
-                shell.append($('<hr/>', { class: 'ac-section-divider' }));
-              }
               shell.append(_listToHTML(data.sections[i], regex));
             }
           }
@@ -111,7 +110,7 @@
           : _data;
         var cid = input.data('cacheId');
         cache[cid][term] = data;
-        if (data.length === 0) {
+        if (data.length === 0 || (typeof data.sections !== 'undefined' && data.sections.length === 0)) {
           hide();
         } else {
           _createList(data, input);
@@ -150,7 +149,6 @@
           // Call handler
           } else {
             options.handler(input, function achandlerCallback(data) {
-        console.log(input, term, data);
               _handleResults(input, term, data);
             });
           }
