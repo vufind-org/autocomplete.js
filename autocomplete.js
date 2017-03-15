@@ -208,7 +208,8 @@
         return item;
       }
       var _setup = function _setup() {
-        if ($('.autocomplete-results').length === 0) {
+        element = $('.autocomplete-results');
+        if (element.length === 0) {
           element = $('<div/>')
             .addClass('autocomplete-results ' + options.hidingClass)
             .html('<i class="item loading">' + options.loadingString + '</i>');
