@@ -1,4 +1,4 @@
-﻿/* https://github.com/crhallberg/autocomplete.js 0.16.3 */
+﻿/* https://github.com/vufind-org/autocomplete.js 1.0b */
 .autocomplete-results {
   position: absolute;
   display: table;
@@ -6,7 +6,6 @@
   margin-top: 2px;
   padding: 0;
   border: 1px solid lightgray;
-  background-color: inherit;
   overflow: hidden;
   z-index: 50;
 }
@@ -15,6 +14,7 @@
   margin: 0;
   padding: .5rem;
   border-bottom: 1px solid lightgray;
+  background-color: inherit;
   cursor: pointer;
 }
 .autocomplete-results .ac-item:last-child { border: 0; }

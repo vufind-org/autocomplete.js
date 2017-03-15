@@ -1,4 +1,4 @@
-/* https://github.com/crhallberg/autocomplete.js 1.0b */
+/* https://github.com/vufind-org/autocomplete.js 1.0b */
 (function autocomplete( $ ) {
   var element = false,
     xhr = false;
@@ -159,7 +159,7 @@
       var search = function search() {
         if (xhr) { xhr.abort(); }
         if (input.val().length >= options.minLength) {
-          element.html('<i class="item loading">' + options.loadingString + '</i>');
+          element.html('<i class="ac-item loading">' + options.loadingString + '</i>');
           show();
           _align();
           input.data('selected', -1);

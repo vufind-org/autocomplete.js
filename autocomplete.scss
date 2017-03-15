@@ -1,4 +1,4 @@
-﻿/* https://github.com/crhallberg/autocomplete.js 0.16.3 */
+﻿/* https://github.com/vufind-org/autocomplete.js 1.0b */
 $autocomplete-item-bg   : inherit   !default;
 $autocomplete-active-bg : black     !default;
 $autocomplete-hover-bg  : lightgray !default;
@@ -12,15 +12,15 @@ $autocomplete-secondary : darkgray  !default; // item description
   margin-top: 2px;
   padding: 0;
   border: 1px solid $autocomplete-border;
-  background-color: $autocomplete-item-bg;
   overflow: hidden;
   z-index: 50;
 
-  .item {
+  .ac-item {
     display: block;
     margin: 0;
     padding: .5rem;
     border-bottom: 1px solid $autocomplete-border;
+    background-color: $autocomplete-item-bg;
     cursor: pointer;
 
     &:last-child { border: 0; }
