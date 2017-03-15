@@ -6,6 +6,7 @@
   margin-top: 2px;
   padding: 0;
   border: 1px solid lightgray;
+  background-color: inherit;
   overflow: hidden;
   z-index: 50;
 }
