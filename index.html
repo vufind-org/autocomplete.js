@@ -60,7 +60,7 @@
 $('#ajax').autocomplete({
   handler: function(inputEl, callback) {
     $.fn.autocomplete.ajax({
-      url: 'http://api.wordnik.com/v4/words.json/search/' + inputEl.val() + '?api_key=809e23b70d7458731900207646903be3a474ef8a97e17dc16',
+      url: 'https://api.wordnik.com/v4/words.json/search/' + inputEl.val() + '?api_key=809e23b70d7458731900207646903be3a474ef8a97e17dc16',
       success: function(json) {
         callback( json.searchResults.map( word => word.word ) );
       }
@@ -69,7 +69,7 @@ $('#ajax').autocomplete({
 });
 $('#ajax').on('ac:render', function(event, container) {
   $(container).find('.ac-item').on('mousemove', function(e, a) {
-    this.style.background = 'hsl(' + Math.floor(Math.random() * 365) + ', 30%, 90%)';
+    this.style.background = 'hsl(' + Math.floor(Math.random() * 365) + ', 60%, 90%)';
   });
 });
           </script>
