@@ -1,4 +1,4 @@
-/* https://github.com/vufind-org/autocomplete.js 1.0b */
+/* https://github.com/vufind-org/autocomplete.js 1.0b2 */
 (function autocomplete( $ ) {
   var element = false,
     xhr = false;
@@ -26,6 +26,7 @@
       }
 
       var _populate = function _populate(item, eventType) {
+        input.trigger('ac:select', [ item, eventType ]);
         if (options.callback) {
           if (options.callback(item, input, eventType) === true && typeof item.href !== 'undefined') {
             return window.location.assign(item.href);
@@ -69,6 +70,7 @@
           }
           shell.append(item);
         }
+        input.trigger('ac:render', [ shell[0] ]);
         return shell;
       }
       var _createList = function _createList(data) {
