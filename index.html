@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://unpkg.com/basscss-basic@1.0.0/index.css" />
     <link rel="stylesheet" href="https://raw.crhallberg.com/justgrid.css" />
     <link rel="stylesheet" href="./autocomplete.css" />
-    <script src="http://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
     <script src="./autocomplete.js"></script>
     <style>
       body { text-align: center; }
@@ -31,6 +31,8 @@
         box-sizing: border-box;
         width: 100%;
         margin-top: 1rem;
+        padding: 0 1rem;
+        line-height: 1.2;
         text-align: left;
         white-space: pre;
         overflow-x: auto;
@@ -55,21 +57,21 @@
         <div class="pad">
           <input id="ajax" type="text" placeholder="Words search from Wordnik"/>
           <script>
-  $('#ajax').autocomplete({
-    handler: function(inputEl, callback) {
-      $.fn.autocomplete.ajax({
-        url: 'http://api.wordnik.com/v4/words.json/search/' + inputEl.val() + '?api_key=809e23b70d7458731900207646903be3a474ef8a97e17dc16',
-        success: function(json) {
-          callback( json.searchResults.map( word => word.word ) );
-        }
-      });
-    }
-  });
-  $('#ajax').on('ac:render', function(event, container) {
-    $(container).find('.ac-item').on('mousemove', function(e, a) {
-      this.style.background = 'hsl(' + Math.floor(Math.random() * 365) + ', 30%, 90%)';
+$('#ajax').autocomplete({
+  handler: function(inputEl, callback) {
+    $.fn.autocomplete.ajax({
+      url: 'http://api.wordnik.com/v4/words.json/search/' + inputEl.val() + '?api_key=809e23b70d7458731900207646903be3a474ef8a97e17dc16',
+      success: function(json) {
+        callback( json.searchResults.map( word => word.word ) );
+      }
     });
+  }
+});
+$('#ajax').on('ac:render', function(event, container) {
+  $(container).find('.ac-item').on('mousemove', function(e, a) {
+    this.style.background = 'hsl(' + Math.floor(Math.random() * 365) + ', 30%, 90%)';
   });
+});
           </script>
         </div>
       </div>
@@ -80,20 +82,20 @@
           <input id="static" type="text" placeholder="List of Animals"/>
           <p id="favorite-animal"></p>
           <script>
-  $('#static').autocomplete({
-    minLength: 1,
-    static: ['aardvark','albatross','alligator','alpaca','ant','anteater','antelope','ape','armadillo','baboon','badger','barracuda','bat','bear','bee','beetle','bison','boar','buffalo','bushbaby','bustard','butterfly','camel','capuchin','caribou','cat','caterpillar','chameleon','chamois','cheetah','chicken','chimpanzee','chinchilla','chipmunk','chough','clam','cobra','cockroach','cod','cormorant','coyote','crab','crane','crocodile','crow','curlew','deer','dinosaur','dog','dogfish','dolphin','donkey','dotterel','dove','dragon','dragonfly','duck','dugong','dunlin','eagle','echidna','eel','eland','elephant','elk','emu','falcon','ferret','finch','fish','flamingo','fly','fox','frog','gaur','gazelle','gecko','gerbil','giraffe','gnu','goat','goldfish','goose','gorilla','goshawk','grasshopper','grouse','guanaco','gull','hamster','hare','hawk','hedgehog','heron','herring','hippopotamus','hornet','horse','horsecrab','hummingbird','hyena','hyrax','ibex','ibis','iguana','impala','jackal','jaguar','jay','jellyfish','kangaroo','koala','kouprey','kudu','lapwing','lark','lemming','lemur','leopard','lion','llama','lobster','locust','loris','louse','lynx','lyrebird','magpie','mallard','manatee','marten','meerkat','mink','mole','mongoose','monkey','moose','mosquito','mouse','mule','narwhal','newt','nightingale','numbat','octopus','okapi','opossum','oryx','ostrich','otter','owl','ox','oyster','panther','parrot','partridge','peacock','peafowl','pelican','penguin','pheasant','pig','pigeon','platypus','pony','porcupine','porpoise','puffin','quagga','quail','quelea','rabbit','raccoon','ram','rat','raven','reindeer','rhea','rhinoceros','rook','ruff','salamander','salmon','sambar','sandpiper','sardine','scorpion','seahorse','seal','shark','sheep','shrew','shrimp','skink','skunk','snail','snake','spider','squid','squirrel','starling','stinkbug','stork','swan','tapir','tarsier','termite','tern','tiger','toad','trout','turkey','turtle','viper','vulture','wallaby','walrus','wasp','weasel','whale','wolf','wolverine','wombat','woodcock','woodpecker','worm','wren','yak','zebra','zorilla'],
-    callback: function (selected, input, evt) {
-      console.log(selected);
-    }
-  });
-  $('#static').on('ac:select', function(event, item, type) {
-    var html = 'Your favorite animal:' + item.value;
-    html += type.mouse
-      ? ' (clicked)'
-      : ' (keyed)'
-    $('#favorite-animal').html(html);
-  });
+$('#static').autocomplete({
+  minLength: 1,
+  static: ['aardvark','albatross','alligator','alpaca','ant','anteater','antelope','ape','armadillo','baboon','badger','barracuda','bat','bear','bee','beetle','bison','boar','buffalo','bushbaby','bustard','butterfly','camel','capuchin','caribou','cat','caterpillar','chameleon','chamois','cheetah','chicken','chimpanzee','chinchilla','chipmunk','chough','clam','cobra','cockroach','cod','cormorant','coyote','crab','crane','crocodile','crow','curlew','deer','dinosaur','dog','dogfish','dolphin','donkey','dotterel','dove','dragon','dragonfly','duck','dugong','dunlin','eagle','echidna','eel','eland','elephant','elk','emu','falcon','ferret','finch','fish','flamingo','fly','fox','frog','gaur','gazelle','gecko','gerbil','giraffe','gnu','goat','goldfish','goose','gorilla','goshawk','grasshopper','grouse','guanaco','gull','hamster','hare','hawk','hedgehog','heron','herring','hippopotamus','hornet','horse','horsecrab','hummingbird','hyena','hyrax','ibex','ibis','iguana','impala','jackal','jaguar','jay','jellyfish','kangaroo','koala','kouprey','kudu','lapwing','lark','lemming','lemur','leopard','lion','llama','lobster','locust','loris','louse','lynx','lyrebird','magpie','mallard','manatee','marten','meerkat','mink','mole','mongoose','monkey','moose','mosquito','mouse','mule','narwhal','newt','nightingale','numbat','octopus','okapi','opossum','oryx','ostrich','otter','owl','ox','oyster','panther','parrot','partridge','peacock','peafowl','pelican','penguin','pheasant','pig','pigeon','platypus','pony','porcupine','porpoise','puffin','quagga','quail','quelea','rabbit','raccoon','ram','rat','raven','reindeer','rhea','rhinoceros','rook','ruff','salamander','salmon','sambar','sandpiper','sardine','scorpion','seahorse','seal','shark','sheep','shrew','shrimp','skink','skunk','snail','snake','spider','squid','squirrel','starling','stinkbug','stork','swan','tapir','tarsier','termite','tern','tiger','toad','trout','turkey','turtle','viper','vulture','wallaby','walrus','wasp','weasel','whale','wolf','wolverine','wombat','woodcock','woodpecker','worm','wren','yak','zebra','zorilla'],
+  callback: function (selected, input, evt) {
+    console.log(selected);
+  }
+});
+$('#static').on('ac:select', function(event, item, type) {
+  var html = 'Your favorite animal:' + item.value;
+  html += type.mouse
+    ? ' (clicked)'
+    : ' (keyed)'
+  $('#favorite-animal').html(html);
+});
           </script>
         </div>
       </div>
@@ -104,14 +106,14 @@
           <input class="multiple" type="text" placeholder="Colors and States"/>
           <input class="multiple" type="text" placeholder="Colors and States"/>
           <script>
-  $('.multiple').autocomplete({
-    static: {
-      groups: [
-        { label: "Colors", items: ['red','ORANGE','yellow','GREEN','blue','INDIGO','violet'] },
-        { label: "States", items: ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming'] }
-      ]
-    }
-  });
+$('.multiple').autocomplete({
+  static: {
+    groups: [
+      { label: "Colors", items: ['red','ORANGE','yellow','GREEN','blue','INDIGO','violet'] },
+      { label: "States", items: ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming'] }
+    ]
+  }
+});
           </script>
         </div>
       </div>
