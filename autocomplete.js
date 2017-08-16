@@ -309,7 +309,7 @@
             var selected = element.find('.ac-item.selected');
             if (selected.length > 0) {
               event.preventDefault();
-              if (event.which === 13 && selected.attr('href')) {
+              if (event.which === 13 && selected.attr('href') && options.callback === 'undefined') {
                 return window.location.assign(selected.attr('href'));
               } else {
                 _populate(selected.data(), $(this), {key: true});
