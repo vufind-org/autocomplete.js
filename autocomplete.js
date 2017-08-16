@@ -27,8 +27,9 @@
 
       var _populate = function _populate(item, eventType) {
         input.trigger('ac:select', [ item, eventType ]);
+        var ret;
         if (options.callback) {
-          var ret = options.callback(item, input, eventType);
+          ret = options.callback(item, input, eventType);
           if (ret === true && typeof item.href !== 'undefined') {
             return window.location.assign(item.href);
           }
@@ -38,7 +39,7 @@
         } else if (typeof item.href !== 'undefined') {
           return window.location.assign(item.href);
         }
-        input.val(item.value);
+        input.val(typeof ret === 'undefined' ? item.value : ret);
         // Reset
         element.find('.ac-item.selected').removeClass('selected');
         $(this).data('selected', -1);

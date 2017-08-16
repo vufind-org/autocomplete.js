@@ -55,7 +55,7 @@ $('input').autocomplete({
 ```
 
 ### callback (optional)
-This function will fire when a selection is made. Returning false will prevent closing of dropdown and populating of the input element.
+This function will fire when a selection is made. Values returned will populate the input. Returning false will prevent closing of the dropdown and populating of the input element.
 
 ```Javascript
 function(data, inputElement, eventType) {
