@@ -28,8 +28,12 @@
       var _populate = function _populate(item, eventType) {
         input.trigger('ac:select', [ item, eventType ]);
         if (options.callback) {
-          if (options.callback(item, input, eventType) === true && typeof item.href !== 'undefined') {
+          var ret = options.callback(item, input, eventType);
+          if (ret === true && typeof item.href !== 'undefined') {
             return window.location.assign(item.href);
+          }
+          if (ret === false) {
+            return false;
           }
         } else if (typeof item.href !== 'undefined') {
           return window.location.assign(item.href);
