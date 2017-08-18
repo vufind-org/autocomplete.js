@@ -246,6 +246,9 @@
         input.focus(function acinputFocus() {
           search();
         });
+        input.on('paste', function acinputPaste() {
+          requestAnimationFrame(search);
+        });
         input.keyup(function acinputKeyup(event) {
           // Ignore navigation keys
           // - Ignore control functions
