@@ -66,18 +66,18 @@ function(data, inputElement, eventType) {
 ```
 
 ## Sectioned display
-Returning an object with a `sections` key to your handler callback will create a sectioned output.
+Returning an object with a `groups` key to your handler callback will create a sectioned output.
 ```Javascript
 {
-  sections: [
+  groups: [
     [items],
     [], // empty arrays ignored
-    { label: "Section 2", items: [items]) }, // use { label:, items: } to add headers to your sections
+    { label: "Section 2", items: [items] }, // use { label:, items: } to add headers to your groups
     [items]
   ]
 }
 ```
-![Sections visual](http://image.prntscr.com/image/16f13976674b4b618fd94ddbad04c8ab.png)
+![Groups example](http://image.prntscr.com/image/16f13976674b4b618fd94ddbad04c8ab.png)
 
 ## Other options
 - `ajaxDelay` (200) - milliseconds between last input and firing of AJAX
