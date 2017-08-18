@@ -25,15 +25,16 @@
   background-color: black;
   color: white;
 }
-.autocomplete-results .ac-item small {
+.autocomplete-results small {
   display: block;
-  color: darkgray;
+  color: slategray;
 }
 .autocomplete-results .ac-section-header {
   float: right;
   display: block;
-  margin-top: -1.75rem;
+  margin-top: -1.5rem;
   padding: 0 .5rem;
+  font-size: 12px;
   color: gray;
   background-color: #fff;
 }
