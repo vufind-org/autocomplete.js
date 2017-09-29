@@ -1,5 +1,3 @@
-[![Travis Status](https://travis-ci.org/vufind-org/autocomplete.js.svg?branch=master)](https://travis-ci.org/crhallberg/autocomplete.js)
-
 # autocomplete.js
 Here to provide the interface so you can control the results.
 
