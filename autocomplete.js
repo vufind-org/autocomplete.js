@@ -19,7 +19,7 @@
         });
       };
 
-      var show = function show() {
+      var _show = function _show() {
         element.removeClass(options.hidingClass);
       };
       var hide = function hide() {
@@ -173,7 +173,7 @@
         }
         if (input.val().length >= options.minLength) {
           element.html('<i class="ac-item loading">' + options.loadingString + '</i>');
-          show();
+          _show();
           _align();
           input.data('ac-selected', -1);
           var term = input.val();
@@ -369,8 +369,8 @@
       }
 
       return {
-        show: function publicShow() {
-          show();
+        show: function show() {
+          _show();
           _align();
         },
         hide: hide,
