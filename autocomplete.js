@@ -374,6 +374,7 @@
           _align();
         },
         hide: hide,
+        search: search,
         clearCache: function clearCache() {
           cache[input.data('ac-id')] = {};
         }
