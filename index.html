@@ -49,7 +49,7 @@
     </style>
   </head>
   <body>
-    <h1><a href="https://github.com/vufind-org/autocomplete.js">autocomplete.js demo</a></h1>
+    <h1><a href="https://github.com/vufind-org/autocomplete.js">autocomplete.js</a> demo</h1>
     <div class="row">
       <div class="col four">
         <h2>Handler w/ AJAX</h2>
@@ -67,6 +67,7 @@ $('#ajax').autocomplete({
     });
   }
 });
+// Pretty colors to demonstrate events
 $('#ajax').on('ac:render', function(event, container) {
   $(container).find('.ac-item').on('mousemove', function(e, a) {
     this.style.background = 'hsl(' + Math.floor(Math.random() * 365) + ', 60%, 90%)';
