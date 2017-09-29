@@ -1,13 +1,14 @@
 /* https://github.com/vufind-org/autocomplete.js 1.0b2 */
 (function autocomplete($) {
   var element = false,
+    cache = {},
+    optionStorage = {},
     xhr = false;
 
   function Factory(_input, settings) {
     return function acClosure() {
-      var input = $(this),
-        cache = {},
-        options;
+      var input = $(this);
+      var options = optionStorage[input.data('ac-id')];
 
       var _align = function _align() {
         var position = input.offset();
@@ -120,7 +121,7 @@
           typeof _data.groups === 'undefined'
             ? _data.slice(0, Math.min(options.maxResults, _data.length))
             : _data;
-        var cid = input.data('cacheId');
+        var cid = input.data('ac-id');
         cache[cid][term] = data;
         if (data.length === 0 || (typeof data.groups !== 'undefined' && data.groups.length === 0)) {
           hide();
@@ -177,7 +178,7 @@
           input.data('ac-selected', -1);
           var term = input.val();
           // Check cache (only for handler-based setups)
-          var cid = input.data('cacheId');
+          var cid = input.data('ac-id');
           if (options.cache && typeof cache[cid][term] !== 'undefined') {
             if (cache[cid][term].length === 0) {
               hide();
@@ -217,7 +218,19 @@
         item.match = (item.label || item.value).toLowerCase();
         return item;
       }
-      var _setup = function _setup() {
+      var _setup = function _setup(settings) {
+        var cid = Math.floor(Math.random() * 1000);
+        input.data('ac-id', cid);
+        input.data('ac-selected', -1);
+        input.data('ac-length', 0);
+
+        options = $.extend({}, $.fn.autocomplete.defaults, settings);
+        optionStorage[input.data('ac-id')] = options;
+
+        if (options.cache) {
+          cache[cid] = {};
+        }
+
         element = $('.autocomplete-results');
         if (element.length === 0) {
           element = $('<div/>')
@@ -225,15 +238,6 @@
             .html('<i class="item loading">' + options.loadingString + '</i>');
           _align();
           $(document.body).append(element);
-        }
-
-        input.data('ac-selected', -1);
-        input.data('ac-length', 0);
-
-        if (options.cache) {
-          var cid = Math.floor(Math.random() * 1000);
-          input.data('cacheId', cid);
-          cache[cid] = {};
         }
 
         input.blur(function acinputBlur(e) {
@@ -338,23 +342,15 @@
         window.addEventListener('resize', hide, false);
       };
 
-      if (typeof settings === 'string') {
-        if (settings === 'show') {
-          show();
-          _align();
-        } else if (settings === 'hide') {
-          hide();
-        } else if (options.cache && settings === 'clear cache') {
-          var cid = parseInt(input.data('cacheId'), 10);
-          console.log(JSON.encode(cache[cid]));
-          cache[cid] = {};
-          console.log(JSON.encode(cache[cid]));
+      // Setup
+      if (!input.data('ac-id')) {
+        if (typeof settings === 'undefined') {
+          console.error('Autocomplete not initialized, please pass setup parameters.');
         }
-        return input;
-      } else if (typeof settings.handler === 'undefined' && typeof settings.static === 'undefined') {
-        console.error('Neither handler function nor static result list provided for autocomplete');
-        return input;
-      } else {
+        if (typeof settings.handler === 'undefined' && typeof settings.static === 'undefined') {
+          console.error('Neither handler function nor static result list provided for autocomplete');
+          return null;
+        }
         if (typeof settings.static !== 'undefined') {
           // Preprocess strings into items
           if (typeof settings.static.groups !== 'undefined') {
@@ -369,18 +365,28 @@
             settings.static = settings.static.map(preprocessStatic);
           }
         }
-        options = $.extend({}, $.fn.autocomplete.defaults, settings);
-        _setup();
+        _setup(settings);
       }
 
-      return item;
+      return {
+        show: function publicShow() {
+          show();
+          _align();
+        },
+        hide: hide,
+        clearCache: function clearCache() {
+          cache[input.data('ac-id')] = {};
+        }
+      };
     }.bind(_input)();
   }
 
   $.fn.autocomplete = function acJQuery(settings) {
-    return this.each(function acJQueryEach() {
-      return Factory(this, settings);
+    var ac;
+    this.each(function acJQueryEach() {
+      ac = Factory(this, settings);
     });
+    return ac;
   };
 
   $.fn.autocomplete.defaults = {
