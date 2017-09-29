@@ -98,7 +98,7 @@ Returning an object with a `groups` key to your handler callback will create a s
 | name | params | description |
 |------|--------|-------------|
 | **`ac:render`** | HTMLDivElement container | When the HTML of the results list has been created, but before `display` (for binding before display) |
-| **`ac:select`** | [ItemObj](#item-format) item, [`{} eventType`](#callback) | When an option has been selected. Equivalent to using [`callback`](#callback) |
+| **`ac:select`** | [ItemObj](#item-format) item, [`{}eventType`](#callback-optional) | When an option has been selected. Equivalent to using [`callback`](#callback) |
 
 ## Exposed components
 - `$.fn.autocomplete.ajax` - make jQuery style AJAX calls that cancel on new searches
