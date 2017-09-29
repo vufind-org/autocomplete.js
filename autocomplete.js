@@ -42,7 +42,7 @@
         input.val(typeof ret === 'undefined' ? item.value : ret);
         // Reset
         element.find('.ac-item.selected').removeClass('selected');
-        $(this).data('selected', -1);
+        $(this).data('ac-selected', -1);
         setTimeout(function acPopulateDelay() {
           input.focus();
           hide();
@@ -107,7 +107,7 @@
           }
         }
         element.html(shell);
-        input.data('length', shell.find('.ac-item').length);
+        input.data('ac-length', shell.find('.ac-item').length);
         element.find('.ac-item').mousedown(function acItemClick() {
           _populate($(this).data(), { mouse: true });
         });
@@ -174,7 +174,7 @@
           element.html('<i class="ac-item loading">' + options.loadingString + '</i>');
           show();
           _align();
-          input.data('selected', -1);
+          input.data('ac-selected', -1);
           var term = input.val();
           // Check cache (only for handler-based setups)
           var cid = input.data('cacheId');
@@ -227,8 +227,8 @@
           $(document.body).append(element);
         }
 
-        input.data('selected', -1);
-        input.data('length', 0);
+        input.data('ac-selected', -1);
+        input.data('ac-length', 0);
 
         if (options.cache) {
           var cid = Math.floor(Math.random() * 1000);
@@ -290,7 +290,7 @@
           if (event.ctrlKey || event.which === 17) {
             return;
           }
-          var position = $(this).data('selected');
+          var position = $(this).data('ac-selected');
           switch (event.which) {
             // arrow keys through items
             case 38: // up key
@@ -300,18 +300,18 @@
                 if (position-- > 0) {
                   element.find('.ac-item:eq(' + position + ')').addClass('selected');
                 }
-                $(this).data('selected', position);
+                $(this).data('ac-selected', position);
               }
               break;
             case 40: // down key
               event.preventDefault();
               if (element.hasClass(options.hidingClass)) {
                 search();
-              } else if (position < input.data('length') - 1) {
+              } else if (position < input.data('ac-length') - 1) {
                 position++;
                 element.find('.ac-item.selected').removeClass('selected');
                 element.find('.ac-item:eq(' + position + ')').addClass('selected');
-                $(this).data('selected', position);
+                $(this).data('ac-selected', position);
               }
               break;
             // enter to nav or populate
@@ -330,7 +330,7 @@
             // hide on escape
             case 27:
               hide();
-              $(this).data('selected', -1);
+              $(this).data('ac-selected', -1);
               break;
           }
         });
@@ -346,7 +346,9 @@
           hide();
         } else if (options.cache && settings === 'clear cache') {
           var cid = parseInt(input.data('cacheId'), 10);
+          console.log(JSON.encode(cache[cid]));
           cache[cid] = {};
+          console.log(JSON.encode(cache[cid]));
         }
         return input;
       } else if (typeof settings.handler === 'undefined' && typeof settings.static === 'undefined') {
@@ -371,7 +373,7 @@
         _setup();
       }
 
-      return input;
+      return item;
     }.bind(_input)();
   }
 
