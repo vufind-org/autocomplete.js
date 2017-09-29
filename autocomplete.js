@@ -61,7 +61,10 @@
           }
           var item = typeof list[i].href === 'undefined' ? $('<div/>') : $('<a/>').attr('href', list[i].href);
           // list
-          item.data(list[i]).addClass('ac-item').html(content);
+          item
+            .data(list[i])
+            .addClass('ac-item')
+            .html(content);
           if (typeof list[i].description !== 'undefined') {
             item.append(
               $('<small/>').html(
