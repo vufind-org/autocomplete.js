@@ -25,12 +25,8 @@ $autocomplete-secondary: slategray !default; // item description
   display: block;
   margin: 0;
   padding: 0.5rem;
-  border-bottom: 1px solid $autocomplete-border;
   cursor: pointer;
 
-  &:last-child {
-    border: 0;
-  }
   &:hover {
     background-color: $autocomplete-hover-bg;
   }

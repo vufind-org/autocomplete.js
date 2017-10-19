@@ -22,8 +22,8 @@
   background-color: inherit;
   cursor: pointer;
 }
-.ac-item.loading {
-  background-color: inherit;
+.ac-item:hover {
+  background-color: lightgray;
 }
 .ac-item.selected {
   background-color: black;
