@@ -90,22 +90,21 @@
         } else {
           shell = $('<div/>');
           for (var i = 0; i < data.groups.length; i++) {
-            if (typeof data.groups[i].label !== 'undefined' || i > 0) {
-              shell.append($('<hr/>', { class: 'ac-section-divider' }));
-            }
+            var group = $('<div/>', { class: 'ac-group' });
             if (typeof data.groups[i].label !== 'undefined') {
-              shell.append(
+              group.append(
                 $('<header>', {
-                  class: 'ac-section-header',
+                  class: 'ac-group-header',
                   html: data.groups[i].label
                 })
               );
             }
-            if (typeof data.groups[i].label !== 'undefined' && data.groups[i].items.length > 0) {
-              shell.append(_listToHTML(data.groups[i].items, regex));
+            if (data.groups[i].items.length > 0) {
+              group.append(_listToHTML(data.groups[i].items, regex));
             } else if (data.groups[i].length > 0) {
-              shell.append(_listToHTML(data.groups[i], regex));
+              group.append(_listToHTML(data.groups[i], regex));
             }
+            shell.append(group);
           }
         }
         element.html(shell);

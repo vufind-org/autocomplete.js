@@ -5,13 +5,16 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="https://unpkg.com/basscss-basic@1.0.0/index.css" />
     <link rel="stylesheet" href="https://www.crhallberg.com/css/justgrid.css" />
     <link rel="stylesheet" href="./autocomplete.css" />
     <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
     <script src="./autocomplete.js"></script>
     <style>
-      body { text-align: center; }
+      html { font-size: 16px; }
+      body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
+      h1,
+      h2,
+      p { text-align: center; }
       h2 { margin-top: .5rem; }
       .row {
         max-width: 1200px;
@@ -69,7 +72,7 @@ $('#ajax').autocomplete({
 });
 // Pretty colors to demonstrate events
 $('#ajax').on('ac:render', function(event, container) {
-  $(container).find('.ac-item').on('mousemove', function(e, a) {
+  $(container).find('.ac-item').on('mouseenter', function(e, a) {
     this.style.background = 'hsl(' + Math.floor(Math.random() * 365) + ', 60%, 90%)';
   });
 });
@@ -104,14 +107,15 @@ $('#static').on('ac:select', function(event, item, type) {
         <h2>Binding to Multiple Elements</h2>
         <p>Shared static list, grouped display</p>
         <div class="pad">
-          <input class="multiple" type="text" placeholder="Colors and States"/>
-          <input class="multiple" type="text" placeholder="Colors and States"/>
+          <input class="multiple" type="text" placeholder="Colors, States, and Fruit"/>
+          <input class="multiple" type="text" placeholder="Colors, States, and Fruit"/>
           <script>
 $('.multiple').autocomplete({
   static: {
     groups: [
       { label: "Colors", items: ['red','ORANGE','yellow','GREEN','blue','INDIGO','violet'] },
-      { label: "States", items: ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming'] }
+      { label: "States", items: ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming'] },
+      { label: "Fruit", items: ['Apple', 'Apricot', 'Avocado', 'Avocado', 'Banana', 'Bilberry', 'Blackberry', 'Blackcurrant', 'Blood orange', 'Blueberry', 'Boysenberry', 'Cantaloupe', 'Cherimoya', 'Cherry', 'Chico fruit', 'Chili pepper', 'Clementine', 'Cloudberry', 'Coconut', 'Corn kernel', 'Crab apples', 'Cranberry', 'Cucumber', 'Cucumber', 'Currant', 'Custard apple', 'Damson', 'Date', 'Dragonfruit', 'Durian', 'Eggplant', 'Elderberry', 'Feijoa', 'Fig', 'Goji berry', 'Gooseberry', 'Grape', 'Grapefruit', 'Guava', 'Honeyberry', 'Honeydew', 'Huckleberry', 'Jabuticaba', 'Jackfruit', 'Jambul', 'Jujube', 'Juniper berry', 'Kiwano', 'Kiwifruit', 'Kumquat', 'Lemon', 'Lime', 'Longan', 'Loquat', 'Lychee', 'Mandarine', 'Mango', 'Mangosteen', 'Marionberry', 'Melon', 'Miracle fruit', 'Mulberry', 'Nance', 'Nectarine', 'Olive', 'Olive', 'Orange', 'Papaya', 'Passionfruit', 'Pea', 'Peach', 'Pear', 'Persimmon', 'Pineapple', 'Plantain', 'Plum', 'Plumcot (or Pluot)', 'Pomegranate', 'Pomelo', 'Prune (dried plum)', 'Purple mangosteen', 'Quince', 'Raisin', 'Rambutan', 'Raspberry', 'Redcurrant', 'Salak', 'Salal berry', 'Salmonberry', 'Satsuma', 'Solanum quitoense', 'Soursop', 'Squash', 'Star fruit', 'Strawberry', 'Sunflower seed', 'Tamarillo', 'Tamarind', 'Tangerine', 'Tomato', 'Ugli fruit', 'Watermelon', 'Yuzu'] }
     ]
   }
 });

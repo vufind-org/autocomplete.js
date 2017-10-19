@@ -6,7 +6,7 @@
   margin-top: 2px;
   padding: 0;
   border: 1px solid lightgray;
-  background-color: inherit;
+  background-color: #fff;
   overflow: hidden;
   z-index: 50;
 }
@@ -19,15 +19,8 @@
   display: block;
   margin: 0;
   padding: 0.5rem;
-  border-bottom: 1px solid lightgray;
   background-color: inherit;
   cursor: pointer;
-}
-.ac-item:last-child {
-  border: 0;
-}
-.ac-item:hover {
-  background-color: lightgray;
 }
 .ac-item.loading {
   background-color: inherit;
@@ -37,18 +30,20 @@
   color: white;
 }
 
-.ac-section-header {
-  float: right;
-  display: block;
-  margin-top: -1.5rem;
-  padding: 0 0.5rem;
-  font-size: 12px;
-  color: gray;
-  background-color: #fff;
+.ac-group {
+  position: relative;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  border-top: 1px solid gray;
 }
-
-.ac-section-divider {
-  margin: 1rem 0.5rem;
+.ac-group:first-child {
   border: 0;
-  border-top: 2px solid lightgray;
+}
+.ac-group-header {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: smaller;
+  font-weight: bold;
+  color: gray;
 }

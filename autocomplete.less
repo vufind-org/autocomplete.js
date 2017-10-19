@@ -2,7 +2,7 @@
 @autocomplete-item-bg   : inherit;
 @autocomplete-active-bg : black;
 @autocomplete-hover-bg  : lightgray;
-@autocomplete-border    : lightgray;
+@autocomplete-border    : gray;
 @autocomplete-secondary : slategray; // item description
 
 .autocomplete-results {
@@ -12,6 +12,7 @@
   margin-top: 2px;
   padding: 0;
   border: 1px solid @autocomplete-border;
+  background-color: @autocomplete-item-bg;
   overflow: hidden;
   z-index: 50;
 }
@@ -24,31 +25,29 @@
   display: block;
   margin: 0;
   padding: .5rem;
-  border-bottom: 1px solid @autocomplete-border;
-  background-color: @autocomplete-item-bg;
   cursor: pointer;
 
-  &:last-child { border: 0; }
   &:hover { background-color: @autocomplete-hover-bg; }
-  &.loading { background-color: @autocomplete-item-bg; }
   &.selected {
     background-color: @autocomplete-active-bg;
     color: contrast(@autocomplete-active-bg);
   }
 }
 
-.ac-section-header {
-  float: right;
-  display: block;
-  margin-top: -1.5rem;
-  padding: 0 .5rem;
-  font-size: 12px;
-  color: @autocomplete-border;
-  background-color: #fff;
+.ac-group {
+  position: relative;
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  border-top: 1px solid @autocomplete-border;
 }
-
-.ac-section-divider {
-  margin: 1rem .5rem;
+.ac-group:first-child {
   border: 0;
-  border-top: 2px solid @autocomplete-border;
+}
+.ac-group-header {
+  position: absolute;
+  top: .5rem;
+  right: .5rem;
+  font-size: smaller;
+  font-weight: bold;
+  color: @autocomplete-border;
 }
