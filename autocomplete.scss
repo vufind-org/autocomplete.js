@@ -1,9 +1,9 @@
 /* https://github.com/vufind-org/autocomplete.js 1.0b2 */
-$autocomplete-item-bg   : inherit   !default;
-$autocomplete-active-bg : black     !default;
-$autocomplete-hover-bg  : lightgray !default;
-$autocomplete-border    : lightgray !default;
-$autocomplete-secondary : slategray !default; // item description
+$autocomplete-item-bg: inherit !default;
+$autocomplete-active-bg: black !default;
+$autocomplete-hover-bg: lightgray !default;
+$autocomplete-border: lightgray !default;
+$autocomplete-secondary: slategray !default; // item description
 
 .autocomplete-results {
   position: absolute;
@@ -24,12 +24,16 @@ $autocomplete-secondary : slategray !default; // item description
 .ac-item {
   display: block;
   margin: 0;
-  padding: .5rem;
+  padding: 0.5rem;
   border-bottom: 1px solid $autocomplete-border;
   cursor: pointer;
 
-  &:last-child { border: 0; }
-  &:hover { background-color: $autocomplete-hover-bg; }
+  &:last-child {
+    border: 0;
+  }
+  &:hover {
+    background-color: $autocomplete-hover-bg;
+  }
   &.selected {
     background-color: $autocomplete-active-bg;
     color: if(lightness($autocomplete-active-bg) > 50, black, white);
@@ -38,8 +42,8 @@ $autocomplete-secondary : slategray !default; // item description
 
 .ac-group {
   position: relative;
-  padding-top: .25rem;
-  padding-bottom: .25rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
   border-top: 1px solid $autocomplete-border;
 }
 .ac-group:first-child {
@@ -47,8 +51,8 @@ $autocomplete-secondary : slategray !default; // item description
 }
 .ac-group-header {
   position: absolute;
-  top: .5rem;
-  right: .5rem;
+  top: 0.5rem;
+  right: 0.5rem;
   font-size: smaller;
   font-weight: bold;
   color: $autocomplete-border;
