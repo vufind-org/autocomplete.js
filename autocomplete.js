@@ -12,9 +12,10 @@
 
       var _align = function _align() {
         var position = input.offset();
+        var right = document.documentElement.offsetWidth - element.width() - 5;
         element.css({
           top: position.top + input.outerHeight(),
-          left: position.left,
+          left: Math.min(position.left, right),
           minWidth: input.width()
         });
       };
