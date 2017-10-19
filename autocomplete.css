@@ -10,36 +10,45 @@
   overflow: hidden;
   z-index: 50;
 }
-.autocomplete-results .ac-item {
-  display: block;
-  margin: 0;
-  padding: .5rem;
-  border-bottom: 1px solid lightgray;
-  background-color: inherit;
-  cursor: pointer;
-}
-.autocomplete-results .ac-item:last-child { border: 0; }
-.autocomplete-results .ac-item:hover { background-color: lightgray; }
-.autocomplete-results .ac-item.loading { background-color: inherit; }
-.autocomplete-results .ac-item.selected {
-  background-color: black;
-  color: white;
-}
 .autocomplete-results small {
   display: block;
   color: slategray;
 }
-.autocomplete-results .ac-section-header {
+
+.ac-item {
+  display: block;
+  margin: 0;
+  padding: 0.5rem;
+  border-bottom: 1px solid lightgray;
+  background-color: inherit;
+  cursor: pointer;
+}
+.ac-item:last-child {
+  border: 0;
+}
+.ac-item:hover {
+  background-color: lightgray;
+}
+.ac-item.loading {
+  background-color: inherit;
+}
+.ac-item.selected {
+  background-color: black;
+  color: white;
+}
+
+.ac-section-header {
   float: right;
   display: block;
   margin-top: -1.5rem;
-  padding: 0 .5rem;
+  padding: 0 0.5rem;
   font-size: 12px;
   color: gray;
   background-color: #fff;
 }
-.autocomplete-results .ac-section-divider {
-  margin: 1rem .5rem;
+
+.ac-section-divider {
+  margin: 1rem 0.5rem;
   border: 0;
   border-top: 2px solid lightgray;
 }
