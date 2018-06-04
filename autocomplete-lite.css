@@ -1,0 +1,67 @@
+/* https://github.com/vufind-org/autocomplete.js 1.0b2 */
+.ac-container {
+  display: none;
+  position: absolute;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  z-index: 5;
+}
+.ac-container.open {
+  display: table;
+}
+
+.autocomplete-results {
+  position: absolute;
+  display: table;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 1px solid lightgray;
+  background-color: #fff;
+  overflow: hidden;
+  z-index: 10;
+}
+.ac-item {
+  display: block;
+  margin: 0;
+  padding: 0.25rem 0.5rem;
+  border-bottom: 1px solid lightgray;
+  background-color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+.ac-item:last-child {
+  border: 0;
+}
+
+.ac-item.selected,
+.ac-item:hover {
+  color: white;
+  background-color: black;
+}
+.ac-item.loading {
+  color: gray;
+  font-style: italic;
+}
+.ac-item.loading:hover {
+  background-color: inherit;
+  cursor: default;
+}
+
+.ac-item.selected {
+  background-color: black;
+  color: white;
+}
+.ac-item small {
+  display: block;
+  color: slategray;
+  text-decoration: none;
+}
+.ac-item.selected,
+.ac-item:hover small {
+  color: lightgray;
+}
