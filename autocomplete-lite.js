@@ -54,15 +54,20 @@ function Autocomplete(_settings) {
   }
 
   function _hide(e) {
-    if (
-      typeof e === 'undefined' ||
-      typeof e.target === 'undefined' ||
-      !(e.relatedTarget !== 'undefined' && e.related.hasAttribute('href')) ||
-      !e.target.classList.contains('ac-item')
-    ) {
-      list.classList.remove('open');
-      _currentIndex = -1;
+    if (typeof e !== 'undefined' && !!e.relatedTarget && e.relatedTarget.hasAttribute('href')) {
+      return;
     }
+    list.classList.remove('open');
+    _currentIndex = -1;
+  }
+
+  function _selectItem(item, input) {
+    if (typeof item === 'string') {
+      input.value = item;
+    } else {
+      input.value = item.text;
+    }
+    _hide();
   }
 
   function _renderItem(item, input) {
@@ -80,18 +85,7 @@ function Autocomplete(_settings) {
       }
     }
     if (typeof item.href === 'undefined') {
-      el.addEventListener(
-        'click',
-        function _acItemClick() {
-          if (typeof item === 'string') {
-            input.value = item;
-          } else {
-            input.value = item.text;
-          }
-          _hide();
-        },
-        false
-      );
+      el.addEventListener('mousedown', e => _selectItem(item, input), false);
     } else {
       el.href = item.href;
     }
@@ -199,7 +193,7 @@ function Autocomplete(_settings) {
         if (_currentIndex === -1) {
           return;
         }
-        _currentListEls[_currentIndex].click();
+        _selectItem(_currentItems[_currentIndex], input);
         break;
       // hide on escape
       case 27:
@@ -224,6 +218,7 @@ function Autocomplete(_settings) {
         list = document.createElement('div');
         list.classList.add('autocomplete-results');
         document.body.appendChild(list);
+        window.addEventListener('resize', _ => _align(document.activeElement), false);
       }
     }
 
