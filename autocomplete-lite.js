@@ -191,9 +191,6 @@ function Autocomplete(_settings) {
           _currentListEls[_currentIndex].classList.remove('selected');
         }
         _currentIndex += 1;
-        if (_currentIndex === _currentItems.length - 1) {
-          return;
-        }
         _currentListEls[_currentIndex].classList.add('selected');
         break;
       // enter to nav or populate
