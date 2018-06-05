@@ -11,7 +11,6 @@ function Autocomplete(_settings) {
     _settings = {};
   }
   const settings = Object.assign(_DEFAULTS, _settings);
-  let container;
   let list;
   let _currentItems;
   let _currentListEls;
@@ -43,6 +42,7 @@ function Autocomplete(_settings) {
   }
 
   function _align(input) {
+    // TODO: RTL
     let rightLimit = document.documentElement.offsetWidth - list.offsetWidth - 8;
     list.style.left = Math.min(input.offsetLeft, rightLimit) + 'px';
     list.style.top = input.offsetTop + input.offsetHeight + 'px';
@@ -50,14 +50,19 @@ function Autocomplete(_settings) {
   }
 
   function _show() {
-    container.classList.add('open');
+    list.classList.add('open');
   }
 
   function _hide(e) {
-    if (typeof e === 'undefined' || typeof e.target === 'undefined' || e.target === container) {
-      container.classList.remove('open');
+    if (
+      typeof e === 'undefined' ||
+      typeof e.target === 'undefined' ||
+      !(e.relatedTarget !== 'undefined' && e.related.hasAttribute('href')) ||
+      !e.target.classList.contains('ac-item')
+    ) {
+      list.classList.remove('open');
+      _currentIndex = -1;
     }
-    _currentIndex = -1;
   }
 
   function _renderItem(item, input) {
@@ -109,7 +114,6 @@ function Autocomplete(_settings) {
   }
 
   function _search(handler, input) {
-    console.log('_search');
     if (input.value.length < settings.minInputLength) {
       _hide();
       return;
@@ -217,21 +221,20 @@ function Autocomplete(_settings) {
       );
     }
 
-    if (typeof container === 'undefined') {
-      container = document.querySelector('.ac-container');
-      if (!container) {
-        container = document.createElement('div');
-        container.classList.add('ac-container');
-        container.addEventListener('click', _hide, false);
+    if (typeof list === 'undefined') {
+      list = document.querySelector('.autocomplete-results');
+      if (!list) {
         list = document.createElement('div');
         list.classList.add('autocomplete-results');
-        container.appendChild(list);
-        document.body.appendChild(container);
+        document.body.appendChild(list);
       }
     }
 
     input.addEventListener('focus', () => _search(handler, input), false);
+    input.addEventListener('blur', _hide, false);
+    // Input typing
     input.addEventListener('keyup', _debounce(_keyup, settings.delay, [handler, input]), false);
+    // Checking escape characters
     input.addEventListener('keydown', event => _keydown(handler, input, event), false);
 
     return input;

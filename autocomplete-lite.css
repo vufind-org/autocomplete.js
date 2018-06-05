@@ -1,30 +1,20 @@
-/* https://github.com/vufind-org/autocomplete.js 1.0b2 */
-.ac-container {
-  display: none;
-  position: absolute;
-  box-sizing: border-box;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: transparent;
-  z-index: 5;
-}
-.ac-container.open {
-  display: table;
-}
-
+/* https://github.com/vufind-org/autocomplete.js */
 .autocomplete-results {
   position: absolute;
-  display: table;
+  display: none;
   box-sizing: border-box;
   margin: 0;
+  margin-bottom: 1rem;
   padding: 0;
   border: 1px solid lightgray;
   background-color: #fff;
   overflow: hidden;
   z-index: 10;
 }
+.autocomplete-results.open {
+  display: table;
+}
+
 .ac-item {
   display: block;
   margin: 0;
