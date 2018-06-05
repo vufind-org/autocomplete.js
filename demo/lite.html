@@ -18,6 +18,9 @@
         height: 1.5rem;
         line-height: inherit;
       }
+      input:focus {
+          border: 2px solid orange;
+      }
       h2 { margin-top: 0; }
       @media (min-width: 768px) {
         .row {
@@ -90,7 +93,25 @@ AC(document.getElementById("static"), function achandler(query, callback) {
     console.log(query);
     const animals = ['aardvark','albatross','alligator','alpaca','ant','anteater','antelope','ape','armadillo','baboon','badger','barracuda','bat','bear','bee','beetle','bison','boar','buffalo','bushbaby','bustard','butterfly','camel','capuchin','caribou','cat','caterpillar','chameleon','chamois','cheetah','chicken','chimpanzee','chinchilla','chipmunk','chough','clam','cobra','cockroach','cod','cormorant','coyote','crab','crane','crocodile','crow','curlew','deer','dinosaur','dog','dogfish','dolphin','donkey','dotterel','dove','dragon','dragonfly','duck','dugong','dunlin','eagle','echidna','eel','eland','elephant','elk','emu','falcon','ferret','finch','fish','flamingo','fly','fox','frog','gaur','gazelle','gecko','gerbil','giraffe','gnu','goat','goldfish','goose','gorilla','goshawk','grasshopper','grouse','guanaco','gull','hamster','hare','hawk','hedgehog','heron','herring','hippopotamus','hornet','horse','horsecrab','hummingbird','hyena','hyrax','ibex','ibis','iguana','impala','jackal','jaguar','jay','jellyfish','kangaroo','koala','kouprey','kudu','lapwing','lark','lemming','lemur','leopard','lion','llama','lobster','locust','loris','louse','lynx','lyrebird','magpie','mallard','manatee','marten','meerkat','mink','mole','mongoose','monkey','moose','mosquito','mouse','mule','narwhal','newt','nightingale','numbat','octopus','okapi','opossum','oryx','ostrich','otter','owl','ox','oyster','panther','parrot','partridge','peacock','peafowl','pelican','penguin','pheasant','pig','pigeon','platypus','pony','porcupine','porpoise','puffin','quagga','quail','quelea','rabbit','raccoon','ram','rat','raven','reindeer','rhea','rhinoceros','rook','ruff','salamander','salmon','sambar','sandpiper','sardine','scorpion','seahorse','seal','shark','sheep','shrew','shrimp','skink','skunk','snail','snake','spider','squid','squirrel','starling','stinkbug','stork','swan','tapir','tarsier','termite','tern','tiger','toad','trout','turkey','turtle','viper','vulture','wallaby','walrus','wasp','weasel','whale','wolf','wolverine','wombat','woodcock','woodpecker','worm','wren','yak','zebra','zorilla'];
     animals.sort((a, b) => weightedFuzzymatch(query, b) - weightedFuzzymatch(query, a));
-    callback(animals);
+    callback(animals.map(w => ({text: w, sub: '{ text: "' + w + '", sub: "..." }'})));
+});
+        </script>
+      </div>
+      <div class="col">
+        <h2>Items with HREFs</h2>
+        <p>Click to go to site</p>
+        <input id="href" type="text" placeholder="Words search from Wordnik"/>
+        <script>
+AC(document.getElementById("href"), function achandler(query, callback) {
+    const url = "https://api.wordnik.com/v4/words.json/search/" + query + "?api_key=809e23b70d7458731900207646903be3a474ef8a97e17dc16";
+    fetch(url).then(function(response) {
+        return response.json();
+    }).then(function(json) {
+        callback( json.searchResults.map( word => ({
+            text: word.word,
+            href: "https://www.wordnik.com/words/" + word.word
+        }) ) );
+    });
 });
         </script>
       </div>
