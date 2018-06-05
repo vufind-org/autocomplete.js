@@ -51,7 +51,7 @@
   color: slategray;
   text-decoration: none;
 }
-.ac-item.selected,
+.ac-item.selected small,
 .ac-item:hover small {
   color: lightgray;
 }
