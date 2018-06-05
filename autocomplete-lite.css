@@ -4,17 +4,12 @@
   display: none;
   box-sizing: border-box;
   margin: 0;
-  margin-bottom: 1rem;
   padding: 0;
   border: 1px solid lightgray;
   background-color: #fff;
   overflow: hidden;
   z-index: 10;
 }
-.autocomplete-results.open {
-  display: table;
-}
-
 .ac-item {
   display: block;
   margin: 0;

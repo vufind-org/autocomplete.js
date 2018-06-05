@@ -226,7 +226,7 @@ function Autocomplete(_settings) {
     input.addEventListener('blur', _hide, false);
     // Input typing
     input.addEventListener('keyup', _debounce(_keyup, settings.delay, [handler, input]), false);
-    // Checking escape characters
+    // Checking control characters
     input.addEventListener('keydown', event => _keydown(handler, input, event), false);
 
     return input;
