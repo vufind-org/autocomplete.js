@@ -53,12 +53,14 @@ function Autocomplete(_settings) {
       if (inputRight - list.offsetWidth <= 0) {
         anchorRight = false;
       }
-    } else if (inputLeft + list.offsetWidth >= document.body.offsetWidth) {
+    } else if (
+      inputLeft + list.offsetWidth >=
+      document.documentElement.offsetWidth
+    ) {
       anchorRight = true;
     }
     if (anchorRight) {
-      const posFromRight =
-        document.body.offsetWidth - (input.offsetLeft + input.offsetWidth);
+      const posFromRight = document.documentElement.offsetWidth - inputRight;
       list.style.left = "auto";
       list.style.right = posFromRight + "px";
     } else {
