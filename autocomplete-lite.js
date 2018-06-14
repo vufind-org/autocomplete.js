@@ -4,12 +4,12 @@ function Autocomplete(_settings) {
     delay: 250,
     highlight: true,
     limit: 20,
-    loadingString: 'Loading...',
+    loadingString: "Loading...",
     minInputLength: 3,
     rtl: false
   };
 
-  if (typeof _settings === 'undefined') {
+  if (typeof _settings === "undefined") {
     _settings = {};
   }
   const settings = Object.assign(_DEFAULTS, _settings);
@@ -25,8 +25,8 @@ function Autocomplete(_settings) {
       const args = [].slice.call(arguments);
 
       // Bind additional parameters
-      if (typeof bindArr !== 'undefined') {
-        if (typeof args === 'undefined') {
+      if (typeof bindArr !== "undefined") {
+        if (typeof args === "undefined") {
           args = bindArr.slice();
         } else {
           for (let i = bindArr.length; i--; ) {
@@ -44,8 +44,8 @@ function Autocomplete(_settings) {
   }
 
   function _align(input) {
-    list.style.minWidth = input.offsetWidth + 'px';
-    list.style.top = input.offsetTop + input.offsetHeight + 'px';
+    list.style.minWidth = input.offsetWidth + "px";
+    list.style.top = input.offsetTop + input.offsetHeight + "px";
     const inputLeft = input.offsetLeft;
     const inputRight = input.offsetLeft + input.offsetWidth;
     let anchorRight = settings.rtl;
@@ -58,29 +58,29 @@ function Autocomplete(_settings) {
     }
     if (anchorRight) {
       const posFromRight = document.body.offsetWidth - (input.offsetLeft + input.offsetWidth);
-      list.style.left = 'auto';
-      list.style.right = posFromRight + 'px';
+      list.style.left = "auto";
+      list.style.right = posFromRight + "px";
     } else {
-      list.style.right = 'auto';
-      list.style.left = input.offsetLeft + 'px';
+      list.style.right = "auto";
+      list.style.left = input.offsetLeft + "px";
     }
   }
 
   function _show() {
-    list.style.left = '-100%'; // hide offscreen
-    list.classList.add('open');
+    list.style.left = "-100%"; // hide offscreen
+    list.classList.add("open");
   }
 
   function _hide(e) {
-    if (typeof e !== 'undefined' && !!e.relatedTarget && e.relatedTarget.hasAttribute('href')) {
+    if (typeof e !== "undefined" && !!e.relatedTarget && e.relatedTarget.hasAttribute("href")) {
       return;
     }
-    list.classList.remove('open');
+    list.classList.remove("open");
     _currentIndex = -1;
   }
 
   function _selectItem(item, input) {
-    if (typeof item === 'string') {
+    if (typeof item === "string") {
       input.value = item;
     } else {
       input.value = item.text;
@@ -89,21 +89,21 @@ function Autocomplete(_settings) {
   }
 
   function _renderItem(item, input) {
-    let el = typeof item.href === 'undefined' ? document.createElement('div') : document.createElement('a');
-    el.classList.add('ac-item');
-    if (typeof item === 'string') {
+    let el = typeof item.href === "undefined" ? document.createElement("div") : document.createElement("a");
+    el.classList.add("ac-item");
+    if (typeof item === "string") {
       el.innerHTML = item;
     } else {
       el.innerHTML = item.text;
-      if (typeof item.sub !== 'undefined') {
-        let sub = document.createElement('small');
-        sub.classList.add('ac-sub');
+      if (typeof item.sub !== "undefined") {
+        let sub = document.createElement("small");
+        sub.classList.add("ac-sub");
         sub.innerHTML = item.sub;
         el.appendChild(sub);
       }
     }
-    if (typeof item.href === 'undefined') {
-      el.addEventListener('mousedown', e => _selectItem(item, input), false);
+    if (typeof item.href === "undefined") {
+      el.addEventListener("mousedown", e => _selectItem(item, input), false);
     } else {
       el.href = item.href;
     }
@@ -120,7 +120,7 @@ function Autocomplete(_settings) {
     }
     _currentItems = items.slice();
     _currentListEls = items.map(item => _renderItem(item, input));
-    list.innerHTML = '';
+    list.innerHTML = "";
     _currentListEls.map(el => list.appendChild(el));
     _currentIndex = -1;
   }
@@ -131,7 +131,7 @@ function Autocomplete(_settings) {
       return;
     }
     let loadingEl = _renderItem(settings.loadingString);
-    loadingEl.classList.add('loading');
+    loadingEl.classList.add("loading");
     list.innerHTML = loadingEl.outerHTML;
     _show();
     _align(input);
@@ -187,12 +187,12 @@ function Autocomplete(_settings) {
         if (_currentIndex === -1) {
           return;
         }
-        _currentListEls[_currentIndex].classList.remove('selected');
+        _currentListEls[_currentIndex].classList.remove("selected");
         _currentIndex -= 1;
         if (_currentIndex === -1) {
           return;
         }
-        _currentListEls[_currentIndex].classList.add('selected');
+        _currentListEls[_currentIndex].classList.add("selected");
         break;
       case 40: // down key
         event.preventDefault();
@@ -200,10 +200,10 @@ function Autocomplete(_settings) {
           return;
         }
         if (_currentIndex > -1) {
-          _currentListEls[_currentIndex].classList.remove('selected');
+          _currentListEls[_currentIndex].classList.remove("selected");
         }
         _currentIndex += 1;
-        _currentListEls[_currentIndex].classList.add('selected');
+        _currentListEls[_currentIndex].classList.add("selected");
         break;
       // enter to nav or populate
       case 9:
@@ -224,33 +224,33 @@ function Autocomplete(_settings) {
     if (!input) {
       return false;
     }
-    if (typeof handler === 'undefined') {
+    if (typeof handler === "undefined") {
       throw new Error(
-        'Autocomplete needs handler to return items based on a query: function(query, callback) {}'
+        "Autocomplete needs handler to return items based on a query: function(query, callback) {}"
       );
     }
 
-    if (typeof list === 'undefined') {
-      list = document.querySelector('.autocomplete-results');
+    if (typeof list === "undefined") {
+      list = document.querySelector(".autocomplete-results");
       if (!list) {
-        list = document.createElement('div');
-        list.classList.add('autocomplete-results');
+        list = document.createElement("div");
+        list.classList.add("autocomplete-results");
         document.body.appendChild(list);
-        window.addEventListener('resize', _ => _align(document.activeElement), false);
+        window.addEventListener("resize", _ => _align(document.activeElement), false);
       }
     }
 
-    input.addEventListener('focus', () => _search(handler, input), false);
-    input.addEventListener('blur', _hide, false);
+    input.addEventListener("focus", () => _search(handler, input), false);
+    input.addEventListener("blur", _hide, false);
     // Input typing
-    input.addEventListener('keyup', _debounce(_keyup, settings.delay, [handler, input]), false);
+    input.addEventListener("keyup", _debounce(_keyup, settings.delay, [handler, input]), false);
     // Checking control characters
-    input.addEventListener('keydown', event => _keydown(handler, input, event), false);
+    input.addEventListener("keydown", event => _keydown(handler, input, event), false);
 
     return input;
   };
 }
 
-if (typeof module !== 'undefined') {
+if (typeof module !== "undefined") {
   module.exports = Autocomplete;
 }
