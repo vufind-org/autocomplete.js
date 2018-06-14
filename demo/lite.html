@@ -108,7 +108,7 @@ AC(document.getElementById("href"), function achandler(query, callback) {
         return response.json();
     }).then(function(json) {
         callback( json.searchResults.map( word => ({
-            text: word.word,
+            text: "https://www.wordnik.com/words/<b>" + word.word + "</b>",
             href: "https://www.wordnik.com/words/" + word.word
         }) ) );
     });
