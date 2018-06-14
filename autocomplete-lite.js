@@ -1,4 +1,3 @@
-// TODO: Header items
 function Autocomplete(_settings) {
   const _DEFAULTS = {
     delay: 250,
