@@ -57,7 +57,8 @@ function Autocomplete(_settings) {
       anchorRight = true;
     }
     if (anchorRight) {
-      const posFromRight = document.body.offsetWidth - (input.offsetLeft + input.offsetWidth);
+      const posFromRight =
+        document.body.offsetWidth - (input.offsetLeft + input.offsetWidth);
       list.style.left = "auto";
       list.style.right = posFromRight + "px";
     } else {
@@ -72,7 +73,11 @@ function Autocomplete(_settings) {
   }
 
   function _hide(e) {
-    if (typeof e !== "undefined" && !!e.relatedTarget && e.relatedTarget.hasAttribute("href")) {
+    if (
+      typeof e !== "undefined" &&
+      !!e.relatedTarget &&
+      e.relatedTarget.hasAttribute("href")
+    ) {
       return;
     }
     list.classList.remove("open");
@@ -89,7 +94,10 @@ function Autocomplete(_settings) {
   }
 
   function _renderItem(item, input) {
-    let el = typeof item.href === "undefined" ? document.createElement("div") : document.createElement("a");
+    let el =
+      typeof item.href === "undefined"
+        ? document.createElement("div")
+        : document.createElement("a");
     el.classList.add("ac-item");
     if (typeof item === "string") {
       el.innerHTML = item;
@@ -236,16 +244,31 @@ function Autocomplete(_settings) {
         list = document.createElement("div");
         list.classList.add("autocomplete-results");
         document.body.appendChild(list);
-        window.addEventListener("resize", _ => _align(document.activeElement), false);
+        window.addEventListener(
+          "resize",
+          _ => _align(document.activeElement),
+          false
+        );
       }
     }
 
+    // Activation / De-activation
     input.addEventListener("focus", () => _search(handler, input), false);
     input.addEventListener("blur", _hide, false);
+
     // Input typing
-    input.addEventListener("keyup", _debounce(_keyup, settings.delay, [handler, input]), false);
+    input.addEventListener(
+      "keyup",
+      _debounce(_keyup, settings.delay, [handler, input]),
+      false
+    );
+
     // Checking control characters
-    input.addEventListener("keydown", event => _keydown(handler, input, event), false);
+    input.addEventListener(
+      "keydown",
+      event => _keydown(handler, input, event),
+      false
+    );
 
     return input;
   };
