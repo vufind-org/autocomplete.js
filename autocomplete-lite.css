@@ -4,12 +4,17 @@
   display: none;
   box-sizing: border-box;
   margin: 0;
+  margin-bottom: 1rem;
   padding: 0;
   border: 1px solid lightgray;
-  background-color: #fff;
+  background-color: white;
   overflow: hidden;
   z-index: 10;
 }
+.autocomplete-results.open {
+  display: table;
+}
+
 .ac-item {
   display: block;
   margin: 0;
@@ -28,15 +33,6 @@
   color: white;
   background-color: black;
 }
-.ac-item.loading {
-  color: gray;
-  font-style: italic;
-}
-.ac-item.loading:hover {
-  background-color: inherit;
-  cursor: default;
-}
-
 .ac-item.selected {
   background-color: black;
   color: white;
@@ -46,7 +42,18 @@
   color: slategray;
   text-decoration: none;
 }
-.ac-item.selected small,
+.ac-item.selected,
 .ac-item:hover small {
   color: lightgray;
+}
+
+.ac-header {
+  font-size: smaller;
+  color: lightgray;
+  text-transform: uppercase;
+  background-color: gray;
+}
+.ac-header:hover {
+  background-color: gray;
+  cursor: default;
 }

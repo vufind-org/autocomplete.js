@@ -101,6 +101,10 @@ function Autocomplete(_settings) {
     el.classList.add("ac-item");
     if (typeof item === "string") {
       el.innerHTML = item;
+    } else if (typeof item.header !== "undefined") {
+      el.innerHTML = item.header;
+      el.classList.add("ac-header");
+      return el;
     } else {
       el.innerHTML = item.text;
       if (typeof item.sub !== "undefined") {
@@ -108,6 +112,8 @@ function Autocomplete(_settings) {
         sub.classList.add("ac-sub");
         sub.innerHTML = item.sub;
         el.appendChild(sub);
+      }
+      if (typeof item.header !== "undefined") {
       }
     }
     if (typeof item.href === "undefined") {
@@ -138,8 +144,7 @@ function Autocomplete(_settings) {
       _hide();
       return;
     }
-    let loadingEl = _renderItem(settings.loadingString);
-    loadingEl.classList.add("loading");
+    let loadingEl = _renderItem({ header: settings.loadingString });
     list.innerHTML = loadingEl.outerHTML;
     _show();
     _align(input);
