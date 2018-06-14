@@ -1,10 +1,12 @@
+// TODO: Header items
 function Autocomplete(_settings) {
   const _DEFAULTS = {
     delay: 250,
     highlight: true,
     limit: 20,
     loadingString: 'Loading...',
-    minInputLength: 3
+    minInputLength: 3,
+    rtl: false
   };
 
   if (typeof _settings === 'undefined') {
@@ -42,14 +44,30 @@ function Autocomplete(_settings) {
   }
 
   function _align(input) {
-    // TODO: RTL
-    let rightLimit = document.documentElement.offsetWidth - list.offsetWidth - 8;
-    list.style.left = Math.min(input.offsetLeft, rightLimit) + 'px';
-    list.style.top = input.offsetTop + input.offsetHeight + 'px';
     list.style.minWidth = input.offsetWidth + 'px';
+    list.style.top = input.offsetTop + input.offsetHeight + 'px';
+    const inputLeft = input.offsetLeft;
+    const inputRight = input.offsetLeft + input.offsetWidth;
+    let anchorRight = settings.rtl;
+    if (anchorRight) {
+      if (inputRight - list.offsetWidth <= 0) {
+        anchorRight = false;
+      }
+    } else if (inputLeft + list.offsetWidth >= document.body.offsetWidth) {
+      anchorRight = true;
+    }
+    if (anchorRight) {
+      const posFromRight = document.body.offsetWidth - (input.offsetLeft + input.offsetWidth);
+      list.style.left = 'auto';
+      list.style.right = posFromRight + 'px';
+    } else {
+      list.style.right = 'auto';
+      list.style.left = input.offsetLeft + 'px';
+    }
   }
 
   function _show() {
+    list.style.left = '-100%'; // hide offscreen
     list.classList.add('open');
   }
 
@@ -115,8 +133,8 @@ function Autocomplete(_settings) {
     let loadingEl = _renderItem(settings.loadingString);
     loadingEl.classList.add('loading');
     list.innerHTML = loadingEl.outerHTML;
-    _align(input);
     _show();
+    _align(input);
     handler(input.value, function callback(items) {
       _searchCallback(items, input);
       _align(input);
