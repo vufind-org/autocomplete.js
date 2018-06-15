@@ -3,11 +3,7 @@
   position: absolute;
   display: none;
   box-sizing: border-box;
-  margin: 0;
-  margin-bottom: 1rem;
-  padding: 0;
-  border: 1px solid lightgray;
-  background-color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   z-index: 10;
 }
@@ -48,7 +44,7 @@
   color: white;
   text-transform: uppercase;
   white-space: nowrap;
-  background-color: gray;
+  background-color: slategray;
 }
 .ac-header:hover {
   background-color: gray;
