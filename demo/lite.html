@@ -68,7 +68,7 @@ AC(document.getElementById("static"), Autocomplete.static(animals));
       </div>
       <div class="col">
         <h2>Items with HREFs</h2>
-        <p>Click to go to site</p>
+        <p>and subtitles (<code>{text: , sub: }</code>)</p>
         <input id="href" type="text" placeholder="Words search from Wordnik"/>
         <script>
 AC(document.getElementById("href"), function achandler(query, callback) {
@@ -77,7 +77,8 @@ AC(document.getElementById("href"), function achandler(query, callback) {
         return response.json();
     }).then(function(json) {
         callback( json.searchResults.map( word => ({
-            text: "https://www.wordnik.com/words/<b>" + word.word + "</b>",
+            text: word.word,
+            sub: "https://www.wordnik.com/words/" + word.word,
             href: "https://www.wordnik.com/words/" + word.word
         }) ) );
     });
