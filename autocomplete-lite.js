@@ -207,6 +207,10 @@ function Autocomplete(_settings) {
         break;
       case 40: // down key
         event.preventDefault();
+        if (lastInput === false) {
+          _search(handler, input);
+          return;
+        }
         if (_currentIndex === _currentItems.length - 1) {
           return;
         }
