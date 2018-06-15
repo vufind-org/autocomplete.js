@@ -62,7 +62,9 @@ function Autocomplete(_settings) {
     }
   }
 
-  function _show() {
+  let lastInput = false;
+  function _show(input) {
+    lastInput = input;
     list.style.left = "-100%"; // hide offscreen
     list.classList.add("open");
   }
@@ -77,6 +79,7 @@ function Autocomplete(_settings) {
     }
     list.classList.remove("open");
     _currentIndex = -1;
+    lastInput = false;
   }
 
   function _selectItem(item, input) {
@@ -141,7 +144,7 @@ function Autocomplete(_settings) {
     }
     let loadingEl = _renderItem({ header: settings.loadingString });
     list.innerHTML = loadingEl.outerHTML;
-    _show();
+    _show(input);
     _align(input);
     handler(input.value, function callback(items) {
       _searchCallback(items, input);
@@ -238,12 +241,23 @@ function Autocomplete(_settings) {
       );
     }
 
+    // Create list element
     if (typeof list === "undefined") {
       list = document.querySelector(".autocomplete-results");
       if (!list) {
         list = document.createElement("div");
         list.classList.add("autocomplete-results");
         document.body.appendChild(list);
+        window.addEventListener(
+          "resize",
+          function acresize() {
+            if (lastInput === false) {
+              return;
+            }
+            _align(lastInput);
+          },
+          false
+        );
       }
     }
 
