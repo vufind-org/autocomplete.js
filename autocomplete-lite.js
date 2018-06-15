@@ -244,11 +244,6 @@ function Autocomplete(_settings) {
         list = document.createElement("div");
         list.classList.add("autocomplete-results");
         document.body.appendChild(list);
-        window.addEventListener(
-          "resize",
-          _ => _align(document.activeElement),
-          false
-        );
       }
     }
 
