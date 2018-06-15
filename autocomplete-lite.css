@@ -49,6 +49,7 @@
 
 .ac-header {
   font-size: smaller;
+  white-space: nowrap;
   color: white;
   text-transform: uppercase;
   background-color: gray;
