@@ -45,9 +45,9 @@
 
 .ac-header {
   font-size: smaller;
-  white-space: nowrap;
   color: white;
   text-transform: uppercase;
+  white-space: nowrap;
   background-color: gray;
 }
 .ac-header:hover {
