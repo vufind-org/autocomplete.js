@@ -17,22 +17,16 @@ function Autocomplete(_settings) {
   let _currentListEls;
   let _currentIndex = -1;
 
-  function _debounce(func, delay, bindArr) {
+  function _debounce(func, delay, passFirst) {
     let timeout = null;
-    return function() {
-      const context = this;
-      const args = [].slice.call(arguments);
 
-      // Bind additional parameters
-      if (typeof bindArr !== "undefined") {
-        if (typeof args === "undefined") {
-          args = bindArr.slice();
-        } else {
-          for (let i = bindArr.length; i--; ) {
-            args.unshift(bindArr[i]);
-          }
-        }
-      }
+    if (typeof passFirst === "undefined") {
+      passFirst = [];
+    }
+
+    return function debounced() {
+      const context = this;
+      const args = passFirst.concat([].slice.call(arguments));
 
       clearTimeout(timeout);
       timeout = setTimeout(function() {
