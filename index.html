@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="autocomplete.css"/>
     <script src="autocomplete.js"></script>
     <script src="autocomplete-static.js"></script>
+    <title>autocomplete.js</title>
     <style>
       html {
         font-size: 16px;
-        background-color: #f0f0f0;
+        background-color: #f0f5ff;
       }
       body {
         max-width: 64rem;
@@ -26,7 +27,20 @@
       input:focus {
           outline: 2px solid orange;
       }
-      h2 { margin-top: 0; }
+      h1 { margin-left: 1rem; }
+      h2 { margin: 0; }
+      blockquote {
+         margin-left: 1rem;
+         margin-bottom: 2rem;
+         font-style: italic;
+         color: #555;
+      }
+      footer {
+          padding: 1rem;
+          font-size: small;
+          color: #555;
+      }
+      footer a { color: #333; }
       @media (min-width: 768px) {
         .row {
             display: flex;
@@ -35,13 +49,15 @@
         .col {
           flex: 0 1 100%;
           margin-right: 1rem;
-          padding: 1rem;
+          padding-left: 1rem;
+          padding-right: 1rem;
         }
       }
     </style>
   </head>
   <body>
-    <h1><a href="https://github.com/vufind-org/autocomplete.js">autocomplete.js</a> demo</h1>
+    <h1><a href="https://github.com/vufind-org/autocomplete.js">autocomplete.js</a></h1>
+    <blockquote>Here to provide the interface so you can control the results.</blockquote>
     <div class="row">
       <div class="col">
         <h2>Handler w/ AJAX</h2>
@@ -60,12 +76,12 @@ AC(document.getElementById("ajax"), function achandler(query, callback) {
         </script>
       </div>
       <div class="col">
-        <h2>Static List</h2>
+        <h2>Autocomplete.static</h2>
         <p>Using optional Autocomplete.static</p>
         <input id="static" type="text" placeholder="List of Animals"/>
         <p id="favorite-animal"></p>
         <script>
-const animals = ['aardvark','albatross','alligator','alpaca','ant','anteater','antelope','ape','armadillo','baboon','badger','barracuda','bat','bear','bee','beetle','bison','boar','buffalo','bushbaby','bustard','butterfly','camel','capuchin','caribou','cat','caterpillar','chameleon','chamois','cheetah','chicken','chimpanzee','chinchilla','chipmunk','chough','clam','cobra','cockroach','cod','cormorant','coyote','crab','crane','crocodile','crow','curlew','deer','dinosaur','dog','dogfish','dolphin','donkey','dotterel','dove','dragon','dragonfly','duck','dugong','dunlin','eagle','echidna','eel','eland','elephant','elk','emu','falcon','ferret','finch','fish','flamingo','fly','fox','frog','gaur','gazelle','gecko','gerbil','giraffe','gnu','goat','goldfish','goose','gorilla','goshawk','grasshopper','grouse','guanaco','gull','hamster','hare','hawk','hedgehog','heron','herring','hippopotamus','hornet','horse','horsecrab','hummingbird','hyena','hyrax','ibex','ibis','iguana','impala','jackal','jaguar','jay','jellyfish','kangaroo','koala','kouprey','kudu','lapwing','lark','lemming','lemur','leopard','lion','llama','lobster','locust','loris','louse','lynx','lyrebird','magpie','mallard','manatee','marten','meerkat','mink','mole','mongoose','monkey','moose','mosquito','mouse','mule','narwhal','newt','nightingale','numbat','octopus','okapi','opossum','oryx','ostrich','otter','owl','ox','oyster','panther','parrot','partridge','peacock','peafowl','pelican','penguin','pheasant','pig','pigeon','platypus','pony','porcupine','porpoise','puffin','quagga','quail','quelea','rabbit','raccoon','ram','rat','raven','reindeer','rhea','rhinoceros','rook','ruff','salamander','salmon','sambar','sandpiper','sardine','scorpion','seahorse','seal','shark','sheep','shrew','shrimp','skink','skunk','snail','snake','spider','squid','squirrel','starling','stinkbug','stork','swan','tapir','tarsier','termite','tern','tiger','toad','trout','turkey','turtle','viper','vulture','wallaby','walrus','wasp','weasel','whale','wolf','wolverine','wombat','woodcock','woodpecker','worm','wren','yak','zebra','zorilla'];
+const animals = ['aardvark','albatross','alligator','alpaca','ant','anteater','antelope','ape','armadillo','baboon','badger','barracuda','bat','bear','bee','beetle','bison','boar','buffalo','bushbaby','bustard','butterfly','camel','capuchin','caribou','cat','caterpillar','chameleon','chamois','cheetah','chicken','chimpanzee','chinchilla','chipmunk','chough','clam','cobra','cockroach','cod','cormorant','coyote','crab','crane','crocodile','crow','curlew','deer','dinosaur','dog','dogfish','dolphin','donkey','dotterel','dove','dragon','dragonfly','duck','dugong','dunlin','eagle','echidna','eel','eland','elephant','elk','emu','falcon','ferret','finch','fish','flamingo','fly','fox','frog','gaur','gazelle','gecko','gerbil','giraffe','gnu','goat','goldfish','goose','gorilla','goshawk','grasshopper','grouse','guanaco','gull','hamster','hare','hawk','hedgehog','heron','herring','hippopotamus','hornet','horse','horsecrab','hummingbird','hyena','hyrax','ibex','ibis','iguana','impala','jackal','jaguar','jay','jellyfish','kangaroo','koala','kouprey','kudu','lapwing','lark','lemming','lemur','leopard','lion','llama','lobster','locust','loris','louse','lynx','lyrebird','magpie','mallard','manatee','marten','meerkat','mink','mole','mongoose','monkey','moose','mosquito','mouse','mule','narwhal','newt','nightingale','numbat','octopus','okapi','opossum','orangutan','oryx','ostrich','otter','owl','ox','oyster','panther','parrot','partridge','peacock','peafowl','pelican','penguin','pheasant','pig','pigeon','platypus','pony','porcupine','porpoise','puffin','quagga','quail','quelea','rabbit','raccoon','ram','rat','raven','reindeer','rhea','rhinoceros','rook','ruff','salamander','salmon','sambar','sandpiper','sardine','scorpion','seahorse','seal','shark','sheep','shrew','shrimp','skink','skunk','snail','snake','spider','squid','squirrel','starling','stinkbug','stork','swan','tapir','tarsier','termite','tern','tiger','toad','trout','turkey','turtle','viper','vulture','wallaby','walrus','wasp','weasel','whale','wolf','wolverine','wombat','woodcock','woodpecker','worm','wren','yak','zebra','zorilla'];
 AC(document.getElementById("static"), Autocomplete.static(animals));
         </script>
       </div>
@@ -89,5 +105,9 @@ AC(document.getElementById("href"), function achandler(query, callback) {
         </script>
       </div>
     </div>
+    <footer>
+        <p>Made with &lt;3 by <a href="https://crhallberg.com">Chris Hallberg</a> for <a href="http://vufind.org">VuFind</a>.</p>
+        <p>AJAX powered by the <a href="https://www.wordnik.com/">Wordnik</a> API.</p>
+    </footer>
   </body>
 </html>
