@@ -1,7 +1,6 @@
 function Autocomplete(_settings) {
   const _DEFAULTS = {
     delay: 250,
-    highlight: true,
     limit: 20,
     loadingString: "Loading...",
     minInputLength: 3,
@@ -85,6 +84,8 @@ function Autocomplete(_settings) {
   function _selectItem(item, input) {
     if (typeof item === "string") {
       input.value = item;
+    } else if (typeof item.href !== "undefined") {
+      window.location.assign(item.href);
     } else {
       input.value = item.text;
     }
