@@ -2,6 +2,8 @@
 
 > Here to provide the interface so you can control the results.
 
+[![Go to latest version](https://img.shields.io/github/release/vufind-org/autocomplete.js.svg)](https://github.com/vufind-org/autocomplete.js/releases)
+
 Go to [Version 1](https://github.com/vufind-org/autocomplete.js/tree/v1) for groups, etc.
 
 ## Getting Started
