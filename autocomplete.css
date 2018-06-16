@@ -1,49 +1,52 @@
-/* https://github.com/vufind-org/autocomplete.js 1.0b2 */
+/* https://github.com/vufind-org/autocomplete.js */
 .autocomplete-results {
   position: absolute;
-  display: table;
-  margin: 0;
-  margin-top: 2px;
-  padding: 0;
-  border: 1px solid lightgray;
-  background-color: #fff;
+  display: none;
+  box-sizing: border-box;
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
   overflow: hidden;
-  z-index: 50;
+  z-index: 10;
 }
-.autocomplete-results small {
-  display: block;
-  color: slategray;
+.autocomplete-results.open {
+  display: table;
 }
 
 .ac-item {
   display: block;
   margin: 0;
-  padding: 0.5rem;
-  background-color: inherit;
+  padding: 0.25rem 0.5rem;
+  border-bottom: 1px solid lightgray;
   cursor: pointer;
+  text-decoration: none;
 }
-.ac-item:hover {
-  background-color: lightgray;
-}
-.ac-item.selected {
-  background-color: black;
-  color: white;
-}
-
-.ac-group {
-  position: relative;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-  border-top: 1px solid gray;
-}
-.ac-group:first-child {
+.ac-item:last-child {
   border: 0;
 }
-.ac-group-header {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+
+.ac-item.selected,
+.ac-item:hover {
+  color: white;
+  background-color: black;
+}
+.ac-item small {
+  display: block;
+  color: slategray;
+  text-decoration: none;
+}
+.ac-item.selected small,
+.ac-item:hover small {
+  color: lightgray;
+}
+
+.ac-header {
   font-size: smaller;
-  font-weight: bold;
-  color: gray;
+  color: white;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background-color: slategray;
+}
+.ac-header:hover {
+  background-color: gray;
+  cursor: default;
 }
