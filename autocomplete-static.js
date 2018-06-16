@@ -1,5 +1,6 @@
 Autocomplete.static = function staticAC(set, _limit) {
   const limit = typeof _limit !== "number" ? 20 : _limit;
+
   function weightedFuzzymatch(needle, haystack) {
     // terms may be switched
     if (needle.length > haystack.length) {
@@ -28,6 +29,7 @@ Autocomplete.static = function staticAC(set, _limit) {
     }
     return weight;
   }
+
   return function insertSortByWeight(query, cb) {
     let start = set
       .slice(0, limit)
