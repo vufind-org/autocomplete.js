@@ -93,10 +93,7 @@ function Autocomplete(_settings) {
   }
 
   function _renderItem(item, input) {
-    let el =
-      typeof item.href === "undefined"
-        ? document.createElement("div")
-        : document.createElement("a");
+    let el = document.createElement("div");
     el.classList.add("ac-item");
     if (typeof item === "string") {
       el.innerHTML = item;
@@ -115,11 +112,7 @@ function Autocomplete(_settings) {
       if (typeof item.header !== "undefined") {
       }
     }
-    if (typeof item.href === "undefined") {
-      el.addEventListener("mousedown", e => _selectItem(item, input), false);
-    } else {
-      el.href = item.href;
-    }
+    el.addEventListener("mousedown", e => _selectItem(item, input), false);
     return el;
   }
 
