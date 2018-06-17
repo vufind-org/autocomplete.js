@@ -52,7 +52,6 @@ Autocomplete.static = function staticAC(set, _limit) {
       ret = ret.slice(0, limit);
       weights = weights.slice(0, limit);
     }
-    console.log(ret);
     cb(ret);
   };
 };
