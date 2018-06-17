@@ -1,7 +1,7 @@
 Autocomplete.static = function staticAC(set, _limit) {
   const limit = typeof _limit !== "number" ? 20 : _limit;
 
-  function weightedFuzzymatch(needle, haystack) {
+  function _weightedFuzzymatch(needle, haystack) {
     // terms may be switched
     if (needle.length > haystack.length) {
       // return weightedFuzzymatch(haystack, needle);
@@ -30,28 +30,44 @@ Autocomplete.static = function staticAC(set, _limit) {
     return weight;
   }
 
+  function _binaryInsertIndex(arr, op) {
+    let low = 0;
+    let high = arr.length;
+    while (low < high) {
+      let mid = (low + high) >>> 1;
+      if (op === arr[mid]) {
+        return mid;
+      }
+      if (high - low === 1) {
+        return low;
+      }
+      if (op > arr[mid]) {
+        high = mid;
+      } else {
+        low = mid + 1;
+      }
+    }
+    return Math.min(high, arr.length - 1);
+  }
+
   return function insertSortByWeight(query, cb) {
     let start = set
       .slice(0, limit)
-      .map(x => [x, weightedFuzzymatch(query, x)])
+      .map(x => [x, _weightedFuzzymatch(query, x)])
       .sort((a, b) => b[1] - a[1]);
     let ret = start.map(x => x[0]);
     let weights = start.map(x => x[1]);
     for (let i = limit; i < set.length; i++) {
-      let weight = weightedFuzzymatch(query, set[i]);
+      let weight = _weightedFuzzymatch(query, set[i]);
       if (weight < weights[weights.length - 1]) {
         continue;
       }
-      for (let j = 0; j < set.length; j++) {
-        if (weight >= weights[j]) {
-          ret.splice(j, 0, set[i]);
-          weights.splice(j, 0, weight);
-          break;
-        }
-      }
-      ret = ret.slice(0, limit);
-      weights = weights.slice(0, limit);
+      const index = _binaryInsertIndex(weights, weight);
+      ret.splice(index, 0, set[i]);
+      weights.splice(index, 0, weight);
     }
+    ret = ret.slice(0, limit);
+    weights = weights.slice(0, limit);
     cb(ret);
   };
 };
