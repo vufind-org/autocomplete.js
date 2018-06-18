@@ -30,7 +30,13 @@ Autocomplete.static = function staticAC(set, _limit) {
     return weight;
   }
 
+  // For a reverse sorted array
   function _binaryInsertIndex(arr, op) {
+    // Edge cases
+    if (op > arr[0]) {
+      return 0;
+    }
+    // Binary search
     let low = 0;
     let high = arr.length;
     while (low < high) {
@@ -38,14 +44,12 @@ Autocomplete.static = function staticAC(set, _limit) {
       if (op === arr[mid]) {
         return mid;
       }
-      if (high - low === 1) {
-        return low;
-      }
       if (op > arr[mid]) {
         high = mid;
       } else {
         low = mid + 1;
       }
+      console.log(low, high);
     }
     return Math.min(high, arr.length - 1);
   }
