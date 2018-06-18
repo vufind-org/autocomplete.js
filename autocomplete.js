@@ -131,6 +131,7 @@ function Autocomplete(_settings) {
     _currentIndex = -1;
   }
 
+  let lastCB;
   function _search(handler, input) {
     if (input.value.length < settings.minInputLength) {
       _hide();
@@ -140,9 +141,13 @@ function Autocomplete(_settings) {
     list.innerHTML = loadingEl.outerHTML;
     _show(input);
     _align(input);
+    let thisCB = new Date().getTime();
+    lastCB = thisCB;
     handler(input.value, function callback(items) {
-      _searchCallback(items, input);
-      _align(input);
+      if (thisCB !== lastCB) {
+        _searchCallback(items, input);
+        _align(input);
+      }
     });
   }
 
