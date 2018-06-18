@@ -144,7 +144,7 @@ function Autocomplete(_settings) {
     let thisCB = new Date().getTime();
     lastCB = thisCB;
     handler(input.value, function callback(items) {
-      if (thisCB !== lastCB) {
+      if (thisCB === lastCB) {
         _searchCallback(items, input);
         _align(input);
       }
