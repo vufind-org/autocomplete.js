@@ -1,7 +1,8 @@
-Autocomplete.static = function staticAC(set, _limit) {
+Autocomplete.static = function staticAC(set, _limit, key) {
   const limit = typeof _limit !== "number" ? 20 : _limit;
 
-  function _weightedFuzzymatch(needle, haystack) {
+  function _weightedFuzzymatch(needle, _haystack) {
+    const haystack = typeof key !== "undefined" ? _haystack[key] : _haystack;
     // terms may be switched
     if (needle.length > haystack.length) {
       // return weightedFuzzymatch(haystack, needle);
@@ -49,7 +50,6 @@ Autocomplete.static = function staticAC(set, _limit) {
       } else {
         low = mid + 1;
       }
-      console.log(low, high);
     }
     return Math.min(high, arr.length - 1);
   }

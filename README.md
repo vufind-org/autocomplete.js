@@ -95,3 +95,17 @@ For default fuzzy searching on a static list of strings, you can use `Autocomple
 const animals = ['aardvark','albatross','alligator','alpaca','ant','anteater'...];
 AC(document.getElementById("static"), Autocomplete.static(animals));
 ```
+
+`Autocomplete.static` fires the callback **and** returns the results normally.
+
+### Options
+
+```js
+Autocomplete.static(set, [limit], [key]);
+```
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| set    |         | Array of strings or objects you want to search. |
+| limit  | 20      | Optional. Number of items to return. |
+| key    | undefined | Optional. When objects are passed, this key is used for text comparison. |
