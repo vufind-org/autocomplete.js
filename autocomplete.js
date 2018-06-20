@@ -84,10 +84,11 @@ function Autocomplete(_settings) {
   function _selectItem(item, input) {
     if (typeof item === "string") {
       input.value = item;
-    } else if (typeof item.href !== "undefined") {
-      window.location.assign(item.href);
     } else {
       input.value = item.text;
+    }
+    if (typeof item.href !== "undefined") {
+      window.location.assign(item.href);
     }
     _hide();
   }
