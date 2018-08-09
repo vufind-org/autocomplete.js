@@ -57,7 +57,8 @@ If you want to get fancy, there are a few more options for items. Text would be 
 
 ```js
 {
-  text: "What is displayed",
+  text: "What is displayed (html for formatting)",
+  value: "optional string that gets filled into the input (maybe a format-free version)",
   href: "optional url to go to when this item is selected",
   sub: "optional smaller subtitle"
 }
