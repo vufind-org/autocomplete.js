@@ -112,10 +112,19 @@ function Autocomplete(_settings) {
         sub.innerHTML = item.sub;
         el.appendChild(sub);
       }
-      if (typeof item.header !== "undefined") {
-      }
     }
-    el.addEventListener("mousedown", e => _selectItem(item, input), false);
+    el.addEventListener(
+      "mousedown",
+      e => {
+        if (e.which === 1) {
+          e.preventDefault();
+          _selectItem(item, input);
+        } else {
+          return true;
+        }
+      },
+      false
+    );
     return el;
   }
 
