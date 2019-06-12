@@ -1,3 +1,4 @@
+/* https://github.com/vufind-org/autocomplete.js (v2.1.2) */
 function Autocomplete(_settings) {
   const _DEFAULTS = {
     delay: 250,
@@ -36,28 +37,28 @@ function Autocomplete(_settings) {
   }
 
   function _align(input) {
-    list.style.minWidth = input.offsetWidth + "px";
-    list.style.top = input.offsetTop + input.offsetHeight + "px";
-    const inputLeft = input.offsetLeft;
-    const inputRight = input.offsetLeft + input.offsetWidth;
+    const inputBox = input.getBoundingClientRect();
+    list.style.minWidth = inputBox.width + "px";
+    list.style.top = inputBox.bottom + "px";
+    list.style.left = "auto"; // fixes width estimation
     let anchorRight = settings.rtl;
-    if (anchorRight) {
-      if (inputRight - list.offsetWidth <= 0) {
-        anchorRight = false;
-      }
-    } else if (
-      inputLeft + list.offsetWidth >=
+    if (!anchorRight && (
+      inputBox.left + list.offsetWidth >=
       document.documentElement.offsetWidth
-    ) {
+    )) {
       anchorRight = true;
     }
     if (anchorRight) {
-      const posFromRight = document.documentElement.offsetWidth - inputRight;
-      list.style.left = "auto";
+      if (inputBox.right - list.offsetWidth <= 0) {
+        anchorRight = false;
+      }
+    }
+    if (anchorRight) {
+      const posFromRight = document.documentElement.offsetWidth - inputBox.right;
       list.style.right = posFromRight + "px";
     } else {
       list.style.right = "auto";
-      list.style.left = input.offsetLeft + "px";
+      list.style.left = inputBox.left + "px";
     }
   }
 
@@ -237,6 +238,7 @@ function Autocomplete(_settings) {
         if (_currentIndex === -1) {
           return;
         }
+        event.preventDefault();
         _selectItem(_currentItems[_currentIndex], input);
         break;
       // hide on escape
@@ -277,6 +279,7 @@ function Autocomplete(_settings) {
     }
 
     // Activation / De-activation
+    input.setAttribute("autocomplete", "off");
     input.addEventListener("focus", () => _search(handler, input), false);
     input.addEventListener("blur", _hide, false);
 
