@@ -82,7 +82,7 @@ function Autocomplete(_settings) {
   }
 
   function _selectItem(item, input) {
-    if (typeof item === "string") {
+    if (typeof item === "string" || typeof item === "number") {
       input.value = item;
     } else if (typeof item.value === "undefined") {
       input.value = item.text;
@@ -98,7 +98,7 @@ function Autocomplete(_settings) {
   function _renderItem(item, input) {
     let el = document.createElement("div");
     el.classList.add("ac-item");
-    if (typeof item === "string") {
+    if (typeof item === "string" || typeof item === "number") {
       el.innerHTML = item;
     } else if (typeof item.header !== "undefined") {
       el.innerHTML = item.header;
