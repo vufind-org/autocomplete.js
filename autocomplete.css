@@ -50,3 +50,10 @@
   background-color: gray;
   cursor: default;
 }
+
+.ac-item[disabled],
+.ac-item[disabled] small {
+  color: #555;
+  background-color: #e7e7e7;
+  cursor: default;
+}

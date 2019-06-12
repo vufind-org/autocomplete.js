@@ -83,6 +83,15 @@ function Autocomplete(_settings) {
   }
 
   function _selectItem(item, input) {
+    if (typeof item._disabled !== "undefined" && item._disabled) {
+      return;
+    }
+    // Broadcast
+    var event = document.createEvent("CustomEvent");
+    // CustomEvent: name, canBubble, cancelable, detail
+    event.initCustomEvent("ac-select", true, true, item);
+    input.dispatchEvent(event);
+    // Copy value
     if (typeof item === "string" || typeof item === "number") {
       input.value = item;
     } else if (typeof item.value === "undefined") {
@@ -112,6 +121,9 @@ function Autocomplete(_settings) {
         sub.classList.add("ac-sub");
         sub.innerHTML = item.sub;
         el.appendChild(sub);
+      }
+      if (typeof item._disabled !== "undefined" && item._disabled) {
+        el.setAttribute("disabled", true);
       }
     }
     el.addEventListener(
