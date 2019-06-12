@@ -48,27 +48,8 @@ Every input is bound to a handler function that will create the results displaye
 The handler function will receive two parameters:
 - `query` is the search text
 - and `callback` to return your results as
-  - an array of strings (can be HTML)
+  - an array of strings or numbers (can be HTML)
   - an array of [objects](#item-format)
-
-### Item format
-
-If you want to get fancy, there are a few more options for items. Text would be the only required field for these.
-
-```js
-{
-  text: "What is displayed (html for formatting)",
-  value: "optional string that gets filled into the input (maybe a format-free version)",
-  href: "optional url to go to when this item is selected",
-  sub: "optional smaller subtitle"
-}
-```
-
-You can also create section headers like so:
-
-```js
-{ header: "Fruits and Vegetables" }
-```
 
 ### Options
 
@@ -79,6 +60,35 @@ You can also create section headers like so:
 | loadingString | "Loading..." | String that is displayed while waiting for results. HTML welcome. |
 | minInputLength | 3 | Minimum number of characters that need to be typed before a search is made |
 | rtl | false | RTL tries to anchor to the right edge of the input instead of the left |
+
+### Item format
+
+Returning objects allows you to have more control and information. You can have any keys you like, but the following control how items are displayed. Text would be the only required field for objects.
+
+```js
+{
+  text: "What is displayed (html for formatting)",
+  value: "optional string that gets filled into the input (maybe a format-free version)",
+  href: "optional url to go to when this item is selected",
+  sub: "optional smaller subtitle"
+}
+```
+
+You can disable items with `._disabled`:
+
+```js
+{ _disabled: true }
+```
+
+You can also create section headers like so:
+
+```js
+{ header: "Fruits and Vegetables" }
+```
+
+### Events
+
+Autocomplete.js broadcasts an `ac-select` event on the input element when an item is chosen. `event.detail` contains the full item, be it a string, number, or object.
 
 ## Autocomplete.static
 
