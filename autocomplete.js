@@ -110,8 +110,8 @@ function Autocomplete(_settings) {
     el.classList.add("ac-item");
     if (typeof item === "string" || typeof item === "number") {
       el.innerHTML = item;
-    } else if (typeof item.header !== "undefined") {
-      el.innerHTML = item.header;
+    } else if (typeof item._header !== "undefined") {
+      el.innerHTML = item._header;
       el.classList.add("ac-header");
       return el;
     } else {

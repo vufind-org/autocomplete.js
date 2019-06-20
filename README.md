@@ -83,7 +83,7 @@ You can disable items with `._disabled`:
 You can also create section headers like so:
 
 ```js
-{ header: "Fruits and Vegetables" }
+{ _header: "Fruits and Vegetables" }
 ```
 
 ### Events
