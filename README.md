@@ -74,13 +74,13 @@ Returning objects allows you to have more control and information. You can have 
 }
 ```
 
-You can disable items with `._disabled`:
+You can disable items by adding a `._disabled` key:
 
 ```js
 { _disabled: true }
 ```
 
-You can also create section headers like so:
+You can also create static section headers like so:
 
 ```js
 { _header: "Fruits and Vegetables" }
