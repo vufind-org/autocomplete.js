@@ -162,7 +162,7 @@ function Autocomplete(_settings) {
       _hide();
       return;
     }
-    let loadingEl = _renderItem({ header: settings.loadingString });
+    let loadingEl = _renderItem({ _header: settings.loadingString });
     list.innerHTML = loadingEl.outerHTML;
     _show(input);
     _align(input);
