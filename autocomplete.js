@@ -20,10 +20,6 @@ function Autocomplete(_settings) {
   function _debounce(func, delay, passFirst) {
     let timeout = null;
 
-    if (typeof passFirst === "undefined") {
-      passFirst = [];
-    }
-
     return function debounced() {
       const context = this;
       const args = passFirst.concat([].slice.call(arguments));

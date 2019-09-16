@@ -71,7 +71,6 @@ Autocomplete.static = function staticAC(set, _limit, key) {
       weights.splice(index, 0, weight);
     }
     ret = ret.slice(0, limit);
-    weights = weights.slice(0, limit);
     cb(ret);
   };
 };
