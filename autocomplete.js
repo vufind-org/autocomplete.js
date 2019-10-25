@@ -20,6 +20,10 @@ function Autocomplete(_settings) {
   function _debounce(func, delay, passFirst) {
     let timeout = null;
 
+    if (typeof passFirst === "undefined") {
+      passFirst = [];
+    }
+
     return function debounced() {
       const context = this;
       const args = passFirst.concat([].slice.call(arguments));
@@ -138,10 +142,6 @@ function Autocomplete(_settings) {
   }
 
   function _searchCallback(items, input) {
-    if (items.length === 0) {
-      _hide();
-      return;
-    }
     if (items.length > settings.limit) {
       items = items.slice(0, settings.limit);
     }
@@ -175,6 +175,9 @@ function Autocomplete(_settings) {
       }
       _searchCallback(items, input);
       _align(input);
+    });
+  }
+
   function _keyup(handler, input, event) {
     // Ignore navigation keys
     // - Ignore control functions
