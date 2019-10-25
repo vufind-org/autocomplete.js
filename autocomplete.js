@@ -221,12 +221,12 @@ function Autocomplete(_settings) {
         if (_currentIndex === -1) {
           return;
         }
-        _currentListEls[_currentIndex].classList.remove("selected");
+        _currentListEls[_currentIndex].classList.remove("is-selected");
         _currentIndex -= 1;
         if (_currentIndex === -1) {
           return;
         }
-        _currentListEls[_currentIndex].classList.add("selected");
+        _currentListEls[_currentIndex].classList.add("is-selected");
         break;
       case 40: // down key
         event.preventDefault();
@@ -238,10 +238,10 @@ function Autocomplete(_settings) {
           return;
         }
         if (_currentIndex > -1) {
-          _currentListEls[_currentIndex].classList.remove("selected");
+          _currentListEls[_currentIndex].classList.remove("is-selected");
         }
         _currentIndex += 1;
-        _currentListEls[_currentIndex].classList.add("selected");
+        _currentListEls[_currentIndex].classList.add("is-selected");
         break;
       // enter to nav or populate
       case 9:

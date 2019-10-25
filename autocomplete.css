@@ -24,7 +24,7 @@
   border: 0;
 }
 
-.ac-item.selected,
+.ac-item.is-selected,
 .ac-item:hover {
   color: white;
   background-color: black;
@@ -34,7 +34,7 @@
   color: slategray;
   text-decoration: none;
 }
-.ac-item.selected small,
+.ac-item.is-selected small,
 .ac-item:hover small {
   color: lightgray;
 }
