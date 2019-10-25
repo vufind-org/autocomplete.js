@@ -1,11 +1,11 @@
-/* https://github.com/vufind-org/autocomplete.js (v2.1.2) */
+/* https://github.com/vufind-org/autocomplete.js (v2.1.3) */
 function Autocomplete(_settings) {
   const _DEFAULTS = {
     delay: 250,
     limit: 20,
     loadingString: "Loading...",
     minInputLength: 3,
-    rtl: false
+    rtl: false,
   };
 
   if (typeof _settings === "undefined") {
@@ -42,10 +42,10 @@ function Autocomplete(_settings) {
     list.style.top = inputBox.bottom + "px";
     list.style.left = "auto"; // fixes width estimation
     let anchorRight = settings.rtl;
-    if (!anchorRight && (
-      inputBox.left + list.offsetWidth >=
-      document.documentElement.offsetWidth
-    )) {
+    if (
+      !anchorRight &&
+      inputBox.left + list.offsetWidth >= document.documentElement.offsetWidth
+    ) {
       anchorRight = true;
     }
     if (anchorRight) {
@@ -54,7 +54,8 @@ function Autocomplete(_settings) {
       }
     }
     if (anchorRight) {
-      const posFromRight = document.documentElement.offsetWidth - inputBox.right;
+      const posFromRight =
+        document.documentElement.offsetWidth - inputBox.right;
       list.style.right = posFromRight + "px";
     } else {
       list.style.right = "auto";
@@ -165,11 +166,7 @@ function Autocomplete(_settings) {
     let thisCB = new Date().getTime();
     lastCB = thisCB;
     handler(input.value, function callback(items) {
-      if (
-        thisCB !== lastCB ||
-        items === false ||
-        items.length === 0
-      ) {
+      if (thisCB !== lastCB || items === false || items.length === 0) {
         _hide();
         return;
       }
@@ -298,9 +295,16 @@ function Autocomplete(_settings) {
     input.addEventListener("blur", _hide, false);
 
     // Input typing
+    const debounceSearch = _debounce(_keyup, settings.delay);
     input.addEventListener(
       "input",
-      _debounce(_keyup, settings.delay, [handler, input]),
+      event => {
+        if (!event.inputType || event.inputType === "insertFromPaste") {
+          _search(handler, input);
+        } else {
+          debounceSearch(handler, input, event);
+        }
+      },
       false
     );
 
