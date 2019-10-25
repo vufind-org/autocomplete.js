@@ -165,13 +165,16 @@ function Autocomplete(_settings) {
     let thisCB = new Date().getTime();
     lastCB = thisCB;
     handler(input.value, function callback(items) {
-      if (thisCB === lastCB) {
-        _searchCallback(items, input);
-        _align(input);
+      if (
+        thisCB !== lastCB ||
+        items === false ||
+        items.length === 0
+      ) {
+        _hide();
+        return;
       }
-    });
-  }
-
+      _searchCallback(items, input);
+      _align(input);
   function _keyup(handler, input, event) {
     // Ignore navigation keys
     // - Ignore control functions
