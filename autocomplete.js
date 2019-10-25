@@ -299,7 +299,7 @@ function Autocomplete(_settings) {
 
     // Input typing
     input.addEventListener(
-      "keyup",
+      "input",
       _debounce(_keyup, settings.delay, [handler, input]),
       false
     );
