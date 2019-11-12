@@ -39,23 +39,16 @@ function Autocomplete(_settings) {
   function _align(input) {
     const inputBox = input.getBoundingClientRect();
     list.style.minWidth = inputBox.width + "px";
-    list.style.top = inputBox.bottom + "px";
-    list.style.left = "auto"; // fixes width estimation
-    let anchorRight = settings.rtl;
-    if (
-      !anchorRight &&
-      inputBox.left + list.offsetWidth >= document.documentElement.offsetWidth
-    ) {
-      anchorRight = true;
-    }
-    if (anchorRight) {
-      if (inputBox.right - list.offsetWidth <= 0) {
-        anchorRight = false;
-      }
-    }
+    list.style.top = inputBox.bottom + window.scrollY + "px";
+    let anchorRight =
+      settings.rtl ||
+      (inputBox.left + list.offsetWidth >=
+        document.documentElement.offsetWidth &&
+        inputBox.right - list.offsetWidth > 0);
     if (anchorRight) {
       const posFromRight =
         document.documentElement.offsetWidth - inputBox.right;
+      list.style.left = "auto"; // fixes width estimation
       list.style.right = posFromRight + "px";
     } else {
       list.style.right = "auto";
