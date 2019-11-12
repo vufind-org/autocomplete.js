@@ -262,6 +262,7 @@ function Autocomplete(_settings) {
     // Activation / De-activation
     input.setAttribute("autocomplete", "off");
     input.addEventListener("focus", _ => _search(handler, input), false);
+    input.addEventListener("click", _ => _search(handler, input), false);
     input.addEventListener("blur", _hide, false);
 
     // Input typing
