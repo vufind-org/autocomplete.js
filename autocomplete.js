@@ -163,40 +163,6 @@ function Autocomplete(_settings) {
     });
   }
 
-  function _keyup(handler, input, event) {
-    // Ignore navigation keys
-    // - Ignore control functions
-    if (event.ctrlKey || event.which === 17) {
-      return;
-    }
-    // - Function keys (F1 - F15)
-    if (112 <= event.which && event.which <= 126) {
-      return;
-    }
-    switch (event.which) {
-      case 9: // tab
-      case 13: // enter
-      case 16: // shift
-      case 20: // caps lock
-      case 27: // esc
-      case 33: // page up
-      case 34: // page down
-      case 35: // end
-      case 36: // home
-      case 37: // arrows
-      case 38:
-      case 39:
-      case 40:
-      case 45: // insert
-      case 144: // num lock
-      case 145: // scroll lock
-      case 19: // pause/break
-        return;
-      default:
-        _search(handler, input);
-    }
-  }
-
   function _keydown(handler, input, event) {
     // - Ignore control functions
     if (event.ctrlKey || event.which === 17) {
@@ -283,7 +249,7 @@ function Autocomplete(_settings) {
     input.addEventListener("blur", _hide, false);
 
     // Input typing
-    const debounceSearch = _debounce(_keyup, settings.delay);
+    const debounceSearch = _debounce(_search, settings.delay);
     input.addEventListener(
       "input",
       event => {
@@ -293,7 +259,7 @@ function Autocomplete(_settings) {
         ) {
           _search(handler, input);
         } else {
-          debounceSearch(handler, input, event);
+          debounceSearch(handler, input);
         }
       },
       false
