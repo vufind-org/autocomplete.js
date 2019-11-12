@@ -11,26 +11,21 @@ function Autocomplete(_settings) {
   if (typeof _settings === "undefined") {
     _settings = {};
   }
-  const settings = Object.assign(_DEFAULTS, _settings);
+  const settings = Object.assign({}, _DEFAULTS, _settings);
   let list;
   let _currentItems;
   let _currentListEls;
   let _currentIndex = -1;
 
-  function _debounce(func, delay, passFirst) {
-    let timeout = null;
-
-    if (typeof passFirst === "undefined") {
-      passFirst = [];
-    }
+  function _debounce(func, delay) {
+    let timeout;
 
     return function debounced() {
       const context = this;
-      const args = passFirst.concat([].slice.call(arguments));
+      const args = [].slice.call(arguments);
 
       clearTimeout(timeout);
       timeout = setTimeout(function() {
-        timeout = null;
         func.apply(context, args);
       }, delay);
     };
@@ -284,7 +279,7 @@ function Autocomplete(_settings) {
 
     // Activation / De-activation
     input.setAttribute("autocomplete", "off");
-    input.addEventListener("focus", () => _search(handler, input), false);
+    input.addEventListener("focus", _ => _search(handler, input), false);
     input.addEventListener("blur", _hide, false);
 
     // Input typing
@@ -292,7 +287,10 @@ function Autocomplete(_settings) {
     input.addEventListener(
       "input",
       event => {
-        if (!event.inputType || event.inputType === "insertFromPaste") {
+        if (
+          event.inputType === "insertFromPaste" ||
+          event.inputType === "insertFromDrop"
+        ) {
           _search(handler, input);
         } else {
           debounceSearch(handler, input, event);
