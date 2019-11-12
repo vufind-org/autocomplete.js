@@ -5,8 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <link rel="stylesheet" href="autocomplete.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/themes/prism.min.css"/>
     <script src="autocomplete.js"></script>
     <script src="autocomplete-static.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.15.0/prism.min.js"></script>
     <title>autocomplete.js</title>
     <style>
       html {
@@ -66,6 +68,30 @@
           padding-right: 1rem;
         }
       }
+      .code-btn {
+        display: block;
+        width: 100%;
+        margin-top: 2rem;
+        margin-bottom: -2px;
+        padding: 0.7rem;
+        border: 1px solid gray;
+        border-bottom: 0;
+        background-color: #f5f2f0;
+        border-radius: .25rem .25rem 0 0;
+        cursor: pointer;
+      }
+      #code-examples {
+        min-height: 2rem;
+        border: 1px solid gray;
+        background-color: #f5f2f0;
+      }
+      pre.language-javascript {
+        margin: 0;
+        padding: 0 2rem;
+      }
+      pre.language-javascript:not(.is-open) {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -75,15 +101,19 @@
       <div class="col">
         <h2>Handler w/ AJAX</h2>
         <p>Basic example</p>
-        <input id="ajax" type="text" placeholder="Words search from Wordnik"/>
-        <script>
+        <input id="ajax" type="text" placeholder="Search MealDB"/>
+        <script id="example-1">
 const AC = new Autocomplete({ limit: 10, minInputLength: 1 });
 AC(document.getElementById("ajax"), function achandler(query, callback) {
-    const url = "https://api.wordnik.com/v4/words.json/search/" + query + "?api_key=809e23b70d7458731900207646903be3a474ef8a97e17dc16";
+    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`;
     fetch(url).then(function(response) {
         return response.json();
     }).then(function(json) {
-        callback( json.searchResults.map( word => word.word ) );
+        if (!json.meals) {
+          callback([{ _header: "no results" }]);
+          return;
+        }
+        callback( json.meals.map( meal => meal.strMeal ) );
     });
 });
         </script>
@@ -92,8 +122,7 @@ AC(document.getElementById("ajax"), function achandler(query, callback) {
         <h2>Autocomplete.static</h2>
         <p>Using optional Autocomplete.static</p>
         <input id="static" type="text" placeholder="List of Animals"/>
-        <p id="favorite-animal"></p>
-        <script>
+        <script id="example-2">
 const animals = ['aardvark','albatross','alligator','alpaca','ant','anteater','antelope','ape','armadillo','baboon','badger','barracuda','bat','bear','bee','beetle','bison','boar','buffalo','bushbaby','bustard','butterfly','camel','capuchin','caribou','cat','caterpillar','chameleon','chamois','cheetah','chicken','chimpanzee','chinchilla','chipmunk','chough','clam','cobra','cockroach','cod','cormorant','coyote','crab','crane','crocodile','crow','curlew','deer','dinosaur','dog','dogfish','dolphin','donkey','dotterel','dove','dragon','dragonfly','duck','dugong','dunlin','eagle','echidna','eel','eland','elephant','elk','emu','falcon','ferret','finch','fish','flamingo','fly','fox','frog','gaur','gazelle','gecko','gerbil','giraffe','gnu','goat','goldfish','goose','gorilla','goshawk','grasshopper','grouse','guanaco','gull','hamster','hare','hawk','hedgehog','heron','herring','hippopotamus','hornet','horse','horsecrab','hummingbird','hyena','hyrax','ibex','ibis','iguana','impala','jackal','jaguar','jay','jellyfish','kangaroo','koala','kouprey','kudu','lapwing','lark','lemming','lemur','leopard','lion','llama','lobster','locust','loris','louse','lynx','lyrebird','magpie','mallard','manatee','marten','meerkat','mink','mole','mongoose','monkey','moose','mosquito','mouse','mule','narwhal','newt','nightingale','numbat','octopus','okapi','opossum','orangutan','oryx','ostrich','otter','owl','ox','oyster','panther','parrot','partridge','peacock','peafowl','pelican','penguin','pheasant','pig','pigeon','platypus','pony','porcupine','porpoise','puffin','quagga','quail','quelea','rabbit','raccoon','ram','rat','raven','reindeer','rhea','rhinoceros','rook','ruff','salamander','salmon','sambar','sandpiper','sardine','scorpion','seahorse','seal','shark','sheep','shrew','shrimp','skink','skunk','snail','snake','spider','squid','squirrel','starling','stinkbug','stork','swan','tapir','tarsier','termite','tern','tiger','toad','trout','turkey','turtle','viper','vulture','wallaby','walrus','wasp','weasel','whale','wolf','wolverine','wombat','woodcock','woodpecker','worm','wren','yak','zebra','zorilla'];
 AC(document.getElementById("static"), Autocomplete.static(animals));
         </script>
@@ -101,26 +130,70 @@ AC(document.getElementById("static"), Autocomplete.static(animals));
       <div class="col">
         <h2>Items with HREFs</h2>
         <p>and subtitles (<code>{text: , sub: }</code>)</p>
-        <input id="href" type="text" placeholder="Words search from Wordnik"/>
-        <script>
+        <input id="href" type="text" placeholder="Search MealDB"/>
+        <script id="example-3">
 AC(document.getElementById("href"), function achandler(query, callback) {
-    const url = "https://api.wordnik.com/v4/words.json/search/" + query + "?api_key=809e23b70d7458731900207646903be3a474ef8a97e17dc16";
-    fetch(url).then(function(response) {
+    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`;
+    let x = fetch(url).then(function(response) {
         return response.json();
     }).then(function(json) {
-        callback( json.searchResults.map( word => ({
-            text: word.word,
-            sub: "https://www.wordnik.com/words/" + word.word,
-            href: "https://www.wordnik.com/words/" + word.word
+        if (!json.meals) {
+          callback([{ _header: "no results" }]);
+          return;
+        }
+        callback( json.meals.map( meal => ({
+            text: meal.strMeal,
+            sub: meal.strCategory,
+            href: meal.strMealThumb
         }) ) );
     });
 });
         </script>
       </div>
     </div>
+
+    <div id="code-examples">
+    </div>
+
     <footer>
         <p>Made with &lt;3 by <a href="https://crhallberg.com">Chris Hallberg</a> for <a href="http://vufind.org">VuFind</a>.</p>
-        <p>AJAX powered by the <a href="https://www.wordnik.com/">Wordnik</a> API.</p>
+        <p>AJAX powered by the <a href="https://www.themealdb.com/api.php">TheMealDB API</a>.</p>
     </footer>
+
+    <script>
+      const examplesEl = document.getElementById("code-examples");
+      function showCode(srcId) {
+        var pre = document.createElement('pre');
+        const srcEl = document.getElementById(srcId);
+        pre.innerHTML = '<code class="language-javascript" id="code-' + srcId + '">' + srcEl.innerHTML + '</code>';
+        examplesEl.appendChild(pre);
+
+        const btn = document.createElement("button");
+        btn.className = "code-btn";
+        btn.textContent = "Show Code";
+        btn.dataset.target = "code-" + srcId;
+        srcEl.parentNode.appendChild(btn);
+      }
+
+      showCode("example-1");
+      showCode("example-2");
+      showCode("example-3");
+
+      const codeTabs = document.querySelectorAll("code.language-javascript");
+      document.querySelectorAll(".code-btn").forEach(btn => {
+        btn.addEventListener("click", function() {
+          codeTabs.forEach(tab => {
+            if (tab.id === btn.dataset.target) {
+              tab.parentNode.classList.add("is-open");
+            } else {
+              tab.parentNode.classList.remove("is-open");
+            }
+          });
+        }, false);
+      });
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('[data-target="code-example-1"]').click();
+      });
+    </script>
   </body>
 </html>
