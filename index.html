@@ -110,10 +110,10 @@ AC(document.getElementById("ajax"), function achandler(query, callback) {
         return response.json();
     }).then(function(json) {
         if (!json.meals) {
-          callback([{ _header: "no results" }]);
+          callback([{ _disabled: "no results" }]);
           return;
         }
-        callback( json.meals.map( meal => meal.strMeal ) );
+        callback([{ _header: "meals" }, ...json.meals.map( meal => meal.strMeal ) ]);
     });
 });
         </script>
@@ -138,7 +138,7 @@ AC(document.getElementById("href"), function achandler(query, callback) {
         return response.json();
     }).then(function(json) {
         if (!json.meals) {
-          callback([{ _header: "no results" }]);
+          callback([{ _disabled: "no results" }]);
           return;
         }
         callback( json.meals.map( meal => ({
