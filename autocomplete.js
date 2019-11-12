@@ -131,13 +131,26 @@ function Autocomplete(_settings) {
   }
 
   function _searchCallback(items, input) {
+    // Render
     if (items.length > settings.limit) {
       items = items.slice(0, settings.limit);
     }
-    _currentItems = items.slice();
-    _currentListEls = items.map(item => _renderItem(item, input));
+    const listEls = items.map(item => _renderItem(item, input));
     list.innerHTML = "";
-    _currentListEls.map(el => list.appendChild(el));
+    listEls.map(el => list.appendChild(el));
+
+    // Setup keyboard information
+    _currentItems = items.slice().filter(item => {
+      return (
+        typeof item._header === "undefined" &&
+        typeof item._disabled === "undefined"
+      );
+    });
+    _currentListEls = listEls.filter(
+      el =>
+        !el.classList.contains("ac-header") &&
+        !el.classList.contains("ac-disabled")
+    );
     _currentIndex = -1;
   }
 
