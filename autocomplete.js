@@ -113,6 +113,9 @@ function Autocomplete(_settings) {
       }
       if (typeof item._disabled !== "undefined" && item._disabled) {
         el.setAttribute("disabled", true);
+        if (typeof item._disabled !== "boolean") {
+          el.innerHTML = item._disabled;
+        }
       }
     }
     el.addEventListener(
