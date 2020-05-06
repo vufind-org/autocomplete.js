@@ -122,7 +122,9 @@
             ? _data.slice(0, Math.min(options.maxResults, _data.length))
             : _data;
         var cid = input.data('ac-id');
-        cache[cid][term] = data;
+        if (options.cache) {
+          cache[cid][term] = data;
+        }
         if (data.length === 0 || (typeof data.groups !== 'undefined' && data.groups.length === 0)) {
           hide();
         } else {
