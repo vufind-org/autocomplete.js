@@ -3,7 +3,7 @@
 > Here to provide the interface so you can control the results.
 
 [![Go to latest version](https://img.shields.io/github/release/vufind-org/autocomplete.js.svg)](https://github.com/vufind-org/autocomplete.js/releases)
-[![GitHub license](https://img.shields.io/github/license/vufind-org/autocomplete.js.svg)](https://github.com/vufind-org/autocomplete.js/blob/master/LICENSE.md)
+[![GitHub license](https://img.shields.io/github/license/vufind-org/autocomplete.js.svg)](https://github.com/vufind-org/autocomplete.js/blob/dev/LICENSE.md)
 ![GitHub last commit](https://img.shields.io/github/last-commit/vufind-org/autocomplete.js.svg)
 
 Go to [Version 1](https://github.com/vufind-org/autocomplete.js/tree/v1) for groups, etc.
