@@ -19,7 +19,7 @@ Go to [Version 1](https://github.com/vufind-org/autocomplete.js/tree/v1) for gro
 2/ Include the CSS, usually in your page's head.
 
 ```html
-<link rel="stylesheet" href="./autocomplete-lite.css"/>
+<link rel="stylesheet" href="./autocomplete.css"/>
 ```
 
 3/ Create an Autocomplete instance with all your desired settings.
