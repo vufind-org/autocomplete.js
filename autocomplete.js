@@ -159,14 +159,6 @@ function Autocomplete(_settings) {
 
   let lastCB;
   function _search(handler, input) {
-    if (input.value.length < settings.minInputLength) {
-      _hide();
-      return;
-    }
-    let loadingEl = _renderItem({ _header: settings.loadingString });
-    list.innerHTML = loadingEl.outerHTML;
-    _show(input);
-    _align(input);
     let thisCB = new Date().getTime();
     lastCB = thisCB;
     handler(input.value, function callback(items) {
@@ -175,6 +167,7 @@ function Autocomplete(_settings) {
         return;
       }
       _searchCallback(items, input);
+      _show(input);
       _align(input);
     });
   }
@@ -262,7 +255,6 @@ function Autocomplete(_settings) {
     // Activation / De-activation
     input.setAttribute("autocomplete", "off");
     input.addEventListener("focus", _ => _search(handler, input), false);
-    input.addEventListener("click", _ => _search(handler, input), false);
     input.addEventListener("blur", _hide, false);
 
     // Input typing
@@ -270,6 +262,16 @@ function Autocomplete(_settings) {
     input.addEventListener(
       "input",
       event => {
+        if (input.value.length < settings.minInputLength) {
+          _hide();
+          return;
+        }
+
+        let loadingEl = _renderItem({ _header: settings.loadingString });
+        list.innerHTML = loadingEl.outerHTML;
+        _show(input);
+        _align(input);
+
         if (
           event.inputType === "insertFromPaste" ||
           event.inputType === "insertFromDrop"
