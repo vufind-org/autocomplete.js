@@ -94,9 +94,12 @@ function Autocomplete(_settings) {
     _hide();
   }
 
-  function _renderItem(item, input) {
+  function _renderItem(item, input, index = null) {
     let el = document.createElement("div");
     el.classList.add("ac-item");
+    if (index !== null) {
+      el.setAttribute("id", input.getAttribute("id") + "__" + _currentIndex);
+    }
     if (typeof item === "string" || typeof item === "number") {
       el.innerHTML = item;
     } else if (typeof item._header !== "undefined") {
@@ -138,7 +141,7 @@ function Autocomplete(_settings) {
     if (items.length > settings.limit) {
       items = items.slice(0, settings.limit);
     }
-    const listEls = items.map((item) => _renderItem(item, input));
+    const listEls = items.map((item, index) => _renderItem(item, input, index));
     list.innerHTML = "";
     listEls.map((el) => list.appendChild(el));
 
@@ -187,14 +190,13 @@ function Autocomplete(_settings) {
       // arrow keys through items
       case 38: // up key
         event.preventDefault();
-        if (_currentIndex === -1) {
-          return;
+        if (_currentIndex > -1) {
+          _currentListEls[_currentIndex].classList.remove("is-selected");
         }
-        _currentListEls[_currentIndex].classList.remove("is-selected");
-        _currentIndex -= 1;
-        if (_currentIndex === -1) {
-          return;
-        }
+        _currentIndex = Math.max(
+          _currentIndex === -1 ? _currentListEls.length - 1 : _currentIndex - 1,
+          0
+        );
         _currentListEls[_currentIndex].classList.add("is-selected");
         break;
       case 40: // down key
@@ -203,17 +205,16 @@ function Autocomplete(_settings) {
           _search(handler, input);
           return;
         }
-        if (_currentIndex === _currentItems.length - 1) {
-          return;
-        }
         if (_currentIndex > -1) {
           _currentListEls[_currentIndex].classList.remove("is-selected");
         }
-        _currentIndex += 1;
+        _currentIndex = Math.min(
+          _currentIndex === -1 ? 0 : _currentIndex + 1,
+          _currentListEls.length - 1 // don't overflow
+        );
         _currentListEls[_currentIndex].classList.add("is-selected");
         break;
       // enter to nav or populate
-      case 9:
       case 13:
         if (_currentIndex === -1) {
           return;
@@ -225,6 +226,15 @@ function Autocomplete(_settings) {
       case 27:
         _hide();
         break;
+    }
+
+    if (_currentIndex > -1) {
+      input.setAttribute(
+        "aria-activedescendant",
+        list.getAttribute("id") + "__" + _currentIndex
+      );
+    } else {
+      input.removeAttribute("aria-activedescendant");
     }
   }
 
@@ -243,6 +253,7 @@ function Autocomplete(_settings) {
       list = document.querySelector(".autocomplete-results");
       if (!list) {
         list = document.createElement("div");
+        list.setAttribute("id", "ac-" + Math.random().toString().slice(-6));
         list.classList.add("autocomplete-results");
         document.body.appendChild(list);
         window.addEventListener(
@@ -258,8 +269,14 @@ function Autocomplete(_settings) {
       }
     }
 
-    // Activation / De-activation
+    // Aria
     input.setAttribute("autocomplete", "off");
+    input.setAttribute("role", "combobox");
+    input.setAttribute("aria-owns", list.getAttribute("id"));
+    input.setAttribute("aria-autocomplete", "both");
+    list.setAttribute("role", "listbox");
+
+    // Activation / De-activation
     input.addEventListener("focus", (_) => _search(handler, input), false);
     input.addEventListener("blur", _hide, false);
 
@@ -268,7 +285,7 @@ function Autocomplete(_settings) {
     input.addEventListener(
       "input",
       (event) => {
-        let loadingEl = _renderItem({ _header: settings.loadingString });
+        let loadingEl = _renderItem({ _header: settings.loadingString }, input);
         list.innerHTML = loadingEl.outerHTML;
         _show(input);
         _align(input);
