@@ -58,10 +58,10 @@ Autocomplete.static = function staticAC(set, _limit, key) {
   return function insertSortByWeight(query, cb) {
     let start = set
       .slice(0, limit)
-      .map(x => [x, _weightedFuzzymatch(query, x)])
+      .map((x) => [x, _weightedFuzzymatch(query, x)])
       .sort((a, b) => b[1] - a[1]);
-    let ret = start.map(x => x[0]);
-    let weights = start.map(x => x[1]);
+    let ret = start.map((x) => x[0]);
+    let weights = start.map((x) => x[1]);
     for (let i = limit; i < set.length; i++) {
       let weight = _weightedFuzzymatch(query, set[i]);
       if (weight < weights[weights.length - 1]) {

@@ -25,7 +25,7 @@ function Autocomplete(_settings) {
       const args = [].slice.call(arguments);
 
       clearTimeout(timeout);
-      timeout = setTimeout(function() {
+      timeout = setTimeout(function () {
         func.apply(context, args);
       }, delay);
     };
@@ -120,7 +120,7 @@ function Autocomplete(_settings) {
     }
     el.addEventListener(
       "mousedown",
-      e => {
+      (e) => {
         if (e.which === 1) {
           e.preventDefault();
           _selectItem(item, input);
@@ -138,19 +138,19 @@ function Autocomplete(_settings) {
     if (items.length > settings.limit) {
       items = items.slice(0, settings.limit);
     }
-    const listEls = items.map(item => _renderItem(item, input));
+    const listEls = items.map((item) => _renderItem(item, input));
     list.innerHTML = "";
-    listEls.map(el => list.appendChild(el));
+    listEls.map((el) => list.appendChild(el));
 
     // Setup keyboard information
-    _currentItems = items.slice().filter(item => {
+    _currentItems = items.slice().filter((item) => {
       return (
         typeof item._header === "undefined" &&
         typeof item._disabled === "undefined"
       );
     });
     _currentListEls = listEls.filter(
-      el =>
+      (el) =>
         !el.classList.contains("ac-header") &&
         !el.classList.contains("ac-disabled")
     );
@@ -260,14 +260,14 @@ function Autocomplete(_settings) {
 
     // Activation / De-activation
     input.setAttribute("autocomplete", "off");
-    input.addEventListener("focus", _ => _search(handler, input), false);
+    input.addEventListener("focus", (_) => _search(handler, input), false);
     input.addEventListener("blur", _hide, false);
 
     // Input typing
     const debounceSearch = _debounce(_search, settings.delay);
     input.addEventListener(
       "input",
-      event => {
+      (event) => {
         let loadingEl = _renderItem({ _header: settings.loadingString });
         list.innerHTML = loadingEl.outerHTML;
         _show(input);
@@ -288,7 +288,7 @@ function Autocomplete(_settings) {
     // Checking control characters
     input.addEventListener(
       "keydown",
-      event => _keydown(handler, input, event),
+      (event) => _keydown(handler, input, event),
       false
     );
 
