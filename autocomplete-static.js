@@ -1,4 +1,4 @@
-/* https://github.com/vufind-org/autocomplete.js (v2.1.4) (2023-04-11) */
+/* https://github.com/vufind-org/autocomplete.js (v2.1.7) (2023-06-21) */
 Autocomplete.static = function staticAC(set, _limit, key) {
   const limit = typeof _limit !== "number" ? 20 : _limit;
 
