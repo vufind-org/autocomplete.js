@@ -101,10 +101,11 @@ function Autocomplete(_settings) {
   function _renderItem(item, input, index = null) {
     let el = document.createElement("div");
     el.setAttribute("role", "option");
+    el.setAttribute("aria-selected", false);
     el.classList.add("ac-item");
     el.setAttribute(
       "id",
-      input.getAttribute("id") + "__" + (_currentIndex ?? randomID()),
+      input.getAttribute("id") + "__" + (index ?? randomID()),
     );
 
     if (typeof item === "string" || typeof item === "number") {
@@ -199,6 +200,7 @@ function Autocomplete(_settings) {
         event.preventDefault();
         if (_currentIndex > -1) {
           _currentListEls[_currentIndex].classList.remove("is-selected");
+          _currentListEls[_currentIndex].setAttribute("aria-selected", false);
         }
         _currentIndex -= 1;
         if (_currentIndex <= -2) {
@@ -213,8 +215,8 @@ function Autocomplete(_settings) {
         }
         if (_currentIndex > -1) {
           _currentListEls[_currentIndex].classList.remove("is-selected");
+          _currentListEls[_currentIndex].setAttribute("aria-selected", false);
         }
-
         _currentIndex += 1;
         if (_currentIndex >= _currentItems.length) {
           _currentIndex = -1;
