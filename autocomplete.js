@@ -1,4 +1,4 @@
-/* https://github.com/vufind-org/autocomplete.js (v2.1.6) (2023-06-20) */
+/* https://github.com/vufind-org/autocomplete.js (v2.1.7) (2023-06-21) */
 function Autocomplete(_settings) {
   const _DEFAULTS = {
     delay: 250,
@@ -105,7 +105,7 @@ function Autocomplete(_settings) {
     el.classList.add("ac-item");
     el.setAttribute(
       "id",
-      input.getAttribute("id") + "__" + (index ?? randomID()),
+      input.getAttribute("id") + "__" + (index === null ? randomID() : index),
     );
 
     if (typeof item === "string" || typeof item === "number") {
