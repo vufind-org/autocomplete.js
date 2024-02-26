@@ -1,4 +1,4 @@
-/* https://github.com/vufind-org/autocomplete.js (v2.1.8) (2024-01-29) */
+/* https://github.com/vufind-org/autocomplete.js (v2.1.9) (2024-02-26) */
 function Autocomplete(_settings) {
   const _DEFAULTS = {
     delay: 250,
@@ -28,6 +28,8 @@ function Autocomplete(_settings) {
       timeout = setTimeout(function () {
         func.apply(context, args);
       }, delay);
+
+      return timeout;
     };
   }
 
@@ -59,25 +61,22 @@ function Autocomplete(_settings) {
   }
 
   let lastInput = false;
-  let lastCB;
   function _show(input) {
     lastInput = input;
     list.style.left = "-100%"; // hide offscreen
     list.classList.add("open");
   }
 
-  function _hide(e) {
-    if (
-      typeof e !== "undefined" &&
-      !!e.relatedTarget &&
-      e.relatedTarget.hasAttribute("href")
-    ) {
-      return;
-    }
+  let lastCB = null;
+  let debounceTimeout;
+  function _hide() {
     list.classList.remove("open");
+    list.innerHTML = "";
+
+    clearTimeout(debounceTimeout);
     _currentIndex = -1;
     lastInput = false;
-    lastCB = false;
+    lastCB = null;
   }
 
   function _selectItem(item, input) {
@@ -85,9 +84,7 @@ function Autocomplete(_settings) {
       return;
     }
     // Broadcast
-    var event = document.createEvent("CustomEvent");
-    // CustomEvent: name, canBubble, cancelable, detail
-    event.initCustomEvent("ac-select", true, true, item);
+    var event = new CustomEvent("ac-select", { bubbles: true, cancelable: true, detail: item });
     input.dispatchEvent(event);
     // Copy value
     if (typeof item === "string" || typeof item === "number") {
@@ -179,11 +176,21 @@ function Autocomplete(_settings) {
       return;
     }
 
+    let loadingEl = _renderItem({ _header: settings.loadingString }, input);
+    list.innerHTML = loadingEl.outerHTML;
+
     let thisCB = new Date().getTime();
     lastCB = thisCB;
 
     handler(input.value, function callback(items) {
-      if (thisCB !== lastCB || items === false || items.length === 0) {
+      const outdatedHandler = thisCB !== lastCB;
+      if (outdatedHandler) {
+        // We should just ignore outdated handler callbacks; newer code will do
+        // the right thing, and taking action based on an old request will only
+        // cause problems.
+        return;
+      }
+      if (!items || items.length === 0) {
         _hide();
         return;
       }
@@ -311,8 +318,6 @@ function Autocomplete(_settings) {
     input.addEventListener(
       "input",
       (event) => {
-        let loadingEl = _renderItem({ _header: settings.loadingString }, input);
-        list.innerHTML = loadingEl.outerHTML;
         _show(input);
         _align(input);
 
@@ -322,7 +327,7 @@ function Autocomplete(_settings) {
         ) {
           _search(handler, input);
         } else {
-          debounceSearch(handler, input);
+          debounceTimeout = debounceSearch(handler, input);
         }
       },
       false
